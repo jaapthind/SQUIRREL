@@ -2,501 +2,1693 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stop Squirrel Climb | Premium Tree Protection</title>
-    <link rel="icon" type="image/png" href="static/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stop Squirrel Climb | Liquid Glass Edition | Berkeley, CA</title>
+    <meta name="description" content="Stop Squirrel Climb is a locally designed and 3D printed modular squirrel barrier made right here in Berkeley.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
+        /* ==========================================================================
+           CSS VARIABLES & RESET
+           ========================================================================== */
         :root {
-            --bg: #ffffff;
-            --bg-secondary: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --accent-gradient: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-            --accent-color: #FF6B6B;
-            --nav-glass: rgba(255, 255, 255, 0.8);
-            --card-glass: rgba(255, 255, 255, 0.9);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --accent-glow: 0 0 20px rgba(255, 255, 255, 0.5);
+            --blur-intensity: 30px;
+            --font-main: 'Outfit', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            --radius-sm: 8px;
+            --radius-md: 16px;
             --radius-lg: 24px;
+            --radius-xl: 40px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body.dark-mode {
-            --bg: #0b1120;
-            --bg-secondary: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --nav-glass: rgba(11, 17, 32, 0.8);
-            --card-glass: rgba(30, 41, 59, 0.9);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.6;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            font-family: var(--font-main);
+            background-color: #050505;
+            color: var(--text-primary);
             overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
         }
 
-        /* --- BACKGROUND BLOBS --- */
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.4;
-            animation: float 10s infinite alternate ease-in-out;
-        }
-        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #FF6B6B; border-radius: 50%; }
-        .blob-2 { top: 20%; right: -10%; width: 400px; height: 400px; background: #FF8E53; border-radius: 50%; animation-delay: -5s; }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
-        }
-
-        /* --- NAVIGATION --- */
-        nav {
+        /* ==========================================================================
+           LIQUID GLASS RAINBOW BACKGROUND ANIMATION
+           ========================================================================== */
+        .rainbow-container {
             position: fixed;
-            top: 0; width: 100%;
-            background: var(--nav-glass);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .liquid-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.8;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+
+        /* Colors of the Rainbow */
+        .blob-red {
+            background: #ff003c;
+            width: 50vw;
+            height: 50vw;
+            top: -10%;
+            left: -10%;
+            animation: moveLiquid1 25s infinite alternate ease-in-out;
+        }
+
+        .blob-orange {
+            background: #ff6a00;
+            width: 45vw;
+            height: 45vw;
+            top: 20%;
+            right: -10%;
+            animation: moveLiquid2 20s infinite alternate-reverse ease-in-out;
+        }
+
+        .blob-yellow {
+            background: #ffea00;
+            width: 40vw;
+            height: 40vw;
+            bottom: -20%;
+            left: 10%;
+            animation: moveLiquid3 22s infinite alternate ease-in-out;
+        }
+
+        .blob-green {
+            background: #00ff66;
+            width: 55vw;
+            height: 55vw;
+            top: 40%;
+            left: 30%;
+            animation: moveLiquid4 28s infinite alternate-reverse ease-in-out;
+        }
+
+        .blob-blue {
+            background: #0088ff;
+            width: 60vw;
+            height: 60vw;
+            bottom: 10%;
+            right: 0%;
+            animation: moveLiquid5 24s infinite alternate ease-in-out;
+        }
+
+        .blob-purple {
+            background: #8800ff;
+            width: 45vw;
+            height: 45vw;
+            top: 5%;
+            left: 50%;
+            animation: moveLiquid6 26s infinite alternate-reverse ease-in-out;
+        }
+
+        .blob-pink {
+            background: #ff00aa;
+            width: 50vw;
+            height: 50vw;
+            bottom: 30%;
+            left: -10%;
+            animation: moveLiquid7 21s infinite alternate ease-in-out;
+        }
+
+        /* Keyframes for Liquid Motion */
+        @keyframes moveLiquid1 {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(20vw, 15vh) scale(1.2) rotate(90deg); }
+            100% { transform: translate(-10vw, 30vh) scale(0.9) rotate(180deg); }
+        }
+        @keyframes moveLiquid2 {
+            0% { transform: translate(0, 0) scale(1.1) rotate(0deg); }
+            50% { transform: translate(-25vw, 10vh) scale(0.8) rotate(-90deg); }
+            100% { transform: translate(-15vw, -20vh) scale(1.3) rotate(-180deg); }
+        }
+        @keyframes moveLiquid3 {
+            0% { transform: translate(0, 0) scale(0.9) rotate(0deg); }
+            50% { transform: translate(15vw, -30vh) scale(1.4) rotate(45deg); }
+            100% { transform: translate(30vw, -10vh) scale(1) rotate(90deg); }
+        }
+        @keyframes moveLiquid4 {
+            0% { transform: translate(0, 0) scale(1.2) rotate(0deg); }
+            50% { transform: translate(-30vw, -20vh) scale(0.9) rotate(-45deg); }
+            100% { transform: translate(20vw, 20vh) scale(1.1) rotate(-90deg); }
+        }
+        @keyframes moveLiquid5 {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(10vw, -40vh) scale(1.3) rotate(60deg); }
+            100% { transform: translate(-20vw, -10vh) scale(0.8) rotate(120deg); }
+        }
+        @keyframes moveLiquid6 {
+            0% { transform: translate(0, 0) scale(0.8) rotate(0deg); }
+            50% { transform: translate(-15vw, 25vh) scale(1.1) rotate(-60deg); }
+            100% { transform: translate(10vw, 40vh) scale(1.4) rotate(-120deg); }
+        }
+        @keyframes moveLiquid7 {
+            0% { transform: translate(0, 0) scale(1.3) rotate(0deg); }
+            50% { transform: translate(25vw, -15vh) scale(0.9) rotate(75deg); }
+            100% { transform: translate(40vw, 10vh) scale(1.1) rotate(150deg); }
+        }
+
+        /* Ambient Noise Overlay for Glass Texture */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* ==========================================================================
+           GLASSMORPHISM UTILITIES
+           ========================================================================== */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-intensity));
+            -webkit-backdrop-filter: blur(var(--blur-intensity));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-20deg);
+            animation: glassShine 8s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes glassShine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* ==========================================================================
+           TYPOGRAPHY & GLOBAL STYLES
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(to right, #fff, rgba(255,255,255,0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--accent-glow);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .text-center { text-align: center; }
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ==========================================================================
+           NAVIGATION
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-sm) 0;
+            z-index: 1000;
+            transition: var(--transition-medium);
+        }
+
+        .navbar.scrolled {
+            padding: var(--spacing-xs) 0;
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s;
+            border-bottom: 1px solid var(--glass-border);
         }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+
+        .nav-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent-color); }
-        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
-        
-        /* --- BUTTONS --- */
-        .btn-primary {
-            background: var(--accent-gradient);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 99px;
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 25px rgba(255, 107, 107, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -1px;
         }
 
-        /* --- LAYOUT --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .section { padding: 8rem 0; }
-        
-        /* --- HERO --- */
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding-top: 5rem; }
-        .hero-badge {
-            background: rgba(255, 107, 107, 0.1);
-            color: var(--accent-color);
-            padding: 0.5rem 1.2rem;
-            border-radius: 99px;
-            font-weight: 700;
-            font-size: 0.9rem;
+        .logo-svg {
+            width: 32px;
+            height: 32px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #fff;
+            transition: var(--transition-medium);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-shadow: var(--accent-glow);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: 999px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.125rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-medium);
+            border: none;
+            outline: none;
             gap: 8px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 107, 107, 0.2);
         }
-        .hero-badge .dot { width: 8px; height: 8px; background: var(--accent-color); border-radius: 50%; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); } }
-        
-        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 1.5rem; }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; }
 
-        /* --- STORY SECTION --- */
-        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        @media(max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
-        .glass-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2), var(--accent-glow);
+        }
+
+        .btn-solid {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .btn-solid:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff66;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 10px #00ff66;
+            animation: pulseGreen 2s infinite;
+        }
+
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+        }
+
+        .hero p {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        /* Floating 3D Elements in Hero */
+        .floating-element {
+            position: absolute;
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: var(--spacing-sm);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .float-1 {
+            top: 20%;
+            right: 10%;
+            animation: floatObj 6s infinite alternate ease-in-out;
+        }
+
+        .float-2 {
+            bottom: 20%;
+            right: 25%;
+            animation: floatObj 8s infinite alternate-reverse ease-in-out;
+            animation-delay: 1s;
+        }
+        
+        .float-3 {
+            top: 40%;
+            left: 5%;
+            animation: floatObj 7s infinite alternate ease-in-out;
+            animation-delay: 2s;
+        }
+
+        @keyframes floatObj {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* ==========================================================================
+           STORY SECTION (JAAP)
+           ========================================================================== */
+        .section {
+            padding: var(--spacing-xl) 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        @media (max-width: 992px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .story-text {
+            padding-right: var(--spacing-md);
+        }
+
+        .story-image-container {
+            position: relative;
+            border-radius: var(--radius-xl);
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .story-image {
+            width: 100%;
             border-radius: var(--radius-lg);
-            padding: 3rem;
-            box-shadow: var(--shadow-lg);
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 4/3;
+            transition: transform 0.5s;
         }
-        .story-img { width: 100%; border-radius: var(--radius-lg); object-fit: cover; border: 1px solid var(--border); }
-        .story-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- BEFORE/AFTER SLIDER --- */
-        .slider-wrapper { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-lg); position: relative; height: 500px; width: 100%; margin: 4rem 0; cursor: ew-resize; }
-        .img-after { width: 100%; height: 100%; background: url('static/no.jpg') center/cover; }
-        .img-before { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: url('static/before.jpg') left/cover; border-right: 4px solid #fff; box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
-        #slider-range { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: ew-resize; z-index: 10; }
-        .slider-pill { position: absolute; bottom: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 16px; border-radius: 99px; font-weight: 600; font-size: 0.85rem; pointer-events: none; backdrop-filter: blur(4px); }
+        .story-image-container:hover .story-image {
+            transform: translateZ(20px) scale(1.02);
+        }
 
-        /* --- GRID LAYOUTS --- */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .feature-box { background: var(--card-glass); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); transition: transform 0.3s; }
-        .feature-box:hover { transform: translateY(-5px); }
-        .feature-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .image-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--glass-border);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
 
-        /* --- INSTALLATION STEPS --- */
-        .step-container { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
-        .step-card { display: flex; gap: 2rem; background: var(--card-glass); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); align-items: center; }
-        @media(max-width: 768px) { .step-card { flex-direction: column; text-align: center; } }
-        .step-number { font-size: 4rem; font-weight: 800; color: var(--accent-color); opacity: 0.3; line-height: 1; }
-        .step-content { flex: 1; }
-        .step-img-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .step-img-group img { width: 150px; border-radius: 12px; border: 1px solid var(--border); transition: transform 0.3s; cursor: zoom-in; }
-        .step-img-group img:hover { transform: scale(1.05); }
+        /* ==========================================================================
+           BEFORE / AFTER SLIDER
+           ========================================================================== */
+        .comparison-section {
+            text-align: center;
+        }
 
-        /* --- REVIEWS --- */
-        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .review-card { background: var(--bg-secondary); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
-        .stars { color: #F59E0B; letter-spacing: 2px; margin-bottom: 1rem; font-size: 1.2rem; }
-        .form-input { width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-family: inherit; margin-bottom: 1rem; }
+        .slider-glass-wrapper {
+            margin-top: var(--spacing-lg);
+            padding: 16px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-        /* --- UTILS --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .text-center { text-align: center; }
-        
-        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; cursor: zoom-out; backdrop-filter: blur(10px); }
-        #modal img { max-width: 90%; max-height: 90vh; border-radius: 16px; border: 2px solid #333; }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: ew-resize;
+            background: #111;
+        }
 
-        #chat-bubble { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background: var(--accent-gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); z-index: 1000; transition: transform 0.3s; }
-        #chat-bubble:hover { transform: scale(1.1); }
-        
-        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-gradient); z-index: 9999; width: 0%; }
-        
-        /* Interactive Easter Egg */
-        .drip { position: fixed; width: 20px; height: 20px; font-size: 20px; pointer-events: none; z-index: 9999; }
+        @media (max-width: 768px) {
+            .slider-container { height: 400px; }
+        }
+
+        .img-after {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('no.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .img-before {
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%; height: 100%;
+            background-image: url('before.jpg');
+            background-size: cover;
+            background-position: left;
+            border-right: 4px solid rgba(255,255,255,0.8);
+            box-shadow: 10px 0 20px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        .slider-input {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            cursor: ew-resize;
+            z-index: 10;
+        }
+
+        .slider-label {
+            position: absolute;
+            bottom: 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            border: 1px solid var(--glass-border);
+            pointer-events: none;
+            z-index: 5;
+        }
+        .label-left { left: 20px; }
+        .label-right { right: 20px; }
+
+        /* ==========================================================================
+           ENGINEERING & FEATURES
+           ========================================================================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature-card {
+            padding: var(--spacing-md);
+            transition: transform 0.4s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--accent-glow);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+            border: 1px solid var(--glass-border);
+            font-size: 2rem;
+        }
+
+        /* ==========================================================================
+           INSTALLATION STEPS
+           ========================================================================== */
+        .steps-container {
+            max-width: 900px;
+            margin: var(--spacing-lg) auto 0;
+        }
+
+        .step-row {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .step-row {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .step-number-container {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .step-number-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: var(--accent-glow);
+            opacity: 0;
+            transition: var(--transition-medium);
+        }
+
+        .step-row:hover .step-number-container::after {
+            opacity: 1;
+        }
+
+        .step-content {
+            flex-grow: 1;
+            padding: var(--spacing-md);
+        }
+
+        .step-images {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .step-images { justify-content: center; }
+        }
+
+        .step-img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            cursor: zoom-in;
+            transition: var(--transition-medium);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .step-img:hover {
+            transform: scale(1.05) rotate(2deg);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           REVIEWS & LOCAL STORAGE
+           ========================================================================== */
+        .reviews-section {
+            background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(255,255,255,0.02), rgba(0,0,0,0));
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .review-card {
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: var(--spacing-sm);
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+        }
+
+        .review-text {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: var(--spacing-sm);
+        }
+
+        .author-initial {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        /* Review Form */
+        .review-form-container {
+            max-width: 600px;
+            margin: 0 auto var(--spacing-xl);
+            padding: var(--spacing-md);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.6);
+        }
+
+        select.form-input option {
+            background: #111;
+            color: #fff;
+        }
+
+        .success-msg {
+            display: none;
+            padding: 20px;
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            border-radius: var(--radius-sm);
+            color: #00ff66;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
+        }
+
+        /* ==========================================================================
+           FAQ
+           ========================================================================== */
+        .faq-container {
+            max-width: 800px;
+            margin: var(--spacing-lg) auto 0;
+        }
+
+        .faq-item {
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition-medium);
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            user-select: none;
+        }
+
+        .faq-icon {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 24px 24px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            padding: var(--spacing-xl) 0 var(--spacing-md);
+            border-top: 1px solid var(--glass-border);
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+            text-shadow: var(--accent-glow);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        /* ==========================================================================
+           UTILITIES & WIDGETS
+           ========================================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Fullscreen Image Modal */
+        #img-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #img-modal.visible {
+            opacity: 1;
+        }
+
+        #modal-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        #img-modal.visible #modal-image {
+            transform: scale(1);
+        }
+
+        /* Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff003c, #ff6a00, #ffea00, #00ff66, #0088ff, #8800ff, #ff00aa);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            z-index: 9999;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Support Bubble */
+        #support-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: var(--transition-medium);
+        }
+
+        #support-bubble:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), var(--accent-glow);
+        }
+
+        #support-bubble svg {
+            width: 28px;
+            height: 28px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Clicky Analytics Positioning */
+        #clicky-container {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+        #clicky-container:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
 
-    <nav id="nav">
-        <div class="nav-container">
+    <div id="scroll-progress"></div>
+
+    <div class="rainbow-container">
+        <div class="noise-overlay"></div>
+        <div class="liquid-blob blob-red"></div>
+        <div class="liquid-blob blob-orange"></div>
+        <div class="liquid-blob blob-yellow"></div>
+        <div class="liquid-blob blob-green"></div>
+        <div class="liquid-blob blob-blue"></div>
+        <div class="liquid-blob blob-purple"></div>
+        <div class="liquid-blob blob-pink"></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-inner">
             <a href="#" class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <svg class="logo-svg" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
                 Stop Squirrel Climb
             </a>
             <div class="nav-links">
-                <a href="#story">The Story</a>
-                <a href="#design">Design</a>
-                <a href="#install">Install</a>
-                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <a href="#story" class="nav-link">The Story</a>
+                <a href="#engineering" class="nav-link">Engineering</a>
+                <a href="#installation" class="nav-link">Installation</a>
+                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn btn-solid" style="padding: 10px 24px; font-size: 1rem;">Order Kit</a>
             </div>
         </div>
     </nav>
 
-    <div id="modal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
-
-    <main>
-        <section class="hero container">
-            <div>
-                <div class="hero-badge reveal"><span class="dot"></span> Local Project — Ships to Berkeley, CA ONLY</div>
-                <h1 class="reveal" style="transition-delay: 0.1s;">Protect your harvest with <br>precision engineering.</h1>
-                <p class="reveal" style="transition-delay: 0.2s;">An interlocking, modular barrier designed to stop squirrels in their tracks. 3D printed locally in Berkeley.</p>
-                <div class="reveal" style="transition-delay: 0.3s;">
-                    <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn-primary">Order Your Kit — $64.99</a>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge reveal">
+                    <div class="badge-dot"></div>
+                    Locally Designed — Ships to Berkeley, CA ONLY
+                </div>
+                
+                <h1 class="reveal" style="transition-delay: 0.1s;">Protect your harvest with <br>liquid precision.</h1>
+                
+                <p class="reveal" style="transition-delay: 0.2s;">
+                    The ultimate modular, interlocking barrier engineered to stop squirrels in their tracks. 3D printed with industrial-grade polymers right here in Berkeley.
+                </p>
+                
+                <div class="hero-buttons reveal" style="transition-delay: 0.3s;">
+                    <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn btn-solid">
+                        Deploy System — $64.99
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="#story" class="btn btn-glass">
+                        Read the Origin
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="story" class="section container">
+        <div class="floating-element float-1">
+            <svg width="24" height="24" fill="none" stroke="#00ff66" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span style="font-weight: 600; font-size: 0.9rem;">100% Tree Safe</span>
+        </div>
+        <div class="floating-element float-2">
+            <svg width="24" height="24" fill="none" stroke="#0088ff" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span style="font-weight: 600; font-size: 0.9rem;">15 Min Install</span>
+        </div>
+        <div class="floating-element float-3">
+            <svg width="24" height="24" fill="none" stroke="#ff00aa" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span style="font-weight: 600; font-size: 0.9rem;">Modular Scaling</span>
+        </div>
+    </section>
+
+    <section id="story" class="section">
+        <div class="container">
             <div class="story-grid">
-                <div class="glass-card reveal">
-                    <h2 class="story-title">Hi, I'm Jaap.</h2>
-                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">This started as a personal project. My dad was incredibly frustrated because squirrels kept raiding our backyard fruit trees right before the harvest was ready.</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">I wanted to solve the problem for him. Using my 3D printer and CAD software in my bedroom, I designed and prototyped this modular, wrap-around barrier.</p>
-                    <p style="font-size: 1.1rem;">After finding the perfect angle that squirrels simply couldn't grip, our fruit was finally safe. Now, I'm manufacturing these kits to help other families in Berkeley protect their hard work.</p>
+                <div class="story-text reveal">
+                    <h2 class="text-gradient">Hi, I'm Jaap.</h2>
+                    <p style="font-size: 1.25rem; font-weight: 300; color: #fff;">
+                        This entire project started right here in Berkeley because my dad was incredibly frustrated.
+                    </p>
+                    <p>
+                        Every year, we would wait for our backyard fruit trees to ripen. And every year, the local squirrel population would raid the branches, ruining the harvest right before it was perfectly ready to eat. Traditional metal cones from the hardware store were ugly, didn't fit right, and often damaged the bark.
+                    </p>
+                    <p>
+                        I wanted to solve the problem for him. Using my CAD software and my Bambu Lab A1 Mini 3D printer in my room, I began prototyping a modular, wrap-around barrier. We went through dozens of iterations, testing different friction coefficients and slip angles.
+                    </p>
+                    <p>
+                        Once we found the perfect geometric angle that squirrels simply couldn't grip, our fruit was finally safe. Now, I manufacture these kits locally to help other families in Berkeley protect their hard work.
+                    </p>
                 </div>
-                <div class="reveal" style="position: relative;">
-                    <img src="static/Jaap.jpg" class="story-img" alt="Jaap in the workshop" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22600%22%20viewBox%3D%220%200%20600%20600%22%3E%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22%23f8fafc%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224px%22%20fill%3D%22%2394a3b8%22%20text-anchor%3D%22middle%22%3EJaap%20-%20Creator%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                
+                <div class="story-image-container reveal">
+                    <img src="Jaap.jpg" class="story-image" alt="Jaap in his workspace" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22600%22%20viewBox%3D%220%200%20800%20600%22%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2230px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3EJaap.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                    <div class="image-caption">Prototyping in Berkeley</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section container text-center">
-            <h2 class="story-title reveal">The Results Speak</h2>
-            <p class="reveal" style="color: var(--text-muted); font-size: 1.2rem;">Slide to see the difference a custom barrier makes.</p>
+    <section class="section comparison-section">
+        <div class="container">
+            <h2 class="text-gradient reveal">The Results Speak</h2>
+            <p class="reveal text-center" style="max-width: 600px; margin: 0 auto;">Slide to witness the difference between an unprotected trunk and a biologically secure harvest.</p>
             
-            <div class="slider-wrapper reveal" id="slider">
-                <div class="img-after"></div>
-                <div id="before-img" class="img-before"></div>
-                <input type="range" min="0" max="100" value="50" id="slider-range">
-                <div class="slider-pill" style="left: 20px;">Unprotected</div>
-                <div class="slider-pill" style="right: 20px;">Protected</div>
+            <div class="slider-glass-wrapper reveal">
+                <div class="slider-container" id="slider-box">
+                    <div class="img-after"></div>
+                    <div class="img-before" id="slider-before"></div>
+                    <input type="range" min="0" max="100" value="50" class="slider-input" id="slider-range">
+                    
+                    <div class="slider-label label-left">Unprotected</div>
+                    <div class="slider-label label-right">Protected</div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="design" class="section container">
+    <section id="engineering" class="section">
+        <div class="container">
             <div class="text-center reveal">
-                <h2 class="story-title">Built for the Backyard</h2>
+                <h2 class="text-gradient">Built for the Backyard</h2>
+                <p style="max-width: 600px; margin: 0 auto;">Advanced materials science meets backyard agriculture.</p>
             </div>
-            <div class="features">
-                <div class="feature-box reveal">
-                    <div class="feature-icon">🧩</div>
+
+            <div class="features-grid">
+                <div class="glass-panel feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    </div>
                     <h3>Modular Scaling</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Interlocking plates adapt dynamically. Whether your tree is 3 inches or 10 inches wide, the system wraps and secures tightly.</p>
+                    <p>Unlike rigid cones, our interlocking plates adapt dynamically. Whether your tree trunk is 3 inches or 10 inches wide, the system wraps and secures tightly.</p>
                 </div>
-                <div class="feature-box reveal">
-                    <div class="feature-icon">🌳</div>
+                
+                <div class="glass-panel feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
                     <h3>100% Tree Safe</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">No drilling required. The galvanized foundation sheet distributes pressure, preventing hardware from biting into sensitive bark.</p>
+                    <p>No drilling required. The flexible galvanized foundation sheet distributes radial pressure evenly, preventing hardware from biting into the sensitive cambium layer.</p>
                 </div>
-                <div class="feature-box reveal">
-                    <div class="feature-icon" id="weather-egg" style="cursor: pointer;">☀️</div>
+
+                <div class="glass-panel feature-card reveal">
+                    <div class="feature-icon" id="weather-egg" style="cursor: pointer;" title="Click for weather test">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5 0-2.3-1.8-4.2-4-4.5C17.6 7 15 5 12 5 9.2 5 6.9 7 6.4 9.7 3.9 10 2 12 2 14.5 2 17 4 19 6.5 19"></path></svg>
+                    </div>
                     <h3>Weatherproof Build</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Printed using high-impact PETG plastic paired with Type-304 stainless steel hardware. Will not rust, rot, or degrade in the sun.</p>
+                    <p>Printed using high-impact, industrial PETG plastic paired with Type-304 marine-grade stainless steel hardware. Engineered to withstand intense sun, rain, and cold.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="install" class="section container">
+    <section id="installation" class="section">
+        <div class="container">
             <div class="text-center reveal">
-                <h2 class="story-title">Installation Guide</h2>
-                <p style="color: var(--text-muted); font-size: 1.2rem;">Ready in 15 minutes. All hardware included.</p>
+                <h2 class="text-gradient">Deployment Protocol</h2>
+                <p style="max-width: 600px; margin: 0 auto;">No heavy tools required. Secure your harvest in under 15 minutes.</p>
             </div>
 
-            <div class="step-container">
-                <div class="step-card reveal">
-                    <div class="step-number">0</div>
+            <div class="glass-panel steps-container">
+                
+                <div class="step-row reveal">
+                    <div class="step-number-container">0</div>
                     <div class="step-content">
                         <h3>Inventory Your Kit</h3>
-                        <p style="color: var(--text-muted); margin-top: 0.5rem;">6 Standard Plates, 2 Hook Plates, 16 Bolts/Nuts, 32 Washers, Metal Base Sheet, and Tape.</p>
-                    </div>
-                    <div class="step-img-group">
-                        <img src="static/list.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <p>Before beginning, lay out all parts. Your kit includes: 6 Standard Plates, 2 Hook Anchor Plates, 16 Stainless Bolts/Nuts, 32 Washers, 1 Galvanized Metal Base Sheet, and 1 Roll of Heavy-Duty Packing Tape.</p>
+                        <div class="step-images">
+                            <img src="list.jpg" class="step-img" onclick="openModal(this.src)" alt="Parts list" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Elist.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
                 </div>
 
-                <div class="step-card reveal">
-                    <div class="step-number">1</div>
+                <hr style="border: 0; height: 1px; background: var(--glass-border); margin-bottom: var(--spacing-lg);">
+
+                <div class="step-row reveal">
+                    <div class="step-number-container">1</div>
                     <div class="step-content">
-                        <h3>Wrap the Base</h3>
-                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Wrap the metal sheet around the trunk at your desired height (at least 4ft up). Seal the bottom edge tightly against the bark with tape.</p>
-                    </div>
-                    <div class="step-img-group">
-                        <img src="static/bottom.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
-                        <img src="static/tape.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <h3>Establish the Foundation</h3>
+                        <p>Determine the optimal height (minimum 4 feet from ground). Wrap the galvanized metal sheet loosely upward around the trunk. Seal the bottom-most edge tightly against the bark using 3 sequential layers of the provided tape.</p>
+                        <div class="step-images">
+                            <img src="bottom.jpg" class="step-img" onclick="openModal(this.src)" alt="Metal sheet base" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Ebottom.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="tape.jpg" class="step-img" onclick="openModal(this.src)" alt="Taping the sheet" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Etape.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
                 </div>
 
-                <div class="step-card reveal">
-                    <div class="step-number">2</div>
+                <hr style="border: 0; height: 1px; background: var(--glass-border); margin-bottom: var(--spacing-lg);">
+
+                <div class="step-row reveal">
+                    <div class="step-number-container">2</div>
                     <div class="step-content">
-                        <h3>Set the Anchor Plates</h3>
-                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Hang the 2 hook plates over the top of the metal sheet, positioned exactly 180 degrees apart.</p>
-                    </div>
-                    <div class="step-img-group">
-                        <img src="static/hook1.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
-                        <img src="static/hook2.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <h3>Anchor Plate Seating</h3>
+                        <p>Locate the 2 primary anchor plates featuring internal hooks. Secure the hooks directly over the top edge of the taped metal sheet. Position them exactly 180 degrees apart (opposite sides of the trunk) to balance the load.</p>
+                        <div class="step-images">
+                            <img src="hook1.jpg" class="step-img" onclick="openModal(this.src)" alt="Hook placement 1" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Ehook1.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="hook2.jpg" class="step-img" onclick="openModal(this.src)" alt="Hook placement 2" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Ehook2.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
                 </div>
 
-                <div class="step-card reveal">
-                    <div class="step-number">3</div>
+                <hr style="border: 0; height: 1px; background: var(--glass-border); margin-bottom: var(--spacing-lg);">
+
+                <div class="step-row reveal">
+                    <div class="step-number-container">3</div>
                     <div class="step-content">
                         <h3>Interlock & Torque</h3>
-                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Attach standard plates to the hooks. <span style="color:var(--accent-color); font-weight:bold;">Ensure the 'U' slots face each other.</span> Bolt together, filling gaps until the ring is complete and rigid.</p>
-                    </div>
-                    <div class="step-img-group">
-                        <img src="static/side1.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
-                        <img src="static/side2.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <p>Attach standard plates to the hooks using 2 bolts per hole. <strong>Crucial:</strong> Ensure the "U" shaped slot on each side plate faces the opposing side's "U" hole. Hardware stack: Bolt → Washer → Plates → Washer → Nut.</p>
+                        <div class="step-images">
+                            <img src="side1.jpg" class="step-img" onclick="openModal(this.src)" alt="Side assembly" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Eside1.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="side2.jpg" class="step-img" onclick="openModal(this.src)" alt="Side detail" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Eside2.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
                 </div>
+
+                <hr style="border: 0; height: 1px; background: var(--glass-border); margin-bottom: var(--spacing-lg);">
+
+                <div class="step-row reveal">
+                    <div class="step-number-container">4</div>
+                    <div class="step-content">
+                        <h3>Complete the Radial Barrier</h3>
+                        <p>Bridge the remaining gaps with the final middle plates to complete the 360-degree ring. Apply final torque to all stainless steel nuts using a wrench or pliers to achieve a rigid, monolithic structure.</p>
+                        <div class="step-images">
+                            <img src="middle.jpg" class="step-img" onclick="openModal(this.src)" alt="Middle gap assembly" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22rgba(255,255,255,0.05)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22rgba(255,255,255,0.3)%22%3Emiddle.jpg%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center reveal" style="margin-top: var(--spacing-xl);">
+                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn btn-solid" style="padding: 20px 48px; font-size: 1.25rem;">Secure Your Kit Today</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="text-center reveal">
+                <h2 class="text-gradient">Frequently Asked Questions</h2>
             </div>
             
-            <div class="text-center reveal" style="margin-top: 4rem;">
-                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn-primary" style="padding: 1.5rem 4rem; font-size: 1.3rem;">Order Now — Free Local Shipping</a>
+            <div class="glass-panel faq-container reveal">
+                <div id="faq-list"></div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section container">
+    <section class="section reviews-section">
+        <div class="container">
             <div class="text-center reveal">
-                <h2 class="story-title">Berkeley Neighbors Love It</h2>
+                <h2 class="text-gradient">Berkeley Neighbors Love It</h2>
+                <p>Real results from local backyards.</p>
             </div>
 
-            <div class="glass-card reveal" style="max-width: 600px; margin: 3rem auto;">
-                <div id="thanksMsg" style="display:none; text-align:center; color: var(--accent-color); font-weight:bold; margin-bottom: 2rem; font-size: 1.2rem;">
-                    Thanks for supporting my project! Your review is posted locally.
+            <div class="glass-panel review-form-container reveal">
+                <div id="review-success" class="success-msg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px; display:block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Review posted successfully to local session! Thank you!
                 </div>
-                <form id="revForm" onsubmit="handleReview(event)">
-                    <h3 style="margin-bottom: 1.5rem;">Leave a Review</h3>
-                    <input type="text" id="rName" class="form-input" placeholder="Your Name" required>
-                    <select id="rStars" class="form-input">
-                        <option value="5">★★★★★ (5 Stars)</option>
-                        <option value="4">★★★★☆ (4 Stars)</option>
-                    </select>
-                    <textarea id="rText" class="form-input" placeholder="How did it work for your trees?" rows="3" required></textarea>
-                    <button type="submit" class="btn-primary" style="width:100%;">Post Review</button>
+                
+                <form id="review-form">
+                    <h3 style="margin-bottom: var(--spacing-sm);">Leave a Review</h3>
+                    <div class="form-group">
+                        <input type="text" id="rev-name" class="form-input" placeholder="Your Name (e.g. Mark T.)" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="rev-stars" class="form-input" style="cursor: pointer;">
+                            <option value="5">★★★★★ (5 Stars - Flawless)</option>
+                            <option value="4">★★★★☆ (4 Stars - Great)</option>
+                            <option value="3">★★★☆☆ (3 Stars - Okay)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="rev-text" class="form-input" placeholder="How did it work for your trees?" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-solid" style="width: 100%;">Post Review</button>
                 </form>
             </div>
 
-            <div class="review-grid" id="revFeed">
-                <div class="review-card reveal">
-                    <div class="stars">★★★★★</div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"Jaap's design is brilliant. Snapped together easily and the 3D printed parts feel indestructible. Saved my avocado tree!"</p>
-                    <h4 style="font-size: 0.9rem;">— Mark T., Berkeley</h4>
+            <div class="review-grid" id="review-feed">
                 </div>
-                <div class="review-card reveal">
-                    <div class="stars">★★★★★</div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"Love supporting local kids doing cool engineering. The downward angle completely confuses the squirrels. Highly recommend."</p>
-                    <h4 style="font-size: 0.9rem;">— Sarah J., Berkeley</h4>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="logo" style="margin-bottom: var(--spacing-sm);">
+                        <svg class="logo-svg" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        Stop Squirrel Climb
+                    </a>
+                    <p style="font-size: 0.875rem;">Engineered, prototyped, and 3D printed with precision in Berkeley, California.</p>
+                </div>
+                <div>
+                    <h4 style="color: #fff; margin-bottom: var(--spacing-sm);">Navigation</h4>
+                    <a href="#story" class="footer-link">The Story</a>
+                    <a href="#engineering" class="footer-link">Design & Engineering</a>
+                    <a href="#installation" class="footer-link">Installation Guide</a>
+                </div>
+                <div>
+                    <h4 style="color: #fff; margin-bottom: var(--spacing-sm);">Support</h4>
+                    <a href="mailto:stopsquirrelclimb@gmail.com" class="footer-link">stopsquirrelclimb@gmail.com</a>
+                    <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="footer-link">Stripe Checkout Help</a>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer style="border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; margin-top: 4rem;">
-        <p style="color: var(--text-muted); font-weight: 500;">&copy; 2026 Stop Squirrel Climb. Designed and 3D Printed in Berkeley, CA.</p>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stop Squirrel Climb. All rights reserved. A personal local project.</p>
+            </div>
+        </div>
     </footer>
 
-    <div id="chat-bubble" onclick="alert('Email me at stopsquirrelclimb@gmail.com with any questions!')">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <div id="clicky-container">
+        <a title="Web Analytics" href="https://clicky.com/101498866">
+            <img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" />
+        </a>
+    </div>
+    <script async data-id="101498866" src="//static.getclicky.com/js"></script>
+
+    <div id="img-modal" onclick="closeModal()">
+        <img id="modal-image" src="" alt="Expanded View">
     </div>
 
+    <a id="support-bubble" href="mailto:stopsquirrelclimb@gmail.com" title="Email Support">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+
     <script>
-        // Progress Bar & Nav Blur
-        window.onscroll = () => {
-            let winScroll = document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progressBar").style.width = (winScroll / height) * 100 + "%";
-            
-            const nav = document.getElementById('nav');
+        // --- SCROLL PROGRESS & NAVBAR ---
+        const progressBar = document.getElementById('scroll-progress');
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+
             if (winScroll > 50) {
-                nav.style.padding = "0.5rem 0";
-                nav.style.boxShadow = "var(--shadow-sm)";
+                navbar.classList.add('scrolled');
             } else {
-                nav.style.padding = "1rem 0";
-                nav.style.boxShadow = "none";
+                navbar.classList.remove('scrolled');
             }
-        };
+        });
 
-        // Scroll Reveal
-        const observer = new IntersectionObserver((entries) => {
+        // --- INTERSECTION OBSERVER FOR REVEAL ANIMATIONS ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
             });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-        // Slider Logic
-        const slider = document.getElementById('slider-range');
-        const beforeImg = document.getElementById('before-img');
-        const sliderWrapper = document.getElementById('slider');
+        revealElements.forEach(el => revealObserver.observe(el));
 
-        slider.addEventListener('input', (e) => beforeImg.style.width = e.target.value + '%');
-        sliderWrapper.addEventListener('mousemove', (e) => {
-            const rect = sliderWrapper.getBoundingClientRect();
-            beforeImg.style.width = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)) + '%';
-        });
-        sliderWrapper.addEventListener('mouseleave', () => {
-            beforeImg.style.transition = 'width 0.5s ease-out';
-            beforeImg.style.width = '50%';
-            setTimeout(() => beforeImg.style.transition = 'none', 500);
+        // --- BEFORE/AFTER SLIDER LOGIC ---
+        const sliderInput = document.getElementById('slider-range');
+        const sliderBeforeImg = document.getElementById('slider-before');
+        const sliderBox = document.getElementById('slider-box');
+
+        sliderInput.addEventListener('input', (e) => {
+            sliderBeforeImg.style.width = e.target.value + '%';
         });
 
-        // Theme Toggle
-        document.getElementById('theme-toggle').onclick = () => {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-            document.getElementById('theme-toggle').innerText = icon;
-        };
+        sliderBox.addEventListener('mousemove', (e) => {
+            const rect = sliderBox.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const percentage = (x / rect.width) * 100;
+            sliderBeforeImg.style.width = percentage + '%';
+            sliderInput.value = percentage;
+        });
 
-        // Modal
+        sliderBox.addEventListener('mouseleave', () => {
+            sliderBeforeImg.style.transition = 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            sliderBeforeImg.style.width = '50%';
+            sliderInput.value = 50;
+            setTimeout(() => {
+                sliderBeforeImg.style.transition = 'none';
+            }, 600);
+        });
+
+        // --- IMAGE MODAL ---
+        const modal = document.getElementById('img-modal');
+        const modalImg = document.getElementById('modal-image');
+
         function openModal(src) {
-            document.getElementById('modalImg').src = src;
-            document.getElementById('modal').style.display = 'flex';
+            modalImg.src = src;
+            modal.style.display = 'flex';
+            // Force reflow
+            void modal.offsetWidth;
+            modal.classList.add('visible');
         }
 
-        // Reviews (LocalStorage)
-        function handleReview(e) {
-            e.preventDefault();
-            const name = document.getElementById('rName').value;
-            const text = document.getElementById('rText').value;
-            const stars = parseInt(document.getElementById('rStars').value);
-            
-            const rev = { name, text, stars };
-            let saved = JSON.parse(localStorage.getItem('ssc_revs')) || [];
-            saved.unshift(rev);
-            localStorage.setItem('ssc_revs', JSON.stringify(saved));
-            
-            document.getElementById('revForm').style.display = 'none';
-            document.getElementById('thanksMsg').style.display = 'block';
-            confetti({ particleCount: 150, spread: 70, colors: ['#FF6B6B', '#FF8E53'] });
-            
-            renderReview(rev, true);
+        function closeModal() {
+            modal.classList.remove('visible');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         }
 
-        function renderReview(r, top) {
-            const html = `
-                <div class="review-card reveal active" style="border-color: var(--accent-color);">
-                    <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"${r.text}"</p>
-                    <h4 style="font-size: 0.9rem;">— ${r.name}, Berkeley</h4>
+        // --- FAQ DATA & GENERATION ---
+        const faqData = [
+            {
+                q: "Will the galvanized sheet harm the tree's bark?",
+                a: "No. The foundation sheet acts as a protective barrier. It distributes the pressure of the mounting hooks evenly, ensuring the sensitive cambium layer underneath the bark is protected from mechanical pinching."
+            },
+            {
+                q: "What happens as the tree grows over the years?",
+                a: "The system is modular! As the trunk's diameter expands, you can simply remove the tape from the metal base sheet to let it uncoil slightly, and add extra interlocking plates to the main barrier to increase its circumference."
+            },
+            {
+                q: "Does this work for rats and raccoons?",
+                a: "Yes. While specifically geometrically angled to defeat the jumping and climbing mechanics of squirrels, the slick PETG plastic and severe downward angle are highly effective against rats, raccoons, and cats."
+            },
+            {
+                q: "Can squirrels jump over it from a fence?",
+                a: "This barrier stops 100% of ground-up climbing. However, squirrels can jump horizontally up to 8 feet. For total protection, ensure the canopy of your tree is pruned at least 8 feet away from fences, roofs, or other unprotected trees."
+            },
+            {
+                q: "Is the plastic weather resistant?",
+                a: "Absolutely. I print these using high-impact PETG plastic, which is highly UV resistant and thermally stable. It will survive hot summer sun and freezing rain without becoming brittle, and the Type-304 stainless steel hardware will never rust."
+            }
+        ];
+
+        const faqContainer = document.getElementById('faq-list');
+        faqData.forEach((item, index) => {
+            const faqHtml = `
+                <div class="faq-item" style="border-bottom: ${index === faqData.length - 1 ? 'none' : '1px solid var(--glass-border)'}">
+                    <div class="faq-question">
+                        ${item.q}
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p style="padding-top: 10px; margin-bottom: 0;">${item.a}</p>
+                    </div>
                 </div>
             `;
-            const feed = document.getElementById('revFeed');
-            top ? feed.insertAdjacentHTML('afterbegin', html) : feed.insertAdjacentHTML('beforeend', html);
+            faqContainer.insertAdjacentHTML('beforeend', faqHtml);
+        });
+
+        // FAQ Toggle Logic
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // --- REVIEWS DATA & LOCAL STORAGE ---
+        const defaultReviews = [
+            {
+                name: "Marcus T.",
+                stars: 5,
+                text: "Jaap's design is brilliant. Snapped together easily and the 3D printed parts feel indestructible. Saved my avocado tree!"
+            },
+            {
+                name: "Sarah J.",
+                stars: 5,
+                text: "Love supporting local kids doing cool engineering. The downward angle completely confuses the squirrels. Highly recommend."
+            },
+            {
+                name: "David R.",
+                stars: 4,
+                text: "Works exactly as advertised. Dropped a nut in the grass during install, but otherwise flawless. My bird feeder is finally just for birds."
+            }
+        ];
+
+        const STORAGE_KEY = 'ssc_local_reviews_v2';
+
+        function getReviews() {
+            const local = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            return [...local, ...defaultReviews];
         }
 
-        window.onload = () => {
-            let saved = JSON.parse(localStorage.getItem('ssc_revs')) || [];
-            if(saved.length > 0) {
-                document.getElementById('revForm').style.display = 'none';
-                document.getElementById('thanksMsg').style.display = 'block';
-                saved.reverse().forEach(r => renderReview(r, true));
-            }
-        };
+        function renderReviews() {
+            const feed = document.getElementById('review-feed');
+            feed.innerHTML = '';
+            const allReviews = getReviews();
+            
+            allReviews.forEach((r, idx) => {
+                const starsHtml = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+                const initial = r.name.charAt(0).toUpperCase();
+                
+                const html = `
+                    <div class="glass-panel review-card reveal ${idx < 3 ? 'active' : ''}">
+                        <div>
+                            <div class="stars">${starsHtml}</div>
+                            <p class="review-text">"${r.text}"</p>
+                        </div>
+                        <div class="review-author">
+                            <div class="author-initial">${initial}</div>
+                            <div>
+                                <h4 style="font-family: var(--font-main); font-size: 1rem; color: #fff; margin:0;">${r.name}</h4>
+                                <p style="font-size: 0.8rem; margin:0; color: var(--text-tertiary);">Berkeley Local</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                feed.insertAdjacentHTML('beforeend', html);
+            });
+        }
 
-        // Weather Easter Egg
-        document.getElementById('weather-egg').onclick = (e) => {
+        // Handle Review Submission
+        document.getElementById('review-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('rev-name').value;
+            const text = document.getElementById('rev-text').value;
+            const stars = parseInt(document.getElementById('rev-stars').value);
+            
+            const newReview = { name, text, stars };
+            
+            const local = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            local.unshift(newReview);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(local));
+            
+            document.getElementById('review-form').style.display = 'none';
+            document.getElementById('review-success').style.display = 'block';
+            
+            // Trigger Confetti
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#00ff66', '#0088ff', '#ffffff']
+            });
+            
+            renderReviews();
+            
+            // Animate new review
+            setTimeout(() => {
+                document.querySelector('.review-card').classList.add('active');
+            }, 100);
+        });
+
+        // Initialize Reviews
+        renderReviews();
+
+        // --- WEATHER EASTER EGG ---
+        document.getElementById('weather-egg').addEventListener('click', (e) => {
             const rect = e.target.getBoundingClientRect();
-            for(let i=0; i<30; i++) {
+            
+            for(let i=0; i<40; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
-                    el.className = 'drip';
-                    el.style.left = (rect.left - 50 + Math.random() * 100) + 'px';
-                    el.style.top = rect.top + 'px';
-                    el.innerHTML = Math.random() > 0.8 ? '🐿️' : '💧';
+                    const isSquirrel = Math.random() > 0.85;
                     
-                    el.animate([
-                        { transform: 'translateY(0)', opacity: 1 },
-                        { transform: `translateY(100vh) rotate(${Math.random()*360}deg)`, opacity: 0 }
-                    ], { duration: 1500, easing: 'ease-in' });
+                    el.style.position = 'fixed';
+                    el.style.left = (rect.left - 100 + Math.random() * 200) + 'px';
+                    el.style.top = rect.top + 'px';
+                    el.style.fontSize = isSquirrel ? '24px' : '16px';
+                    el.style.zIndex = '9999';
+                    el.style.pointerEvents = 'none';
+                    el.innerHTML = isSquirrel ? '🐿️' : '💧';
                     
                     document.body.appendChild(el);
-                    setTimeout(() => el.remove(), 1500);
-                }, i * 50);
+                    
+                    el.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(100vh) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                    ], { 
+                        duration: 1000 + Math.random() * 1000, 
+                        easing: 'ease-in' 
+                    });
+                    
+                    setTimeout(() => el.remove(), 2000);
+                }, i * 60);
             }
-        };
+        });
+
+        // --- MOUSE PARALLAX ON BLOBS ---
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            gsap.to('.blob-red', { duration: 2, x: mouseX * 100, y: mouseY * 100, ease: 'power2.out' });
+            gsap.to('.blob-blue', { duration: 2, x: mouseX * -120, y: mouseY * -120, ease: 'power2.out' });
+            gsap.to('.blob-green', { duration: 2, x: mouseX * 80, y: mouseY * -80, ease: 'power2.out' });
+        });
     </script>
 </body>
 </html>
