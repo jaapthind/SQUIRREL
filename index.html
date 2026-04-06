@@ -3,887 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stop Squirrel Climb | Advanced Arboricultural & Feeder Protection</title>
-    <meta name="description" content="The premier modular, interlocking squirrel mitigation system for fruit trees, nut trees, and structural poles. Engineered for durability and humane deterrence.">
+    <title>Stop Squirrel Climb | Premium Tree Protection</title>
     <link rel="icon" type="image/png" href="static/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-        :root { 
-            --primary: #2563eb; 
-            --primary-hover: #1d4ed8;
-            --accent: #f59e0b;
-            --accent-hover: #d97706;
-            --surface-color: #ffffff;
-            --surface-alt: #f8fafc;
-            --surface-muted: #f1f5f9;
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --success: #10b981;
-            --danger: #ef4444;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --radius-md: 0.5rem;
-            --radius-lg: 1rem;
-            --radius-xl: 1.5rem;
-            --nav-bg: rgba(255, 255, 255, 0.9);
+            --border: #e2e8f0;
+            --accent-gradient: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            --accent-color: #FF6B6B;
+            --nav-glass: rgba(255, 255, 255, 0.8);
+            --card-glass: rgba(255, 255, 255, 0.9);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --radius-lg: 24px;
         }
 
-        body.dark-mode { 
-            --primary: #3b82f6; 
-            --primary-hover: #60a5fa;
-            --accent: #fbbf24;
-            --accent-hover: #fcd34d;
-            --surface-color: #0f172a;
-            --surface-alt: #1e293b;
-            --surface-muted: #334155;
+        body.dark-mode {
+            --bg: #0b1120;
+            --bg-secondary: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #334155;
-            --nav-bg: rgba(15, 23, 42, 0.9);
+            --border: #334155;
+            --nav-glass: rgba(11, 17, 32, 0.8);
+            --card-glass: rgba(30, 41, 59, 0.9);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND BLOBS --- */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #FF6B6B; border-radius: 50%; }
+        .blob-2 { top: 20%; right: -10%; width: 400px; height: 400px; background: #FF8E53; border-radius: 50%; animation-delay: -5s; }
         
-        * { box-sizing: border-box; }
-        
-        body { 
-            margin: 0; 
-            background-color: var(--surface-alt); 
-            color: var(--text-main); 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            transition: background-color 0.3s ease, color 0.3s ease; 
-            scroll-behavior: smooth; 
-            overflow-x: hidden; 
-            line-height: 1.7; 
-            -webkit-font-smoothing: antialiased;
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
         }
 
         /* --- NAVIGATION --- */
-        #navbar {
+        nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 2500;
-            display: flex;
-            justify-content: center;
-            padding: 16px 0;
-            transition: all 0.3s ease;
+            top: 0; width: 100%;
+            background: var(--nav-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s;
         }
-        .nav-content {
-            width: 92%;
+        .nav-container {
             max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .nav-logo {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--text-main); }
-        .nav-buy-btn {
-            background: var(--primary);
-            color: #ffffff;
-            padding: 10px 24px;
-            border-radius: 999px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-md);
-        }
-        .nav-buy-btn:hover {
-            transform: translateY(-2px);
-            background: var(--primary-hover);
-            box-shadow: var(--shadow-lg);
-            color: #ffffff;
-        }
-
-        /* --- ANIMATIONS --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .fade-in { animation: fadeIn 1s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .logo { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent-color); }
+        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
         
-        .interactive-element { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; cursor: pointer; }
-        .interactive-element:hover { transform: translateY(-4px) scale(1.02); }
-        .interactive-element:active { transform: translateY(0) scale(0.98); }
-
-        /* --- LAYOUT --- */
-        .container {
-            width: 92%;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .section-padding { padding: 120px 0; }
-        .divider { height: 1px; background: var(--border-color); width: 100%; margin: 60px 0; }
-
-        /* --- TYPOGRAPHY --- */
-        h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 24px; color: var(--text-main); }
-        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin-top: 0; margin-bottom: 24px; color: var(--text-main); line-height: 1.2; }
-        h3 { font-size: 1.25rem; font-weight: 700; margin-top: 0; margin-bottom: 12px; color: var(--text-main); }
-        .subtitle { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--text-muted); margin-top: 0; margin-bottom: 40px; font-weight: 400; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; }
-        .text-center { text-align: center; }
-
-        /* --- HERO SECTION --- */
-        .hero { padding-top: 160px; padding-bottom: 80px; text-align: center; position: relative; }
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--surface-color); border-radius: 999px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 30px; color: var(--text-main); }
-        .pulse-dot { height: 8px; width: 8px; background-color: var(--success); border-radius: 50%; display: inline-block; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
-        
-        .cta-button { 
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
             display: inline-block;
-            background: var(--primary); 
-            color: #ffffff; 
-            padding: 20px 48px; 
-            border-radius: var(--radius-lg); 
-            font-weight: 700; 
-            font-size: 1.2rem; 
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s, box-shadow 0.3s;
             border: none;
             cursor: pointer;
-            width: 100%;
-            max-width: 400px;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
         }
-        .cta-button:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-            background: var(--primary-hover);
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(255, 107, 107, 0.4);
         }
-        .secure-checkout { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); margin-top: 16px; }
 
-        /* --- BEFORE / AFTER SLIDER --- */
-        .slider-wrapper { padding: 12px; background: var(--surface-color); border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); margin-top: 60px; margin-bottom: 60px; }
-        .slider-container { position: relative; width: 100%; height: 500px; overflow: hidden; border-radius: var(--radius-lg); background: var(--surface-muted); cursor: crosshair; }
-        .img-after { width: 100%; height: 100%; background-image: url('static/no.jpg'); background-size: cover; background-position: center; }
-        .img-before { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background-image: url('static/before.jpg'); background-size: cover; background-position: left; border-right: 4px solid #ffffff; box-shadow: 10px 0 20px rgba(0,0,0,0.3); pointer-events: none; }
-        #slider-range { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; outline: none; margin: 0; top: 0; left: 0; z-index: 10; cursor: ew-resize; }
-        #slider-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 6px; height: 500px; background: #ffffff; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        #slider-range::-moz-range-thumb { width: 6px; height: 500px; background: #ffffff; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .slider-label { position: absolute; bottom: 24px; background: rgba(15, 23, 42, 0.8); color: #ffffff; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 0.85rem; pointer-events: none; letter-spacing: 0.5px; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1); }
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 8rem 0; }
+        
+        /* --- HERO --- */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding-top: 5rem; }
+        .hero-badge {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+        .hero-badge .dot { width: 8px; height: 8px; background: var(--accent-color); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); } }
+        
+        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; }
 
-        /* --- TRUST METRICS --- */
-        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin: 40px 0; }
-        .metric-card { background: var(--surface-color); padding: 32px 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; box-shadow: var(--shadow-sm); }
-        .metric-icon { width: 48px; height: 48px; margin: 0 auto 16px; color: var(--primary); }
-        .metric-title { font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-        .metric-value { font-weight: 900; font-size: 1.5rem; color: var(--text-main); }
+        /* --- STORY SECTION --- */
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        @media(max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .story-img { width: 100%; border-radius: var(--radius-lg); object-fit: cover; border: 1px solid var(--border); }
+        .story-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* --- FEATURES GRID --- */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 48px; }
-        .feature-card { background: var(--surface-color); padding: 40px; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
-        .feature-card:hover::before { transform: scaleX(1); }
-        .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-color); }
-        .feature-icon-wrapper { width: 56px; height: 56px; background: var(--surface-muted); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--primary); }
+        /* --- BEFORE/AFTER SLIDER --- */
+        .slider-wrapper { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-lg); position: relative; height: 500px; width: 100%; margin: 4rem 0; cursor: ew-resize; }
+        .img-after { width: 100%; height: 100%; background: url('static/no.jpg') center/cover; }
+        .img-before { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: url('static/before.jpg') left/cover; border-right: 4px solid #fff; box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
+        #slider-range { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: ew-resize; z-index: 10; }
+        .slider-pill { position: absolute; bottom: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 16px; border-radius: 99px; font-weight: 600; font-size: 0.85rem; pointer-events: none; backdrop-filter: blur(4px); }
 
-        /* --- ENGINEERING & SCIENCE SECTION --- */
-        .engineering-section { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin: 80px 0; }
-        @media (max-width: 768px) { .engineering-section { grid-template-columns: 1fr; } }
-        .engineering-image { width: 100%; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); background: var(--surface-color); padding: 8px; }
-        .engineering-image img { width: 100%; height: auto; border-radius: var(--radius-lg); display: block; }
-        .tech-list { list-style: none; padding: 0; margin: 32px 0 0 0; }
-        .tech-list li { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
-        .tech-list-icon { flex-shrink: 0; width: 24px; height: 24px; color: var(--success); margin-top: 2px; }
+        /* --- GRID LAYOUTS --- */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .feature-box { background: var(--card-glass); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); transition: transform 0.3s; }
+        .feature-box:hover { transform: translateY(-5px); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
 
-        /* --- TECHNICAL SPECS --- */
-        .specs-container { background: var(--surface-color); border-radius: var(--radius-xl); border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-md); margin-top: 48px; }
-        .specs-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .specs-table th, .specs-table td { padding: 24px; border-bottom: 1px solid var(--border-color); }
-        .specs-table th { background: var(--surface-muted); width: 35%; font-weight: 600; color: var(--text-main); }
-        .specs-table td { color: var(--text-muted); }
-        .specs-table tr:last-child td, .specs-table tr:last-child th { border-bottom: none; }
-        .specs-table tr:hover td { background: var(--surface-alt); }
-
-        /* --- INSTALLATION TIMELINE --- */
-        .timeline { position: relative; max-width: 800px; margin: 60px auto 0; padding-left: 40px; }
-        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border-color); }
-        .timeline-step { position: relative; margin-bottom: 60px; }
-        .timeline-step:last-child { margin-bottom: 0; }
-        .timeline-marker { position: absolute; left: -56px; top: 0; width: 32px; height: 32px; background: var(--primary); border: 4px solid var(--surface-alt); border-radius: 50%; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; z-index: 1; }
-        .timeline-content { background: var(--surface-color); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
-        .timeline-image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 24px; }
-        .timeline-img { width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
-
-        /* --- FAQ --- */
-        .faq-wrapper { max-width: 800px; margin: 48px auto 0; }
-        .faq-item { background: var(--surface-color); margin-bottom: 16px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; transition: all 0.3s ease; }
-        .faq-question { padding: 24px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; color: var(--text-main); }
-        .faq-answer { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease; color: var(--text-muted); line-height: 1.7; }
-        .faq-item.active { border-color: var(--primary); box-shadow: var(--shadow-md); }
-        .faq-item.active .faq-answer { padding: 0 24px 24px 24px; max-height: 500px; }
-        .faq-icon { transition: transform 0.3s ease; color: var(--text-muted); }
-        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--primary); }
+        /* --- INSTALLATION STEPS --- */
+        .step-container { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
+        .step-card { display: flex; gap: 2rem; background: var(--card-glass); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); align-items: center; }
+        @media(max-width: 768px) { .step-card { flex-direction: column; text-align: center; } }
+        .step-number { font-size: 4rem; font-weight: 800; color: var(--accent-color); opacity: 0.3; line-height: 1; }
+        .step-content { flex: 1; }
+        .step-img-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .step-img-group img { width: 150px; border-radius: 12px; border: 1px solid var(--border); transition: transform 0.3s; cursor: zoom-in; }
+        .step-img-group img:hover { transform: scale(1.05); }
 
         /* --- REVIEWS --- */
-        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
-        .review-card { background: var(--surface-color); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; height: 100%; }
-        .review-stars { color: var(--accent); margin-bottom: 16px; font-size: 1.2rem; letter-spacing: 2px; }
-        .review-text { color: var(--text-muted); flex-grow: 1; font-style: italic; margin-bottom: 24px; }
-        .review-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; }
-        .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-muted); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--text-muted); }
-        .author-info h4 { margin: 0; font-size: 0.95rem; color: var(--text-main); }
-        .author-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .review-card { background: var(--bg-secondary); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+        .stars { color: #F59E0B; letter-spacing: 2px; margin-bottom: 1rem; font-size: 1.2rem; }
+        .form-input { width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-family: inherit; margin-bottom: 1rem; }
+
+        /* --- UTILS --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .text-center { text-align: center; }
         
-        .review-form-container { background: var(--surface-color); padding: 40px; border-radius: var(--radius-xl); border: 1px solid var(--border-color); margin-bottom: 48px; box-shadow: var(--shadow-md); }
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); font-size: 0.9rem; }
-        .form-input { width: 100%; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--surface-alt); color: var(--text-main); font-family: inherit; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
-        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .form-submit { width: 100%; background: var(--text-main); color: var(--surface-color); padding: 16px; border-radius: var(--radius-md); border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
-        .form-submit:hover { background: var(--text-muted); }
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; cursor: zoom-out; backdrop-filter: blur(10px); }
+        #modal img { max-width: 90%; max-height: 90vh; border-radius: 16px; border: 2px solid #333; }
 
-        /* --- FOOTER --- */
-        .footer { background: var(--surface-color); border-top: 1px solid var(--border-color); padding: 80px 0 40px; margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 48px; margin-bottom: 60px; }
-        .footer-col h4 { font-size: 1.1rem; margin-top: 0; margin-bottom: 24px; color: var(--text-main); }
-        .footer-col p { color: var(--text-muted); font-size: 0.95rem; }
-        .footer-link { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 12px; font-size: 0.95rem; transition: color 0.2s; }
-        .footer-link:hover { color: var(--primary); }
-        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.85rem; flex-wrap: wrap; gap: 16px; }
-
-        /* --- UTILITIES --- */
-        #progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--primary); z-index: 3000; transition: width 0.1s ease-out; }
-        #glide-top { position: fixed; bottom: 32px; left: 32px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 50%; width: 48px; height: 48px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 1000; box-shadow: var(--shadow-lg); transition: all 0.3s; color: var(--text-main); }
-        #glide-top:hover { transform: translateY(-4px); border-color: var(--primary); color: var(--primary); }
-        #modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); justify-content: center; align-items: center; padding: 24px; backdrop-filter: blur(8px); cursor: zoom-out; }
-        #modalImg { max-width: 95%; max-height: 90vh; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow-xl); object-fit: contain; }
-
-        /* --- CHAT SUPPORT --- */
-        #chat-bubble { position: fixed; bottom: 32px; right: 32px; width: 64px; height: 64px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); z-index: 1000; color: #ffffff; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        #chat-bubble:hover { transform: scale(1.05) translateY(-4px); }
-        #chat-window { position: fixed; bottom: 112px; right: 32px; width: 360px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; z-index: 1000; }
-        .chat-header { background: var(--primary); color: #ffffff; padding: 20px 24px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .chat-close { cursor: pointer; opacity: 0.8; transition: opacity 0.2s; }
-        .chat-close:hover { opacity: 1; }
-        .chat-body { padding: 24px; }
-        .chat-input-box { width: 100%; padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--surface-alt); color: var(--text-main); outline: none; margin-top: 16px; font-family: inherit; }
-        .chat-input-box:focus { border-color: var(--primary); }
-        .chat-btn { width: 100%; margin-top: 16px; background: var(--primary); color: #ffffff; border: none; padding: 14px; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: background 0.2s; }
-        .chat-btn:hover { background: var(--primary-hover); }
-
-        /* SVGs */
-        svg { display: block; }
+        #chat-bubble { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background: var(--accent-gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); z-index: 1000; transition: transform 0.3s; }
+        #chat-bubble:hover { transform: scale(1.1); }
+        
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-gradient); z-index: 9999; width: 0%; }
+        
+        /* Interactive Easter Egg */
+        .drip { position: fixed; width: 20px; height: 20px; font-size: 20px; pointer-events: none; z-index: 9999; }
     </style>
 </head>
 <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
 
-    <div id="progress-bar"></div>
-
-    <nav id="navbar">
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                ArborShield Pro
+    <nav id="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Stop Squirrel Climb
             </a>
             <div class="nav-links">
-                <a href="#engineering">Engineering</a>
-                <a href="#specifications">Specifications</a>
-                <a href="#installation">Installation</a>
-                <a href="#faq">FAQ</a>
-                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; padding:0; color:var(--text-muted);" title="Toggle Theme">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="nav-buy-btn">Order System</a>
+                <a href="#story">The Story</a>
+                <a href="#design">Design</a>
+                <a href="#install">Install</a>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
             </div>
         </div>
     </nav>
 
-    <button id="glide-top" onclick="window.scrollTo(0,0)" title="Back to Top">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
-    </button>
-    
-    <div id="modal" onclick="this.style.display='none'">
-        <img id="modalImg" src="">
-    </div>
+    <div id="modal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
 
-    <main class="container">
-        <section class="hero reveal">
-            <div class="status-badge fade-in">
-                <span class="pulse-dot"></span> System In Stock & Ready for Dispatch
-            </div>
-            
-            <h1>Advanced Structural Protection for Trees & Poles</h1>
-            <p class="subtitle">The definitive modular mitigation system. Engineered to safely and effectively deter climbing wildlife, protecting harvests, structural assets, and aviary feeders.</p>
-
-            <div class="slider-wrapper reveal">
-                <div class="slider-container" id="comparison-slider">
-                    <div class="img-after"></div>
-                    <div id="before-img" class="img-before"></div>
-                    <input type="range" min="0" max="100" value="50" id="slider-range">
-                    <div class="slider-label" style="left: 24px;">Unprotected Infrastructure</div>
-                    <div class="slider-label" style="right: 24px;">Protected Infrastructure</div>
-                </div>
-            </div>
-
-            <div style="margin-top: 48px; max-width: 450px; margin-inline: auto;">
-                <a class="cta-button" href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank">Deploy System - $64.99</a>
-                <div class="secure-checkout">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Encrypted 256-bit SSL Checkout via Stripe
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    </div>
-                    <div class="metric-title">Deterrence Rate</div>
-                    <div class="metric-value">99.8%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                    </div>
-                    <div class="metric-title">Modular Expansion</div>
-                    <div class="metric-value">Infinite</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    </div>
-                    <div class="metric-title">Installation Time</div>
-                    <div class="metric-value">< 20 Min</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    </div>
-                    <div class="metric-title">Arboricultural Safety</div>
-                    <div class="metric-value">100%</div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-        <section id="engineering" class="engineering-section reveal">
+    <main>
+        <section class="hero container">
             <div>
-                <h2>The Science of Deterrence</h2>
-                <p class="subtitle" style="margin-left: 0; max-width: 100%;">Developed through rigorous iterative prototyping, the system utilizes advanced physics and materials science to safely mitigate climbing.</p>
-                
-                <ul class="tech-list">
-                    <li>
-                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <div>
-                            <h3>Friction Deficit Geometry</h3>
-                            <p style="margin-top: 4px; color: var(--text-muted);">The parabolic curve of the interlocking plates establishes a severe downward angle combined with a micro-polished surface finish, calculating a static friction coefficient that wildlife cannot physically grip.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <div>
-                            <h3>Non-Invasive Cambium Protection</h3>
-                            <p style="margin-top: 4px; color: var(--text-muted);">Traditional baffles require drilling directly into the trunk. Our proprietary wrap-around galvanized foundation sheet distributes radial pressure evenly, safeguarding the tree's phloem and cambium layers from mechanical damage.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <div>
-                            <h3>Dynamic Modular Expansion</h3>
-                            <p style="margin-top: 4px; color: var(--text-muted);">The patent-pending linkage slots allow the circumference of the barrier to scale dynamically. As your agricultural asset grows over the years, the system expands without requiring a full replacement.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="engineering-image interactive-element">
-                <img src="static/before.jpg" alt="Engineering analysis of the system" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22600%22%20viewBox%3D%220%200%20600%20600%22%3E%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22%23f1f5f9%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224px%22%20fill%3D%22%2364748b%22%3ECAD%20Geometry%20Visualization%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                <div class="hero-badge reveal"><span class="dot"></span> Local Project — Ships to Berkeley, CA ONLY</div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">Protect your harvest with <br>precision engineering.</h1>
+                <p class="reveal" style="transition-delay: 0.2s;">An interlocking, modular barrier designed to stop squirrels in their tracks. 3D printed locally in Berkeley.</p>
+                <div class="reveal" style="transition-delay: 0.3s;">
+                    <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn-primary">Order Your Kit — $64.99</a>
+                </div>
             </div>
         </section>
 
-        <section id="specifications" class="reveal section-padding">
-            <div class="text-center">
-                <h2>Technical Specifications</h2>
-                <p class="subtitle">Built to industrial standards for maximum longevity in harsh environmental conditions.</p>
+        <section id="story" class="section container">
+            <div class="story-grid">
+                <div class="glass-card reveal">
+                    <h2 class="story-title">Hi, I'm Jaap.</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">This started as a personal project. My dad was incredibly frustrated because squirrels kept raiding our backyard fruit trees right before the harvest was ready.</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">I wanted to solve the problem for him. Using my 3D printer and CAD software in my bedroom, I designed and prototyped this modular, wrap-around barrier.</p>
+                    <p style="font-size: 1.1rem;">After finding the perfect angle that squirrels simply couldn't grip, our fruit was finally safe. Now, I'm manufacturing these kits to help other families in Berkeley protect their hard work.</p>
+                </div>
+                <div class="reveal" style="position: relative;">
+                    <img src="static/Jaap.jpg" class="story-img" alt="Jaap in the workshop" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22600%22%20viewBox%3D%220%200%20600%20600%22%3E%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22%23f8fafc%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224px%22%20fill%3D%22%2394a3b8%22%20text-anchor%3D%22middle%22%3EJaap%20-%20Creator%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+            </div>
+        </section>
+
+        <section class="section container text-center">
+            <h2 class="story-title reveal">The Results Speak</h2>
+            <p class="reveal" style="color: var(--text-muted); font-size: 1.2rem;">Slide to see the difference a custom barrier makes.</p>
+            
+            <div class="slider-wrapper reveal" id="slider">
+                <div class="img-after"></div>
+                <div id="before-img" class="img-before"></div>
+                <input type="range" min="0" max="100" value="50" id="slider-range">
+                <div class="slider-pill" style="left: 20px;">Unprotected</div>
+                <div class="slider-pill" style="right: 20px;">Protected</div>
+            </div>
+        </section>
+
+        <section id="design" class="section container">
+            <div class="text-center reveal">
+                <h2 class="story-title">Built for the Backyard</h2>
+            </div>
+            <div class="features">
+                <div class="feature-box reveal">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Modular Scaling</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Interlocking plates adapt dynamically. Whether your tree is 3 inches or 10 inches wide, the system wraps and secures tightly.</p>
+                </div>
+                <div class="feature-box reveal">
+                    <div class="feature-icon">🌳</div>
+                    <h3>100% Tree Safe</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">No drilling required. The galvanized foundation sheet distributes pressure, preventing hardware from biting into sensitive bark.</p>
+                </div>
+                <div class="feature-box reveal">
+                    <div class="feature-icon" id="weather-egg" style="cursor: pointer;">☀️</div>
+                    <h3>Weatherproof Build</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Printed using high-impact PETG plastic paired with Type-304 stainless steel hardware. Will not rust, rot, or degrade in the sun.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="install" class="section container">
+            <div class="text-center reveal">
+                <h2 class="story-title">Installation Guide</h2>
+                <p style="color: var(--text-muted); font-size: 1.2rem;">Ready in 15 minutes. All hardware included.</p>
+            </div>
+
+            <div class="step-container">
+                <div class="step-card reveal">
+                    <div class="step-number">0</div>
+                    <div class="step-content">
+                        <h3>Inventory Your Kit</h3>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">6 Standard Plates, 2 Hook Plates, 16 Bolts/Nuts, 32 Washers, Metal Base Sheet, and Tape.</p>
+                    </div>
+                    <div class="step-img-group">
+                        <img src="static/list.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                    </div>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Wrap the Base</h3>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Wrap the metal sheet around the trunk at your desired height (at least 4ft up). Seal the bottom edge tightly against the bark with tape.</p>
+                    </div>
+                    <div class="step-img-group">
+                        <img src="static/bottom.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <img src="static/tape.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                    </div>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Set the Anchor Plates</h3>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Hang the 2 hook plates over the top of the metal sheet, positioned exactly 180 degrees apart.</p>
+                    </div>
+                    <div class="step-img-group">
+                        <img src="static/hook1.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <img src="static/hook2.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                    </div>
+                </div>
+
+                <div class="step-card reveal">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Interlock & Torque</h3>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Attach standard plates to the hooks. <span style="color:var(--accent-color); font-weight:bold;">Ensure the 'U' slots face each other.</span> Bolt together, filling gaps until the ring is complete and rigid.</p>
+                    </div>
+                    <div class="step-img-group">
+                        <img src="static/side1.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                        <img src="static/side2.jpg" onclick="openModal(this.src)" onerror="this.style.display='none'">
+                    </div>
+                </div>
             </div>
             
-            <div class="specs-container">
-                <table class="specs-table">
-                    <tbody>
-                        <tr>
-                            <th>Minimum Operational Diameter</th>
-                            <td>2.5 inches (6.35 cm)</td>
-                        </tr>
-                        <tr>
-                            <th>Maximum Operational Diameter (Base Kit)</th>
-                            <td>10.5 inches (26.67 cm) — Expandable indefinitely with supplementary kits.</td>
-                        </tr>
-                        <tr>
-                            <th>Primary Substrate Material</th>
-                            <td>Industrial Grade UV-Stabilized Polyethylene Terephthalate Glycol (PETG)</td>
-                        </tr>
-                        <tr>
-                            <th>Hardware Alloy Specification</th>
-                            <td>Marine-Grade Type 304 Stainless Steel (100% Rust-proof)</td>
-                        </tr>
-                        <tr>
-                            <th>Foundation Sheet Base</th>
-                            <td>G60 Galvanized Steel Matrix</td>
-                        </tr>
-                        <tr>
-                            <th>Thermal Tolerance Range</th>
-                            <td>-40°F to 150°F (-40°C to 65°C)</td>
-                        </tr>
-                        <tr>
-                            <th>Required Assembly Tools</th>
-                            <td>Standard #2 Phillips Screwdriver, 3/8" Wrench or Pliers</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="text-center reveal" style="margin-top: 4rem;">
+                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="btn-primary" style="padding: 1.5rem 4rem; font-size: 1.3rem;">Order Now — Free Local Shipping</a>
             </div>
         </section>
 
-        <div class="divider"></div>
-        <section id="installation" class="reveal">
-            <div class="text-center">
-                <h2>System Deployment Protocol</h2>
-                <p class="subtitle">Follow these precision steps to ensure maximum structural integrity and deterrence efficacy.</p>
+        <section class="section container">
+            <div class="text-center reveal">
+                <h2 class="story-title">Berkeley Neighbors Love It</h2>
             </div>
 
-            <div class="timeline">
-                <div class="timeline-step reveal">
-                    <div class="timeline-marker">1</div>
-                    <div class="timeline-content">
-                        <h3>Inventory Verification</h3>
-                        <p style="color: var(--text-muted);">Before deployment, verify all components are present on a flat staging surface. Your kit must contain:</p>
-                        <ul style="color: var(--text-muted); margin-top: 12px; padding-left: 20px;">
-                            <li>6x Standard Interlocking Plates</li>
-                            <li>2x Primary Anchor Plates (featuring internal hooks)</li>
-                            <li>16x Type-304 Stainless Bolts</li>
-                            <li>16x Type-304 Stainless Nuts</li>
-                            <li>32x Type-304 Stainless Washers</li>
-                            <li>1x Galvanized Foundation Matrix</li>
-                            <li>1x Roll Heavy-Duty Sealant Tape</li>
-                        </ul>
-                        <div class="timeline-image-grid">
-                            <img src="static/list.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Inventory List" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EComponent%20Inventory%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
+            <div class="glass-card reveal" style="max-width: 600px; margin: 3rem auto;">
+                <div id="thanksMsg" style="display:none; text-align:center; color: var(--accent-color); font-weight:bold; margin-bottom: 2rem; font-size: 1.2rem;">
+                    Thanks for supporting my project! Your review is posted locally.
                 </div>
-
-                <div class="timeline-step reveal">
-                    <div class="timeline-marker">2</div>
-                    <div class="timeline-content">
-                        <h3>Establish the Foundation</h3>
-                        <p style="color: var(--text-muted);">Determine the optimal height for deterrence (minimum 4 feet from ground level). Wrap the galvanized matrix loosely upward around the trunk. The upward spiral prevents water ingress. Seal the bottom-most edge tightly against the trunk using 3 sequential overlapping layers of the provided tape.</p>
-                        <div class="timeline-image-grid">
-                            <img src="static/bottom.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Foundation base" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EFoundation%20Matrix%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/tape.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Tape sealing" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3ETape%20Sealing%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-step reveal">
-                    <div class="timeline-marker">3</div>
-                    <div class="timeline-content">
-                        <h3>Anchor Plate Seating</h3>
-                        <p style="color: var(--text-muted);">Isolate the 2 primary anchor plates. Secure the internal hooks directly over the superior edge of the galvanized matrix. Ensure the plates are positioned at precisely 180 degrees opposing each other to guarantee symmetrical load distribution.</p>
-                        <div class="timeline-image-grid">
-                            <img src="static/hook1.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Hook placement 1" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAnchor%20Detail%201%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/hook2.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Hook placement 2" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAnchor%20Detail%202%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-step reveal">
-                    <div class="timeline-marker">4</div>
-                    <div class="timeline-content">
-                        <h3>Sub-Assembly & Final Torquing</h3>
-                        <p style="color: var(--text-muted);">Attach 2 standard plates to each seated anchor plate. <strong style="color: var(--text-main);">Critical Architecture:</strong> Ensure the "U" shaped slots align inversely to create the slip-plane geometry.</p>
-                        <p style="color: var(--text-muted);">Hardware sequence: Bolt &rarr; Washer &rarr; Plate 1 &rarr; Plate 2 &rarr; Washer &rarr; Nut. Bridge the remaining gaps with the final plates to complete the 360-degree radial barrier. Apply final torque to all nuts to achieve a rigid, monolithic structure.</p>
-                        <div class="timeline-image-grid">
-                            <img src="static/side1.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Assembly side" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAlignment%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/side2.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Final assembly" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3ETorquing%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-        <section id="faq" class="reveal section-padding">
-            <div class="text-center">
-                <h2>Frequently Asked Questions</h2>
-                <p class="subtitle">Comprehensive answers regarding system capabilities and maintenance.</p>
-            </div>
-
-            <div class="faq-wrapper">
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">Will the radial pressure inhibit tree growth? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                    <div class="faq-answer">
-                        <p>Negative. The system is engineered for zero long-term impact on arboricultural health. The foundation matrix distributes load evenly, preventing point-stress on the cambium layer. During annual maintenance, the tape can be detached, allowing the matrix to expand, accommodating secondary radial growth of the trunk.</p>
-                    </div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">What is the efficacy against alternative pest vectors? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                    <div class="faq-answer">
-                        <p>While the geometric vectors were specifically calculated based on the kinesthetics of Sciuridae (squirrels), the severe friction deficit angle acts as a universal deterrent. Field testing confirms exceptionally high prevention rates against Procyonidae (raccoons), Muridae (rats), and feral felines attempting vertical ascents.</p>
-                    </div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">How do I mitigate aerial circumvention? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                    <div class="faq-answer">
-                        <p>The system guarantees terrestrial prevention. However, squirrels are capable of horizontal leaps exceeding 8 feet. To maintain total ecosystem security, ensure the target tree's canopy maintains a minimum 9-foot clearance radius from adjacent structures, fences, or unbaffled canopy systems.</p>
-                    </div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">Is the polymer substrate paintable? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                    <div class="faq-answer">
-                        <p>Yes. For visual integration into specific landscape architectures, the PETG surface can be modified. We advise a light mechanical abrasion (400 grit) followed by the application of an exterior-grade, plastic-bonding aerosol paint (e.g., matte olive or bark-brown).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-        <section class="reveal section-padding">
-            <div class="text-center">
-                <h2>Field Performance Reports</h2>
-                <p class="subtitle">Verified deployment data from agricultural and residential installations.</p>
-            </div>
-
-            <div class="review-grid" id="reviewFeed">
-                <div class="review-card reveal">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">"As a landscape architect, I've specified numerous mitigation systems. The structural integrity and modular expansion capability of this system supersedes traditional sheet-metal cones. Flawless execution on a recent commercial orchard deployment."</div>
-                    <div class="review-author">
-                        <div class="author-avatar">AM</div>
-                        <div class="author-info">
-                            <h4>A. Miller</h4>
-                            <p>Landscape Architect, ASLA</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="review-card reveal">
-                    <div class="review-stars">★★★★★</div>
-                    <div class="review-text">"The cambium protection matrix is what sold me. Traditional baffles require invasive mounting hardware that invites fungal pathogens into the trunk. This system provides total perimeter defense while maintaining absolute biological safety for the specimen."</div>
-                    <div class="review-author">
-                        <div class="author-avatar">TH</div>
-                        <div class="author-info">
-                            <h4>T. Hayes</h4>
-                            <p>Certified Arborist</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="review-card reveal">
-                    <div class="review-stars">★★★★☆</div>
-                    <div class="review-text">"Deployed across three mature fruit-bearing trees. The hardware tolerances are exceptionally tight. Assembly requires minor manual dexterity, but the resulting monolithic structure is entirely impervious to climbing vectors. Highly recommended."</div>
-                    <div class="review-author">
-                        <div class="author-avatar">RD</div>
-                        <div class="author-info">
-                            <h4>R. Davis</h4>
-                            <p>Agricultural Facility Manager</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-form-container reveal" style="margin-top: 60px;">
-                <div id="thankYouMsg" style="display:none; text-align:center; padding: 24px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: var(--radius-md); color: var(--success); margin-bottom: 24px; font-weight: 600;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px; display:block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    Field Report Logged Successfully.
-                </div>
-                
-                <form id="reviewForm" onsubmit="submitLocalReview(event)">
-                    <h3 style="margin-top:0; margin-bottom: 24px;">Submit Field Report</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                        <div class="form-group">
-                            <label class="form-label">Name / Designation</label>
-                            <input type="text" id="revName" class="form-input" placeholder="e.g. J. Smith, Facility Director" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">System Performance Rating</label>
-                            <select id="revRating" class="form-input" style="cursor: pointer;">
-                                <option value="5">Optimal (5 Stars)</option>
-                                <option value="4">Satisfactory (4 Stars)</option>
-                                <option value="3">Nominal (3 Stars)</option>
-                                <option value="2">Sub-Optimal (2 Stars)</option>
-                                <option value="1">Failure (1 Star)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Operational Analysis</label>
-                        <textarea id="revText" class="form-input" placeholder="Detail the deployment parameters and system efficacy..." rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="form-submit">Submit Analysis</button>
+                <form id="revForm" onsubmit="handleReview(event)">
+                    <h3 style="margin-bottom: 1.5rem;">Leave a Review</h3>
+                    <input type="text" id="rName" class="form-input" placeholder="Your Name" required>
+                    <select id="rStars" class="form-input">
+                        <option value="5">★★★★★ (5 Stars)</option>
+                        <option value="4">★★★★☆ (4 Stars)</option>
+                    </select>
+                    <textarea id="rText" class="form-input" placeholder="How did it work for your trees?" rows="3" required></textarea>
+                    <button type="submit" class="btn-primary" style="width:100%;">Post Review</button>
                 </form>
+            </div>
+
+            <div class="review-grid" id="revFeed">
+                <div class="review-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"Jaap's design is brilliant. Snapped together easily and the 3D printed parts feel indestructible. Saved my avocado tree!"</p>
+                    <h4 style="font-size: 0.9rem;">— Mark T., Berkeley</h4>
+                </div>
+                <div class="review-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"Love supporting local kids doing cool engineering. The downward angle completely confuses the squirrels. Highly recommend."</p>
+                    <h4 style="font-size: 0.9rem;">— Sarah J., Berkeley</h4>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>ArborShield Pro Systems</h4>
-                    <p>Engineered mitigation systems for the protection of critical agricultural and structural assets against biological climbing vectors.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Documentation</h4>
-                    <a href="#engineering" class="footer-link">Technical Architecture</a>
-                    <a href="#specifications" class="footer-link">Material Specifications</a>
-                    <a href="#installation" class="footer-link">Deployment Manual</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Compliance & Legal</h4>
-                    <a href="#" class="footer-link">Warranty Information</a>
-                    <a href="#" class="footer-link">Environmental Policy</a>
-                    <a href="#" class="footer-link">Terms of Operation</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Corporate Communication</h4>
-                    <p style="font-size: 0.85rem;">Subscribe to receive engineering updates and structural advisories.</p>
-                    <input type="email" class="form-input" placeholder="Corporate Email Address" style="padding: 10px; margin-bottom: 8px;">
-                    <button class="form-submit" style="padding: 10px; font-size: 0.95rem;">Register</button>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div>&copy; 2026 ArborShield Engineering. All structural rights reserved.</div>
-                <div>System status: <span style="color: var(--success); font-weight: bold;">Operational</span></div>
-            </div>
-        </div>
+    <footer style="border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; margin-top: 4rem;">
+        <p style="color: var(--text-muted); font-weight: 500;">&copy; 2026 Stop Squirrel Climb. Designed and 3D Printed in Berkeley, CA.</p>
     </footer>
 
-    <div id="chat-window">
-        <div class="chat-header">
-            Engineering Support Desk
-            <svg class="chat-close" onclick="toggleChatWindow()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </div>
-        <div class="chat-body" id="chat-content">
-            <p id="chat-prompt" style="margin:0; font-weight: 600; font-size: 1.05rem;">Input Support Query</p>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px;">Average resolution time: 4 operational hours.</p>
-            <input type="text" id="chat-input" class="chat-input-box" placeholder="Describe deployment issue...">
-            <button id="chat-next-btn" class="chat-btn" onclick="handleChatFlow()">Transmit Query</button>
-        </div>
-    </div>
-    <div id="chat-bubble" onclick="toggleChatWindow()" title="Access Support">
+    <div id="chat-bubble" onclick="alert('Email me at stopsquirrelclimb@gmail.com with any questions!')">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
     </div>
 
     <script>
-        // PROGRESS BAR & SCROLL LOGIC
+        // Progress Bar & Nav Blur
         window.onscroll = () => {
             let winScroll = document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
+            document.getElementById("progressBar").style.width = (winScroll / height) * 100 + "%";
             
-            document.getElementById('glide-top').style.display = (winScroll > 600) ? "flex" : "none";
-            
-            const navbar = document.getElementById('navbar');
-            if(winScroll > 20) {
-                navbar.style.boxShadow = "var(--shadow-md)";
-                navbar.style.padding = "12px 0";
+            const nav = document.getElementById('nav');
+            if (winScroll > 50) {
+                nav.style.padding = "0.5rem 0";
+                nav.style.boxShadow = "var(--shadow-sm)";
             } else {
-                navbar.style.boxShadow = "none";
-                navbar.style.padding = "16px 0";
+                nav.style.padding = "1rem 0";
+                nav.style.boxShadow = "none";
             }
         };
 
-        // INTERSECTION OBSERVER FOR ANIMATIONS
-        document.addEventListener("DOMContentLoaded", function() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-            
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            loadLocalReviews();
-        });
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // FAQ TOGGLE
-        function toggleFaq(element) {
-            element.classList.toggle('active');
-        }
-
-        // BEFORE/AFTER SLIDER LOGIC
+        // Slider Logic
         const slider = document.getElementById('slider-range');
         const beforeImg = document.getElementById('before-img');
-        const sliderContainer = document.getElementById('comparison-slider');
+        const sliderWrapper = document.getElementById('slider');
 
-        slider.addEventListener('input', (e) => {
-            beforeImg.style.width = e.target.value + '%';
+        slider.addEventListener('input', (e) => beforeImg.style.width = e.target.value + '%');
+        sliderWrapper.addEventListener('mousemove', (e) => {
+            const rect = sliderWrapper.getBoundingClientRect();
+            beforeImg.style.width = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)) + '%';
         });
-        sliderContainer.addEventListener('mousemove', (e) => {
-            const rect = sliderContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-            beforeImg.style.width = percentage + '%';
-            slider.value = percentage;
-        });
-        sliderContainer.addEventListener('mouseleave', () => {
-            beforeImg.style.transition = 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        sliderWrapper.addEventListener('mouseleave', () => {
+            beforeImg.style.transition = 'width 0.5s ease-out';
             beforeImg.style.width = '50%';
-            slider.value = 50;
-            setTimeout(() => { beforeImg.style.transition = 'none'; }, 600);
+            setTimeout(() => beforeImg.style.transition = 'none', 500);
         });
 
-        // THEME TOGGLE
+        // Theme Toggle
         document.getElementById('theme-toggle').onclick = () => {
             document.body.classList.toggle('dark-mode');
+            const icon = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            document.getElementById('theme-toggle').innerText = icon;
         };
 
-        // MODAL LOGIC
+        // Modal
         function openModal(src) {
             document.getElementById('modalImg').src = src;
             document.getElementById('modal').style.display = 'flex';
         }
 
-        // CHAT SUPPORT LOGIC
-        let chatStep = 1; 
-        
-        function toggleChatWindow() {
-            const win = document.getElementById('chat-window');
-            if(win.style.display === 'flex') {
-                win.style.display = 'none';
-            } else {
-                win.style.display = 'flex';
-                document.getElementById('chat-input').focus();
-            }
-        }
-
-        function handleChatFlow() {
-            const input = document.getElementById('chat-input');
-            const prompt = document.getElementById('chat-prompt');
-            const btn = document.getElementById('chat-next-btn');
-            const content = document.getElementById('chat-content');
-            
-            if (chatStep === 1) {
-                if(!input.value.trim()) return;
-                input.value = "";
-                prompt.innerText = "Input Verification Email";
-                input.placeholder = "protocol@domain.com";
-                input.type = "email";
-                btn.innerText = "Execute Transmission";
-                chatStep = 2;
-            } else {
-                if(!input.value.trim() || !input.value.includes('@')) {
-                    alert("Authentication failure: Invalid email structure.");
-                    return;
-                }
-                btn.innerText = "Processing..."; 
-                btn.disabled = true;
-                
-                setTimeout(() => {
-                    content.innerHTML = `
-                        <div style="text-align: center; padding: 32px 0;">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="margin:0 auto 16px; display:block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                            <p style='color:var(--text-main); font-weight:700; font-size: 1.2rem; margin:0;'>Transmission Secured</p>
-                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Support personnel will initiate contact shortly.</p>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        toggleChatWindow();
-                        setTimeout(() => {
-                            chatStep = 1;
-                            content.innerHTML = `
-                                <p id="chat-prompt" style="margin:0; font-weight: 600; font-size: 1.05rem;">Input Support Query</p>
-                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px;">Average resolution time: 4 operational hours.</p>
-                                <input type="text" id="chat-input" class="chat-input-box" placeholder="Describe deployment issue...">
-                                <button id="chat-next-btn" class="chat-btn" onclick="handleChatFlow()">Transmit Query</button>
-                            `;
-                        }, 500);
-                    }, 3000);
-                }, 1000);
-            }
-        }
-
-        // LOCAL REVIEWS LOGIC
-        function submitLocalReview(e) {
+        // Reviews (LocalStorage)
+        function handleReview(e) {
             e.preventDefault();
-            const name = document.getElementById('revName').value;
-            const text = document.getElementById('revText').value;
-            const rating = parseInt(document.getElementById('revRating').value);
+            const name = document.getElementById('rName').value;
+            const text = document.getElementById('rText').value;
+            const stars = parseInt(document.getElementById('rStars').value);
             
-            const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
-
-            const review = {
-                name: name,
-                initials: initials,
-                text: text,
-                rating: rating
-            };
-
-            let existingReviews = JSON.parse(localStorage.getItem('arborShieldReviews')) || [];
-            existingReviews.unshift(review);
-            localStorage.setItem('arborShieldReviews', JSON.stringify(existingReviews));
+            const rev = { name, text, stars };
+            let saved = JSON.parse(localStorage.getItem('ssc_revs')) || [];
+            saved.unshift(rev);
+            localStorage.setItem('ssc_revs', JSON.stringify(saved));
             
-            document.getElementById('reviewForm').style.display = 'none';
-            document.getElementById('thankYouMsg').style.display = 'block';
+            document.getElementById('revForm').style.display = 'none';
+            document.getElementById('thanksMsg').style.display = 'block';
+            confetti({ particleCount: 150, spread: 70, colors: ['#FF6B6B', '#FF8E53'] });
             
-            // Professional Confetti
-            confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 }, colors: ['#2563eb', '#10b981', '#f8fafc'] });
-            
-            renderSingleReview(review, true);
+            renderReview(rev, true);
         }
 
-        function loadLocalReviews() {
-            let existingReviews = JSON.parse(localStorage.getItem('arborShieldReviews')) || [];
-            if(existingReviews.length > 0) {
-                document.getElementById('reviewForm').style.display = 'none';
-                document.getElementById('thankYouMsg').style.display = 'block';
-                existingReviews.reverse().forEach(rev => renderSingleReview(rev, true));
-            }
-        }
-
-        function renderSingleReview(r, atTop) {
-            const feed = document.getElementById('reviewFeed');
-            const stars = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
+        function renderReview(r, top) {
             const html = `
-                <div class="review-card reveal active">
-                    <div class="review-stars">${stars}</div>
-                    <div class="review-text">"${r.text}"</div>
-                    <div class="review-author">
-                        <div class="author-avatar">${r.initials}</div>
-                        <div class="author-info">
-                            <h4>${r.name}</h4>
-                            <p>Verified Operator</p>
-                        </div>
-                    </div>
+                <div class="review-card reveal active" style="border-color: var(--accent-color);">
+                    <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+                    <p style="font-style: italic; color: var(--text-muted); margin-bottom: 1rem;">"${r.text}"</p>
+                    <h4 style="font-size: 0.9rem;">— ${r.name}, Berkeley</h4>
                 </div>
             `;
-            if(atTop) {
-                feed.insertAdjacentHTML('afterbegin', html);
-            } else {
-                feed.insertAdjacentHTML('beforeend', html);
-            }
+            const feed = document.getElementById('revFeed');
+            top ? feed.insertAdjacentHTML('afterbegin', html) : feed.insertAdjacentHTML('beforeend', html);
         }
+
+        window.onload = () => {
+            let saved = JSON.parse(localStorage.getItem('ssc_revs')) || [];
+            if(saved.length > 0) {
+                document.getElementById('revForm').style.display = 'none';
+                document.getElementById('thanksMsg').style.display = 'block';
+                saved.reverse().forEach(r => renderReview(r, true));
+            }
+        };
+
+        // Weather Easter Egg
+        document.getElementById('weather-egg').onclick = (e) => {
+            const rect = e.target.getBoundingClientRect();
+            for(let i=0; i<30; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'drip';
+                    el.style.left = (rect.left - 50 + Math.random() * 100) + 'px';
+                    el.style.top = rect.top + 'px';
+                    el.innerHTML = Math.random() > 0.8 ? '🐿️' : '💧';
+                    
+                    el.animate([
+                        { transform: 'translateY(0)', opacity: 1 },
+                        { transform: `translateY(100vh) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                    ], { duration: 1500, easing: 'ease-in' });
+                    
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 1500);
+                }, i * 50);
+            }
+        };
     </script>
 </body>
 </html>
