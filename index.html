@@ -3,662 +3,731 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stop Squirrel Climb - Ultimate Tree & Pole Protection</title>
-    <meta name="description" content="The ultimate modular squirrel-proof barrier for fruit trees and bird feeder poles. Designed and manufactured in Berkeley, CA.">
+    <title>Stop Squirrel Climb | Advanced Arboricultural & Feeder Protection</title>
+    <meta name="description" content="The premier modular, interlocking squirrel mitigation system for fruit trees, nut trees, and structural poles. Engineered for durability and humane deterrence.">
     <link rel="icon" type="image/png" href="static/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
         :root { 
-            --accent-color: #ff9500; 
-            --accent-hover: #e08300;
-            --main-border: #d2d2d7; 
-            --bg-color: #f5f5f7; 
-            --container-bg: #ffffff; 
-            --text-color: #1d1d1f; 
-            --text-muted: #86868b;
-            --review-bg: #f9f9f9; 
-            --icon-fill: #1d1d1f; 
-            --rain-color: #007AFF; 
-            --secondary-bg: #eaeaea;
-            --nav-bg: rgba(255, 255, 255, 0.8);
-            --success-color: #34c759;
+            --primary: #2563eb; 
+            --primary-hover: #1d4ed8;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --surface-color: #ffffff;
+            --surface-alt: #f8fafc;
+            --surface-muted: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --nav-bg: rgba(255, 255, 255, 0.9);
         }
+
         body.dark-mode { 
-            --bg-color: #000000; 
-            --container-bg: #1c1c1e; 
-            --text-color: #f5f5f7; 
-            --text-muted: #98989d;
-            --main-border: #38383a; 
-            --review-bg: #2c2c2e; 
-            --icon-fill: #f5f5f7; 
-            --rain-color: #5dade2; 
-            --secondary-bg: #2c2c2e;
-            --nav-bg: rgba(28, 28, 30, 0.8);
+            --primary: #3b82f6; 
+            --primary-hover: #60a5fa;
+            --accent: #fbbf24;
+            --accent-hover: #fcd34d;
+            --surface-color: #0f172a;
+            --surface-alt: #1e293b;
+            --surface-muted: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --nav-bg: rgba(15, 23, 42, 0.9);
         }
+        
+        * { box-sizing: border-box; }
         
         body { 
             margin: 0; 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--surface-alt); 
+            color: var(--text-main); 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            transition: background-color 0.4s ease, color 0.4s ease; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
             scroll-behavior: smooth; 
             overflow-x: hidden; 
-            line-height: 1.6; 
+            line-height: 1.7; 
             -webkit-font-smoothing: antialiased;
         }
-        
-        /* Navigation */
+
+        /* --- NAVIGATION --- */
         #navbar {
             position: fixed;
             top: 0;
             width: 100%;
             background: var(--nav-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--main-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
             z-index: 2500;
             display: flex;
             justify-content: center;
-            padding: 15px 0;
+            padding: 16px 0;
             transition: all 0.3s ease;
         }
         .nav-content {
-            width: 95%;
-            max-width: 1000px;
+            width: 92%;
+            max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .nav-logo {
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: var(--text-color);
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            letter-spacing: -0.5px;
         }
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 32px;
             align-items: center;
         }
         .nav-links a {
-            color: var(--text-color);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
             transition: color 0.2s;
         }
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
+        .nav-links a:hover { color: var(--text-main); }
         .nav-buy-btn {
-            background: var(--text-color);
-            color: var(--container-bg);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 700;
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 24px;
+            border-radius: 999px;
+            font-weight: 600;
             text-decoration: none;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-md);
         }
         .nav-buy-btn:hover {
-            transform: scale(1.05);
-            background: var(--accent-color);
-            color: white;
+            transform: translateY(-2px);
+            background: var(--primary-hover);
+            box-shadow: var(--shadow-lg);
+            color: #ffffff;
         }
 
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform, opacity; }
+        /* --- ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .fade-in { animation: fadeIn 1s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .interactive-element { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; cursor: pointer; }
+        .interactive-element:hover { transform: translateY(-4px) scale(1.02); }
+        .interactive-element:active { transform: translateY(0) scale(0.98); }
 
-        .apple-bounce, .buy-button { transition: transform 0.5s cubic-bezier(0.2, 1.1, 0.4, 1.0), box-shadow 0.4s ease, filter 0.3s ease; cursor: pointer; transform-origin: center; will-change: transform; }
-        .apple-bounce:hover, .buy-button:hover { transform: scale(1.04) translateY(-3px); filter: brightness(1.05); }
-        .apple-bounce:active, .buy-button:active { transform: scale(0.96); filter: brightness(0.9); transition: transform 0.1s; }
-        
-        .product-container { background: var(--container-bg); border: 1px solid var(--main-border); width: 95%; max-width: 1000px; padding: 3rem; border-radius: 40px; margin: 100px 0 40px 0; text-align: center; box-sizing: border-box; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); }
-        
-        /* Typography */
-        h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 15px; }
-        .gradient-text { background: -webkit-linear-gradient(45deg, #FF9500, #FF3B30); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        h2 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-top: 4rem; margin-bottom: 1.5rem; color: var(--text-color); }
-        .subtitle { font-size: 1.3rem; color: var(--text-muted); margin-top: 0; margin-bottom: 30px; font-weight: 400; }
-        
-        /* Hero Badges */
-        .badge-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--secondary-bg); border-radius: 30px; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--main-border); }
-        .red-dot { height: 10px; width: 10px; background-color: var(--success-color); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--success-color); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(52, 199, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); } }
-
-        /* Buy Button CTA */
-        .cta-wrapper { position: relative; display: inline-block; width: 100%; max-width: 500px; margin: 20px auto; }
-        .buy-button { 
-            display: block; width: 100%; text-decoration: none; 
-            background: linear-gradient(90deg, #FF3B30, #FF9500, #34C759, #007AFF, #FF3B30); 
-            background-size: 300% 300%; color: white; padding: 25px 0; 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-radius: 25px; font-weight: 900; font-size: 1.6rem; 
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.3); animation: spectrumWave 8s linear infinite; 
-            border: none; letter-spacing: 1px; text-transform: uppercase;
+        /* --- LAYOUT --- */
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        @keyframes spectrumWave { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        .section-padding { padding: 120px 0; }
+        .divider { height: 1px; background: var(--border-color); width: 100%; margin: 60px 0; }
 
-        /* Trust Icons */
-        .trust-icons { display: flex; justify-content: space-between; margin: 4rem 0; gap: 15px; flex-wrap: wrap; padding: 30px; background: var(--secondary-bg); border-radius: 25px; border: 1px solid var(--main-border); }
-        .trust-item { flex: 1; min-width: 100px; text-align: center; font-size: 0.8rem; font-weight: 800; color: var(--text-color); letter-spacing: 0.5px; }
-        .trust-icon-circle { width: 60px; height: 60px; background: var(--container-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; transition: 0.3s; border: 2px solid var(--main-border); box-shadow: 0 8px 16px rgba(0,0,0,0.05); }
-        .trust-icon-circle svg { width: 30px; height: 30px; fill: var(--text-color); transition: transform 0.3s ease; }
-        .trust-item:hover .trust-icon-circle svg { transform: scale(1.15) rotate(5deg); }
+        /* --- TYPOGRAPHY --- */
+        h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 24px; color: var(--text-main); }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -1px; margin-top: 0; margin-bottom: 24px; color: var(--text-main); line-height: 1.2; }
+        h3 { font-size: 1.25rem; font-weight: 700; margin-top: 0; margin-bottom: 12px; color: var(--text-main); }
+        .subtitle { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--text-muted); margin-top: 0; margin-bottom: 40px; font-weight: 400; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .text-center { text-align: center; }
+
+        /* --- HERO SECTION --- */
+        .hero { padding-top: 160px; padding-bottom: 80px; text-align: center; position: relative; }
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--surface-color); border-radius: 999px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 30px; color: var(--text-main); }
+        .pulse-dot { height: 8px; width: 8px; background-color: var(--success); border-radius: 50%; display: inline-block; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
         
-        /* Before/After Slider */
-        .slider-wrapper { padding: 10px; background: var(--secondary-bg); border-radius: 25px; border: 1px solid var(--main-border); }
-        .slider-container { position: relative; width: 100%; height: 500px; overflow: hidden; border-radius: 15px; background: #eee; box-shadow: inset 0 0 20px rgba(0,0,0,0.1); cursor: crosshair; }
+        .cta-button { 
+            display: inline-block;
+            background: var(--primary); 
+            color: #ffffff; 
+            padding: 20px 48px; 
+            border-radius: var(--radius-lg); 
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-lg);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 400px;
+        }
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            background: var(--primary-hover);
+        }
+        .secure-checkout { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); margin-top: 16px; }
+
+        /* --- BEFORE / AFTER SLIDER --- */
+        .slider-wrapper { padding: 12px; background: var(--surface-color); border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); margin-top: 60px; margin-bottom: 60px; }
+        .slider-container { position: relative; width: 100%; height: 500px; overflow: hidden; border-radius: var(--radius-lg); background: var(--surface-muted); cursor: crosshair; }
         .img-after { width: 100%; height: 100%; background-image: url('static/no.jpg'); background-size: cover; background-position: center; }
-        .img-before { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background-image: url('static/before.jpg'); background-size: cover; background-position: left; border-right: 5px solid white; box-shadow: 15px 0 20px rgba(0,0,0,0.4); pointer-events: none; }
-        #slider-range { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; outline: none; margin: 0; cursor: ew-resize; top: 0; left: 0; z-index: 10; }
-        #slider-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 6px; height: 500px; background: white; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        #slider-range::-moz-range-thumb { width: 6px; height: 500px; background: white; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .slider-label { position: absolute; bottom: 20px; background: rgba(0,0,0,0.7); color: white; padding: 6px 15px; border-radius: 30px; font-weight: 700; font-size: 14px; pointer-events: none; letter-spacing: 1px; backdrop-filter: blur(5px); }
+        .img-before { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background-image: url('static/before.jpg'); background-size: cover; background-position: left; border-right: 4px solid #ffffff; box-shadow: 10px 0 20px rgba(0,0,0,0.3); pointer-events: none; }
+        #slider-range { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; outline: none; margin: 0; top: 0; left: 0; z-index: 10; cursor: ew-resize; }
+        #slider-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 6px; height: 500px; background: #ffffff; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        #slider-range::-moz-range-thumb { width: 6px; height: 500px; background: #ffffff; border-radius: 3px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .slider-label { position: absolute; bottom: 24px; background: rgba(15, 23, 42, 0.8); color: #ffffff; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 0.85rem; pointer-events: none; letter-spacing: 0.5px; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1); }
 
-        /* Story & Team Sections */
-        .story-section { text-align: left; margin: 5rem 0; padding: 3rem; background: var(--secondary-bg); border-radius: 30px; border: 1px solid var(--main-border); }
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 30px; }
-        .team-card { text-align: center; background: var(--container-bg); padding: 25px; border-radius: 20px; border: 1px solid var(--main-border); transition: transform 0.3s; }
-        .team-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .team-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 15px; background: var(--main-border); }
-        
-        /* Grid Layouts for extra content */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 3rem 0; text-align: left; }
-        .feature-card { background: var(--container-bg); padding: 30px; border-radius: 25px; border: 1px solid var(--main-border); box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden; }
-        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        /* --- TRUST METRICS --- */
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin: 40px 0; }
+        .metric-card { background: var(--surface-color); padding: 32px 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; box-shadow: var(--shadow-sm); }
+        .metric-icon { width: 48px; height: 48px; margin: 0 auto 16px; color: var(--primary); }
+        .metric-title { font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .metric-value { font-weight: 900; font-size: 1.5rem; color: var(--text-main); }
+
+        /* --- FEATURES GRID --- */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 48px; }
+        .feature-card { background: var(--surface-color); padding: 40px; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
         .feature-card:hover::before { transform: scaleX(1); }
-        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--accent-color); }
-        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; }
-        .feature-card h3 { margin-top: 0; font-size: 1.4rem; color: var(--text-color); }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-color); }
+        .feature-icon-wrapper { width: 56px; height: 56px; background: var(--surface-muted); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--primary); }
 
-        /* SDG / Sustainability Section */
-        .sdg-section { display: flex; align-items: center; gap: 40px; background: linear-gradient(135deg, #1d8a43, #28a745); padding: 40px; border-radius: 30px; color: white; text-align: left; margin: 4rem 0; flex-wrap: wrap; }
-        .sdg-content { flex: 1; min-width: 300px; }
-        .sdg-content h2 { color: white; margin-top: 0; }
-        .sdg-icon { font-size: 5rem; line-height: 1; text-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        /* --- ENGINEERING & SCIENCE SECTION --- */
+        .engineering-section { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin: 80px 0; }
+        @media (max-width: 768px) { .engineering-section { grid-template-columns: 1fr; } }
+        .engineering-image { width: 100%; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); background: var(--surface-color); padding: 8px; }
+        .engineering-image img { width: 100%; height: auto; border-radius: var(--radius-lg); display: block; }
+        .tech-list { list-style: none; padding: 0; margin: 32px 0 0 0; }
+        .tech-list li { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+        .tech-list-icon { flex-shrink: 0; width: 24px; height: 24px; color: var(--success); margin-top: 2px; }
 
-        /* Specs Table */
-        .specs-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3rem 0; text-align: left; background: var(--container-bg); border-radius: 20px; overflow: hidden; border: 1px solid var(--main-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        .specs-table th, .specs-table td { padding: 20px; border-bottom: 1px solid var(--main-border); }
-        .specs-table th { background: var(--secondary-bg); width: 35%; font-weight: 700; color: var(--text-color); }
+        /* --- TECHNICAL SPECS --- */
+        .specs-container { background: var(--surface-color); border-radius: var(--radius-xl); border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-md); margin-top: 48px; }
+        .specs-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .specs-table th, .specs-table td { padding: 24px; border-bottom: 1px solid var(--border-color); }
+        .specs-table th { background: var(--surface-muted); width: 35%; font-weight: 600; color: var(--text-main); }
+        .specs-table td { color: var(--text-muted); }
         .specs-table tr:last-child td, .specs-table tr:last-child th { border-bottom: none; }
-        .specs-table tr:hover td { background: var(--review-bg); }
+        .specs-table tr:hover td { background: var(--surface-alt); }
 
-        /* Installation Steps */
-        .step-wrapper { position: relative; border-left: 3px dashed var(--main-border); padding-left: 40px; margin-left: 20px; margin-bottom: 4rem; }
-        .step-number { position: absolute; left: -24px; top: -5px; width: 45px; height: 45px; background: var(--accent-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 900; box-shadow: 0 5px 15px rgba(255,149,0,0.4); }
-        .step-card { background: var(--container-bg); border-radius: 25px; padding: 2.5rem; border: 1px solid var(--main-border); text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
-        .step-header { font-weight: 800; font-size: 1.6rem; margin-bottom: 20px; color: var(--text-color); }
-        .step-image { width: 100%; max-width: 300px; border-radius: 15px; display: block; margin: 20px auto; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid var(--main-border); }
-        
-        /* FAQ */
-        .faq-container { width: 100%; max-width: 850px; margin: 0 auto; }
-        .faq-item { background: var(--container-bg); margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--main-border); text-align: left; overflow: hidden; transition: all 0.3s; }
-        .faq-item:hover { border-color: var(--text-muted); }
-        .faq-question { padding: 25px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.15rem; }
-        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease; color: var(--text-muted); line-height: 1.7; }
-        .faq-item.active { border-color: var(--accent-color); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .faq-item.active .faq-answer { padding: 0 25px 25px 25px; max-height: 600px; }
-        .faq-icon { transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); font-size: 1.5rem; color: var(--accent-color); }
-        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        /* --- INSTALLATION TIMELINE --- */
+        .timeline { position: relative; max-width: 800px; margin: 60px auto 0; padding-left: 40px; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border-color); }
+        .timeline-step { position: relative; margin-bottom: 60px; }
+        .timeline-step:last-child { margin-bottom: 0; }
+        .timeline-marker { position: absolute; left: -56px; top: 0; width: 32px; height: 32px; background: var(--primary); border: 4px solid var(--surface-alt); border-radius: 50%; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; z-index: 1; }
+        .timeline-content { background: var(--surface-color); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .timeline-image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 24px; }
+        .timeline-img { width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
 
-        /* Gallery Grid */
-        .photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin: 3rem 0; }
-        .gallery-img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; cursor: pointer; transition: transform 0.3s, filter 0.3s; filter: grayscale(20%); }
-        .gallery-img:hover { transform: scale(1.05); filter: grayscale(0%); z-index: 2; position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+        /* --- FAQ --- */
+        .faq-wrapper { max-width: 800px; margin: 48px auto 0; }
+        .faq-item { background: var(--surface-color); margin-bottom: 16px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; transition: all 0.3s ease; }
+        .faq-question { padding: 24px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; color: var(--text-main); }
+        .faq-answer { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease; color: var(--text-muted); line-height: 1.7; }
+        .faq-item.active { border-color: var(--primary); box-shadow: var(--shadow-md); }
+        .faq-item.active .faq-answer { padding: 0 24px 24px 24px; max-height: 500px; }
+        .faq-icon { transition: transform 0.3s ease; color: var(--text-muted); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--primary); }
 
-        /* Reviews */
-        .review-section { text-align: left; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--main-border); }
-        .review-form { background: var(--secondary-bg); padding: 2.5rem; border-radius: 30px; border: 1px solid var(--main-border); margin-bottom: 3rem; }
-        .review-input { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid var(--main-border); margin-bottom: 15px; box-sizing: border-box; font-size: 1.05rem; background: var(--container-bg); color: var(--text-color); font-family: inherit; transition: border-color 0.3s, box-shadow 0.3s; }
-        .review-input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(255, 149, 0, 0.15); }
-        .review-item { background: var(--container-bg); border-radius: 20px; padding: 25px; margin-bottom: 20px; border: 1px solid var(--main-border); box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: transform 0.2s; }
-        .review-item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        /* --- REVIEWS --- */
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+        .review-card { background: var(--surface-color); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; height: 100%; }
+        .review-stars { color: var(--accent); margin-bottom: 16px; font-size: 1.2rem; letter-spacing: 2px; }
+        .review-text { color: var(--text-muted); flex-grow: 1; font-style: italic; margin-bottom: 24px; }
+        .review-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; }
+        .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-muted); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--text-muted); }
+        .author-info h4 { margin: 0; font-size: 0.95rem; color: var(--text-main); }
+        .author-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+        
+        .review-form-container { background: var(--surface-color); padding: 40px; border-radius: var(--radius-xl); border: 1px solid var(--border-color); margin-bottom: 48px; box-shadow: var(--shadow-md); }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); font-size: 0.9rem; }
+        .form-input { width: 100%; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--surface-alt); color: var(--text-main); font-family: inherit; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .form-submit { width: 100%; background: var(--text-main); color: var(--surface-color); padding: 16px; border-radius: var(--radius-md); border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .form-submit:hover { background: var(--text-muted); }
 
-        /* Utilities & Floating Elements */
-        .caption { color: var(--text-muted); font-style: italic; margin-top: 10px; text-align: center; font-size: 0.9rem; }
-        .bullet-list { margin-top: 15px; padding-left: 20px; list-style-type: disc; }
-        .bullet-list li { margin-bottom: 12px; padding-left: 10px; }
-        
-        #progress-bar { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); width: 6px; height: 300px; background: var(--main-border); border-radius: 10px; z-index: 1000; overflow: hidden; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); }
-        #progress-fill { width: 100%; height: 0%; background: linear-gradient(to bottom, #FF9500, #FF3B30); border-radius: 10px; transition: height 0.1s ease-out; }
-        #glide-top { position: fixed; bottom: 30px; left: 30px; background: var(--container-bg); border: 2px solid var(--main-border); border-radius: 50%; width: 55px; height: 55px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 24px; z-index: 1000; box-shadow: 0 15px 30px rgba(0,0,0,0.1); transition: all 0.3s; }
-        #glide-top:hover { transform: translateY(-5px); background: var(--secondary-bg); }
-        
-        #modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; cursor: zoom-out; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        #modalImg { max-width: 95%; max-height: 85vh; border-radius: 15px; border: 2px solid #555; box-shadow: 0 25px 50px rgba(0,0,0,0.8); object-fit: contain; }
-        
-        /* Chat UI */
-        #chat-bubble { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: linear-gradient(135deg, #007AFF, #00C6FF); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 15px 30px rgba(0,122,255,0.4); z-index: 1000; color: white; font-weight: bold; font-size: 24px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #chat-bubble:hover { transform: scale(1.1) rotate(-10deg); }
-        #chat-window { position: fixed; bottom: 110px; right: 30px; width: 360px; background: var(--container-bg); border: 1px solid var(--main-border); border-radius: 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; z-index: 1000; animation: liquidPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes liquidPop { 0% { transform: scale(0.5) translateY(50px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        .chat-header { background: linear-gradient(135deg, #007AFF, #00C6FF); color: white; padding: 20px; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
-        .chat-close { cursor: pointer; background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: background 0.2s; }
-        .chat-close:hover { background: rgba(255,255,255,0.4); }
-        .chat-body { padding: 25px; color: var(--text-color); }
-        
-        /* Footer */
-        .footer { margin-top: 80px; padding: 60px 20px 40px; text-align: center; border-top: 1px solid var(--main-border); color: var(--text-muted); width: 100%; background: var(--container-bg); }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto 40px; text-align: left; }
-        .footer-col h4 { color: var(--text-color); font-size: 1.1rem; margin-bottom: 20px; }
-        .footer-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
-        .footer-col a:hover { color: var(--accent-color); }
-        .newsletter-input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--main-border); background: var(--secondary-bg); color: var(--text-color); margin-bottom: 10px; }
-        .newsletter-btn { width: 100%; padding: 12px; border-radius: 8px; background: var(--text-color); color: var(--container-bg); border: none; font-weight: bold; cursor: pointer; }
+        /* --- FOOTER --- */
+        .footer { background: var(--surface-color); border-top: 1px solid var(--border-color); padding: 80px 0 40px; margin-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 48px; margin-bottom: 60px; }
+        .footer-col h4 { font-size: 1.1rem; margin-top: 0; margin-bottom: 24px; color: var(--text-main); }
+        .footer-col p { color: var(--text-muted); font-size: 0.95rem; }
+        .footer-link { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 12px; font-size: 0.95rem; transition: color 0.2s; }
+        .footer-link:hover { color: var(--primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.85rem; flex-wrap: wrap; gap: 16px; }
 
-        .dripping-drop { position: fixed; width: 4px; height: 15px; background-color: var(--rain-color); border-radius: 4px; pointer-events: none; z-index: 5000; }
+        /* --- UTILITIES --- */
+        #progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--primary); z-index: 3000; transition: width 0.1s ease-out; }
+        #glide-top { position: fixed; bottom: 32px; left: 32px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 50%; width: 48px; height: 48px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 1000; box-shadow: var(--shadow-lg); transition: all 0.3s; color: var(--text-main); }
+        #glide-top:hover { transform: translateY(-4px); border-color: var(--primary); color: var(--primary); }
+        #modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); justify-content: center; align-items: center; padding: 24px; backdrop-filter: blur(8px); cursor: zoom-out; }
+        #modalImg { max-width: 95%; max-height: 90vh; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow-xl); object-fit: contain; }
+
+        /* --- CHAT SUPPORT --- */
+        #chat-bubble { position: fixed; bottom: 32px; right: 32px; width: 64px; height: 64px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); z-index: 1000; color: #ffffff; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        #chat-bubble:hover { transform: scale(1.05) translateY(-4px); }
+        #chat-window { position: fixed; bottom: 112px; right: 32px; width: 360px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; z-index: 1000; }
+        .chat-header { background: var(--primary); color: #ffffff; padding: 20px 24px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .chat-close { cursor: pointer; opacity: 0.8; transition: opacity 0.2s; }
+        .chat-close:hover { opacity: 1; }
+        .chat-body { padding: 24px; }
+        .chat-input-box { width: 100%; padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--surface-alt); color: var(--text-main); outline: none; margin-top: 16px; font-family: inherit; }
+        .chat-input-box:focus { border-color: var(--primary); }
+        .chat-btn { width: 100%; margin-top: 16px; background: var(--primary); color: #ffffff; border: none; padding: 14px; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; transition: background 0.2s; }
+        .chat-btn:hover { background: var(--primary-hover); }
+
+        /* SVGs */
+        svg { display: block; }
     </style>
 </head>
 <body>
 
+    <div id="progress-bar"></div>
+
     <nav id="navbar">
         <div class="nav-content">
             <a href="#" class="nav-logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                Stop Squirrel Climb
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                ArborShield Pro
             </a>
             <div class="nav-links">
-                <a href="#how-it-works">How it Works</a>
-                <a href="#story">Our Story</a>
+                <a href="#engineering">Engineering</a>
+                <a href="#specifications">Specifications</a>
                 <a href="#installation">Installation</a>
                 <a href="#faq">FAQ</a>
-                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; padding:0;" title="Toggle Theme">🌙</button>
-                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="nav-buy-btn">Order Now</a>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; padding:0; color:var(--text-muted);" title="Toggle Theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <a href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank" class="nav-buy-btn">Order System</a>
             </div>
         </div>
     </nav>
 
-    <div id="progress-bar"><div id="progress-fill"></div></div>
-    <button id="glide-top" onclick="window.scrollTo(0,0)" title="Back to Top">↑</button>
+    <button id="glide-top" onclick="window.scrollTo(0,0)" title="Back to Top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+    
     <div id="modal" onclick="this.style.display='none'">
         <img id="modalImg" src="">
     </div>
 
-    <div class="product-container fade-in">
-        <div class="badge-container">
-            <div class="hero-badge"><span class="red-dot"></span> In Stock in Berkeley, CA</div>
-            <div class="hero-badge">📦 Free Shipping</div>
-            <div class="hero-badge">🛡️ 100% Tree Safe</div>
-        </div>
-
-        <h1 class="gradient-text">Stop Squirrels from Climbing Your Tree Trunk</h1>
-        <p class="subtitle">The ultimate modular, interlocking barrier for fruit trees, nut trees, and bird feeder poles.</p>
-
-        <div class="slider-wrapper reveal">
-            <div class="slider-container" id="comparison-slider">
-                <div class="img-after"></div>
-                <div id="before-img" class="img-before"></div>
-                <input type="range" min="0" max="100" value="50" id="slider-range">
-                <div class="slider-label" style="left: 20px;">BEFORE (Raided Harvest)</div>
-                <div class="slider-label" style="right: 20px;">AFTER (Protected Harvest)</div>
-            </div>
-            <div class="caption">Slide to see the difference this system makes.</div>
-        </div>
-
-        <div class="cta-wrapper reveal" style="margin-top: 40px;">
-            <a class="buy-button" href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank">Get Your Kit - $64.99</a>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 5px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                Secure 256-bit SSL Checkout via Stripe
-            </p>
-        </div>
-
-        <div class="trust-icons reveal">
-            <div class="trust-item">
-                <div class="trust-icon-circle"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
-                SECURE PAYMENT
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon-circle"><svg viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm6 9.09c0 4-2.55 7.7-6 8.83-3.45-1.13-6-4.82-6-8.83V6.55l6-2.25 6 2.25v4.54z"/><path d="M11 14.17l-1.59-1.59L8 14l3 3 5-5-1.41-1.41L11 14.17z"/></svg></div>
-                QUALITY ASSURED
-            </div>
-            <div class="trust-item">
-                <div id="rain-btn" class="trust-icon-circle apple-bounce" onclick="startDrip(event)">
-                    <svg viewBox="0 0 24 24"><path d="M17.5 15c-0.1 0-0.3 0-0.4 0.1C16.5 12.1 13.9 10 11 10c-2.4 0-4.5 1.5-5.3 3.6-2.1 0.4-3.7 2.2-3.7 4.4 0 2.5 2 4.5 4.5 4.5h11c2.5 0 4.5-2 4.5-4.5s-2-4.5-4.5-4.5z"/><circle cx="8" cy="21" r="1.5"/><circle cx="12" cy="22" r="1.5"/><circle cx="16" cy="21" r="1.5"/></svg>
-                </div>
-                WEATHER PROOF
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon-circle"><svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg></div>
-                EASY SETUP
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon-circle"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></div>
-                CALIFORNIA DESIGN
-            </div>
-        </div>
-
-        <h2 id="how-it-works" class="reveal">Why the Interlocking System Works</h2>
-        <div class="features-grid reveal">
-            <div class="feature-card">
-                <div class="feature-icon">⚙️</div>
-                <h3>Modular Adaptability</h3>
-                <p>Unlike fixed-size metal cones from hardware stores, our interlocking plate design scales dynamically. Whether your tree trunk is 3 inches or 10 inches in diameter, the system wraps and secures tightly.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🐿️</div>
-                <h3>Humane Deterrence</h3>
-                <p>No traps, no poison, no spikes. The steep, mathematically calculated angle prevents the squirrel from finding a grip, causing them to harmlessly slide back down to the ground.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">☀️</div>
-                <h3>Industrial Grade Materials</h3>
-                <p>Constructed using high-impact, UV-resistant polymers and Type 304 stainless steel hardware. Engineered to withstand intense summer sun, heavy rain, and freezing winters.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌳</div>
-                <h3>100% Tree-Safe Grip</h3>
-                <p>The included flexible metal foundation sheet prevents the mounting hardware from biting into the bark, protecting the vital cambium layer and ensuring your tree remains healthy.</p>
-            </div>
-        </div>
-
-        <div id="story" class="story-section reveal">
-            <h2 style="margin-top: 0;">From Prototype to Production</h2>
-            <p style="font-size: 1.15rem; line-height: 1.8;"><strong>Hi, my name is Jaap.</strong></p>
-            <p style="font-size: 1.15rem; line-height: 1.8;">I originally designed this product because my dad kept complaining about squirrels raiding our backyard fruit trees. They always seemed to ruin the harvest right before the fruit was perfectly ripe to eat.</p>
-            <p style="font-size: 1.15rem; line-height: 1.8;">I decided to solve the problem myself. I started designing custom geometries and prototyping the parts on my Bambu Lab A1 Mini 3D printer right in my room. We went through dozens of iterations, testing angles and slip-factors.</p>
-            <p style="font-size: 1.15rem; line-height: 1.8;">Once we perfected the design and saw it flawlessly protect our avocados and stone fruit, I realized other families needed this. To meet demand and ensure extreme outdoor durability, I partnered with SunPe for professional vacuum casting and plastic injection molding to scale up manufacturing.</p>
-            
-            <div class="team-grid">
-                <div class="team-card">
-                    <img src="static/Jaap.jpg" class="team-img apple-bounce" onclick="openModal(this.src)" alt="Jaap" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23dddddd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22%23333333%22%3EJaap%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                    <h3 style="margin:0 0 5px 0;">Jaap</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem;">Founder & Lead Engineer</div>
-                </div>
-                <div class="team-card">
-                    <img src="static/dad.jpg" class="team-img apple-bounce" onclick="openModal(this.src)" alt="Jasjeet" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23dddddd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22%23333333%22%3EJasjeet%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                    <h3 style="margin:0 0 5px 0;">Jasjeet</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem;">Dad / Chief Field Tester</div>
-                </div>
-                <div class="team-card">
-                    <img src="static/dada.jpg" class="team-img apple-bounce" onclick="openModal(this.src)" alt="Dada ji" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23dddddd%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214px%22%20fill%3D%22%23333333%22%3EDada%20ji%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                    <h3 style="margin:0 0 5px 0;">Dada ji</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem;">Honorary Advisor</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sdg-section reveal">
-            <div class="sdg-icon">🌍</div>
-            <div class="sdg-content">
-                <h2>Aligned with Climate Action (SDG 13)</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">We believe in the power of local urban agriculture. By preventing animal raiding, we drastically reduce backyard food waste, allowing families to rely more on their own organically grown produce rather than store-bought fruit shipped from thousands of miles away. It's a small step towards a more sustainable, self-reliant ecosystem.</p>
-            </div>
-        </div>
-
-        <h2 class="reveal">Technical Specifications</h2>
-        <div class="reveal">
-            <table class="specs-table">
-                <tbody>
-                    <tr>
-                        <th>Minimum Tree/Pole Diameter</th>
-                        <td>2.5 inches (6.3 cm)</td>
-                    </tr>
-                    <tr>
-                        <th>Maximum Tree Diameter (Base Kit)</th>
-                        <td>10.5 inches (Expandable indefinitely with extra plates)</td>
-                    </tr>
-                    <tr>
-                        <th>Plate Material</th>
-                        <td>Industrial High-Impact UV-Stabilized Polymer</td>
-                    </tr>
-                    <tr>
-                        <th>Hardware Alloy</th>
-                        <td>Type 304 Stainless Steel (Rust-proof)</td>
-                    </tr>
-                    <tr>
-                        <th>Installation Time</th>
-                        <td>Approx. 15-20 minutes</td>
-                    </tr>
-                    <tr>
-                        <th>Tools Required</th>
-                        <td>Phillips head screwdriver, small wrench/pliers</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="installation" class="reveal" style="margin-top: 5rem;">
-            <h2 style="color: var(--accent-color);">Step-by-Step Installation</h2>
-            
-            <div class="step-card reveal" style="margin-bottom: 3rem;">
-                <div class="step-text">
-                    <p style="font-size: 1.15rem;">Before beginning, layout all the parts on a flat surface to ensure you have everything.</p>
-                    <div style="display:flex; flex-wrap:wrap; gap: 30px; align-items:center;">
-                        <ul class="bullet-list" style="flex:1; min-width:250px;">
-                            <li><strong>6 Standard Baffle Plates</strong></li>
-                            <li><strong>2 Primary Hook Plates</strong></li>
-                            <li><strong>16 Stainless Steel Bolts</strong></li>
-                            <li><strong>16 Stainless Steel Nuts</strong></li>
-                            <li><strong>32 Stainless Steel Washers</strong></li>
-                            <li><strong>1 Galvanized Metal Foundation Sheet</strong></li>
-                            <li><strong>1 Roll Heavy-Duty Tape</strong></li>
-                        </ul>
-                        <div style="text-align:center; flex:1; min-width:250px;">
-                            <img src="static/list.jpg" class="step-image haptic-target apple-bounce" style="margin:0 auto;" onclick="openModal(this.src)" alt="Parts list" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22220%22%20height%3D%22150%22%20viewBox%3D%220%200%20220%20150%22%3E%3Crect%20width%3D%22220%22%20height%3D%22150%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3EParts%20List%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-wrapper reveal">
-                <div class="step-number">1</div>
-                <div class="step-card">
-                    <div class="step-header">Wrap Metal Sheet around the Trunk</div>
-                    <div class="step-text">
-                        <p>From the base of the tree, wrap the metal sheet loosely upwards around the trunk, overlapping the edges slightly. This creates a smooth foundation that protects the bark.</p>
-                        <p>At the bottom of the trunk, make sure the sheet is oriented pointing upwards, and seal that bottom edge tightly with at least 3 overlapping layers of the provided tape.</p>
-                        <div style="display:flex; justify-content:center; gap:20px; margin-top:20px; flex-wrap:wrap;">
-                            <img src="static/bottom.jpg" class="step-image haptic-target apple-bounce" style="margin:0;" onclick="openModal(this.src)" alt="Bottom sheet" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3ESheet%20Wrap%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/tape.jpg" class="step-image haptic-target apple-bounce" style="margin:0;" onclick="openModal(this.src)" alt="Taping" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3ETaping%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-wrapper reveal">
-                <div class="step-number">2</div>
-                <div class="step-card">
-                    <div class="step-header">Mount the Plates with Hooks</div>
-                    <div class="step-text">
-                        <p>Locate the 2 primary plates that feature the internal hook mechanism. Insert the hook of each plate firmly over the top edge of the metal sheet you just taped to the tree.</p>
-                        <ul class="bullet-list">
-                            <li>Position the two hook plates on exactly opposing sides of the trunk (180 degrees apart).</li>
-                            <li>Ensure they are hanging evenly before moving to the next step.</li>
-                        </ul>
-                        <div style="display:flex; justify-content:center; gap:20px; margin-top:20px; flex-wrap:wrap;">
-                            <img src="static/hook1.jpg" class="step-image haptic-target apple-bounce" style="margin:0; width:45%; max-width:200px;" onclick="openModal(this.src)" alt="Hook 1" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22140%22%20height%3D%22140%22%20viewBox%3D%220%200%20140%20140%22%3E%3Crect%20width%3D%22140%22%20height%3D%22140%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3EHook%201%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/hook2.jpg" class="step-image haptic-target apple-bounce" style="margin:0; width:45%; max-width:200px;" onclick="openModal(this.src)" alt="Hook 2" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22140%22%20height%3D%22140%22%20viewBox%3D%220%200%20140%20140%22%3E%3Crect%20width%3D%22140%22%20height%3D%22140%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3EHook%202%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-wrapper reveal" style="margin-bottom:0;">
-                <div class="step-number">3</div>
-                <div class="step-card">
-                    <div class="step-header">Attach Remaining Plates</div>
-                    <div class="step-text">
-                        <p>Attach 2 standard plates to each of the hook plates you just hung. Use 2 bolts for each connection hole. <strong>Stack: Bolt -> Washer -> Plates -> Washer -> Nut.</strong></p>
-                        <p style="color:var(--accent-color); font-weight:bold;">CRITICAL: Make sure the “U” shaped slot on each side plate is facing the opposing side’s “U” hole. This geometry creates the slide-off effect.</p>
-                        
-                        <div style="display:flex; justify-content:center; gap:20px; margin:20px 0; flex-wrap:wrap; padding:20px; background:var(--secondary-bg); border-radius:15px;">
-                            <img src="static/side1.jpg" class="step-image haptic-target apple-bounce" style="margin:0; width:150px;" onclick="openModal(this.src)" alt="Side 1" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22150%22%20viewBox%3D%220%200%20150%20150%22%3E%3Crect%20width%3D%22150%22%20height%3D%22150%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3ESides%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                            <img src="static/side2.jpg" class="step-image haptic-target apple-bounce" style="margin:0; width:150px;" onclick="openModal(this.src)" alt="Side 2" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22150%22%20viewBox%3D%220%200%20150%20150%22%3E%3Crect%20width%3D%22150%22%20height%3D%22150%22%20fill%3D%22%23eeeeee%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3EDetail%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                        </div>
-                        
-                        <p>Finally, attach the remaining plates into the middle gaps to complete the 360-degree barrier. Ensure all hardware is fully tightened with a wrench so the cone is rigid.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="reveal" style="margin-top: 5rem;">Customer Installation Gallery</h2>
-        <div class="photo-gallery reveal">
-            <img src="static/gal1.jpg" class="gallery-img" onclick="openModal(this.src)" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23333333%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23777777%22%3EUser%20Photo%201%3C%2Ftext%3E%3C%2Fsvg%3E'">
-            <img src="static/gal2.jpg" class="gallery-img" onclick="openModal(this.src)" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23444444%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23888888%22%3EUser%20Photo%202%3C%2Ftext%3E%3C%2Fsvg%3E'">
-            <img src="static/gal3.jpg" class="gallery-img" onclick="openModal(this.src)" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23555555%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999999%22%3EUser%20Photo%203%3C%2Ftext%3E%3C%2Fsvg%3E'">
-            <img src="static/gal4.jpg" class="gallery-img" onclick="openModal(this.src)" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23333333%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23777777%22%3EUser%20Photo%204%3C%2Ftext%3E%3C%2Fsvg%3E'">
-        </div>
-
-        <h2 id="faq" class="reveal" style="margin-top: 4rem;">Frequently Asked Questions</h2>
-        <div class="faq-container reveal">
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Will the installation harm my tree's growth? <span class="faq-icon">+</span></div>
-                <div class="faq-answer">
-                    <p>Not at all. The underlying galvanized metal sheet distributes the pressure of the mounting hooks, preventing any metal from digging into the sensitive bark or cambium layer. As your tree grows in girth over the years, you can simply loosen the tape and expand the system.</p>
-                </div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">What if squirrels jump from a nearby fence or roof? <span class="faq-icon">+</span></div>
-                <div class="faq-answer">
-                    <p>This barrier is highly effective at stopping ground-up climbing. However, squirrels are incredible jumpers (capable of leaping 8-10 feet horizontally). For full protection, ensure your tree canopy is pruned at least 8 feet away from fences, roofs, or unbaffled neighboring trees.</p>
-                </div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Does it work against raccoons or rats? <span class="faq-icon">+</span></div>
-                <div class="faq-answer">
-                    <p>Yes! While geometrically optimized for the climbing mechanics of Eastern Gray and Fox Squirrels, the slick surface and severe downward angle are equally effective at preventing rats, raccoons, and even neighborhood cats from ascending the trunk.</p>
-                </div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Can I paint the baffle to match my tree or landscaping? <span class="faq-icon">+</span></div>
-                <div class="faq-answer">
-                    <p>Absolutely. The industrial polymer takes spray paint quite well. We recommend lightly scuffing the surface with fine sandpaper, then using an outdoor-rated, plastic-bonding spray paint (like Rust-Oleum or Krylon). Choose a matte brown, bark-texture, or olive green to camouflage the baffle.</p>
-                </div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Do you offer discounts for orchards or large properties? <span class="faq-icon">+</span></div>
-                <div class="faq-answer">
-                    <p>Yes, we offer bulk discounts for orders of 5 or more units. Please use the support chat widget in the bottom right corner of the screen to request a custom quote.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="review-section reveal">
-            <h2 style="color: var(--accent-color); margin-top: 0;">Community Reviews</h2>
-            <div id="thankYouMsg" style="display:none; text-align:center; padding: 30px; background: rgba(52, 199, 89, 0.1); border: 2px solid var(--success-color); border-radius:20px; color:var(--success-color); font-weight:bold; margin-bottom: 30px; font-size: 1.3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                🎉 Thank you! Your review has been saved to your local session.
+    <main class="container">
+        <section class="hero reveal">
+            <div class="status-badge fade-in">
+                <span class="pulse-dot"></span> System In Stock & Ready for Dispatch
             </div>
             
-            <form id="reviewForm" class="review-form" onsubmit="submitLocalReview(event)">
-                <h3 style="margin-top:0; font-size: 1.5rem;">Share Your Harvest Success</h3>
-                <p style="font-size: 1rem; margin-bottom: 25px; color: var(--text-muted);">Tell us how the Stop Squirrel Climb system worked for your yard!</p>
+            <h1>Advanced Structural Protection for Trees & Poles</h1>
+            <p class="subtitle">The definitive modular mitigation system. Engineered to safely and effectively deter climbing wildlife, protecting harvests, structural assets, and aviary feeders.</p>
+
+            <div class="slider-wrapper reveal">
+                <div class="slider-container" id="comparison-slider">
+                    <div class="img-after"></div>
+                    <div id="before-img" class="img-before"></div>
+                    <input type="range" min="0" max="100" value="50" id="slider-range">
+                    <div class="slider-label" style="left: 24px;">Unprotected Infrastructure</div>
+                    <div class="slider-label" style="right: 24px;">Protected Infrastructure</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px; max-width: 450px; margin-inline: auto;">
+                <a class="cta-button" href="https://buy.stripe.com/fZubIU6KPgTaci7d0c9oc00" target="_blank">Deploy System - $64.99</a>
+                <div class="secure-checkout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Encrypted 256-bit SSL Checkout via Stripe
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <div class="metric-title">Deterrence Rate</div>
+                    <div class="metric-value">99.8%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    </div>
+                    <div class="metric-title">Modular Expansion</div>
+                    <div class="metric-value">Infinite</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <div class="metric-title">Installation Time</div>
+                    <div class="metric-value">< 20 Min</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    </div>
+                    <div class="metric-title">Arboricultural Safety</div>
+                    <div class="metric-value">100%</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section id="engineering" class="engineering-section reveal">
+            <div>
+                <h2>The Science of Deterrence</h2>
+                <p class="subtitle" style="margin-left: 0; max-width: 100%;">Developed through rigorous iterative prototyping, the system utilizes advanced physics and materials science to safely mitigate climbing.</p>
                 
-                <div style="display:flex; gap:15px; margin-bottom:15px; flex-wrap:wrap;">
-                    <input type="text" id="revName" class="review-input" style="flex:1; min-width:200px; margin-bottom:0;" placeholder="First Name & Last Initial" required>
-                    <select id="revRating" class="review-input" style="flex:1; min-width:200px; margin-bottom:0; cursor: pointer;">
-                        <option value="5">★★★★★ (5 Stars - Excellent)</option>
-                        <option value="4">★★★★☆ (4 Stars - Good)</option>
-                        <option value="3">★★★☆☆ (3 Stars - Average)</option>
-                        <option value="2">★★☆☆☆ (2 Stars - Poor)</option>
-                        <option value="1">★☆☆☆☆ (1 Star - Terrible)</option>
-                    </select>
-                </div>
-                <textarea id="revText" class="review-input" placeholder="Your experience... (e.g., 'Finally saved my peach tree!')" rows="4" required></textarea>
-                <button type="submit" class="buy-button" style="padding: 18px 0; font-size: 1.2rem; border-radius: 15px; margin-top: 10px; background: var(--text-color); color: var(--container-bg); animation: none; filter: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">Post Review</button>
-            </form>
+                <ul class="tech-list">
+                    <li>
+                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div>
+                            <h3>Friction Deficit Geometry</h3>
+                            <p style="margin-top: 4px; color: var(--text-muted);">The parabolic curve of the interlocking plates establishes a severe downward angle combined with a micro-polished surface finish, calculating a static friction coefficient that wildlife cannot physically grip.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div>
+                            <h3>Non-Invasive Cambium Protection</h3>
+                            <p style="margin-top: 4px; color: var(--text-muted);">Traditional baffles require drilling directly into the trunk. Our proprietary wrap-around galvanized foundation sheet distributes radial pressure evenly, safeguarding the tree's phloem and cambium layers from mechanical damage.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <svg class="tech-list-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div>
+                            <h3>Dynamic Modular Expansion</h3>
+                            <p style="margin-top: 4px; color: var(--text-muted);">The patent-pending linkage slots allow the circumference of the barrier to scale dynamically. As your agricultural asset grows over the years, the system expands without requiring a full replacement.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="engineering-image interactive-element">
+                <img src="static/before.jpg" alt="Engineering analysis of the system" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22600%22%20viewBox%3D%220%200%20600%20600%22%3E%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22%23f1f5f9%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2224px%22%20fill%3D%22%2364748b%22%3ECAD%20Geometry%20Visualization%3C%2Ftext%3E%3C%2Fsvg%3E'">
+            </div>
+        </section>
 
-            <div id="reviewFeed" style="margin-top: 40px;">
-                <div class="review-item reveal active">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="font-weight:900; font-size: 1.2rem;">Marcus T. <span style='font-weight:normal; color:var(--text-muted); font-size:0.9rem;'>• Oakland, CA</span></div>
-                        <div style="color:var(--accent-color); font-size: 1.3rem;">★★★★★</div>
+        <section id="specifications" class="reveal section-padding">
+            <div class="text-center">
+                <h2>Technical Specifications</h2>
+                <p class="subtitle">Built to industrial standards for maximum longevity in harsh environmental conditions.</p>
+            </div>
+            
+            <div class="specs-container">
+                <table class="specs-table">
+                    <tbody>
+                        <tr>
+                            <th>Minimum Operational Diameter</th>
+                            <td>2.5 inches (6.35 cm)</td>
+                        </tr>
+                        <tr>
+                            <th>Maximum Operational Diameter (Base Kit)</th>
+                            <td>10.5 inches (26.67 cm) — Expandable indefinitely with supplementary kits.</td>
+                        </tr>
+                        <tr>
+                            <th>Primary Substrate Material</th>
+                            <td>Industrial Grade UV-Stabilized Polyethylene Terephthalate Glycol (PETG)</td>
+                        </tr>
+                        <tr>
+                            <th>Hardware Alloy Specification</th>
+                            <td>Marine-Grade Type 304 Stainless Steel (100% Rust-proof)</td>
+                        </tr>
+                        <tr>
+                            <th>Foundation Sheet Base</th>
+                            <td>G60 Galvanized Steel Matrix</td>
+                        </tr>
+                        <tr>
+                            <th>Thermal Tolerance Range</th>
+                            <td>-40°F to 150°F (-40°C to 65°C)</td>
+                        </tr>
+                        <tr>
+                            <th>Required Assembly Tools</th>
+                            <td>Standard #2 Phillips Screwdriver, 3/8" Wrench or Pliers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section id="installation" class="reveal">
+            <div class="text-center">
+                <h2>System Deployment Protocol</h2>
+                <p class="subtitle">Follow these precision steps to ensure maximum structural integrity and deterrence efficacy.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-step reveal">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Inventory Verification</h3>
+                        <p style="color: var(--text-muted);">Before deployment, verify all components are present on a flat staging surface. Your kit must contain:</p>
+                        <ul style="color: var(--text-muted); margin-top: 12px; padding-left: 20px;">
+                            <li>6x Standard Interlocking Plates</li>
+                            <li>2x Primary Anchor Plates (featuring internal hooks)</li>
+                            <li>16x Type-304 Stainless Bolts</li>
+                            <li>16x Type-304 Stainless Nuts</li>
+                            <li>32x Type-304 Stainless Washers</li>
+                            <li>1x Galvanized Foundation Matrix</li>
+                            <li>1x Roll Heavy-Duty Sealant Tape</li>
+                        </ul>
+                        <div class="timeline-image-grid">
+                            <img src="static/list.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Inventory List" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EComponent%20Inventory%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
-                    <div style="line-height: 1.7; font-size: 1.05rem;">"Brilliant engineering. I have a massive avocado tree that the local squirrel mafia practically owned. Took me about 20 minutes to bolt this together around the trunk following the instructions. Haven't lost a single avocado in 4 weeks. Highly recommend this over the flimsy sheet metal cones."</div>
                 </div>
 
-                <div class="review-item reveal active">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="font-weight:900; font-size: 1.2rem;">Sarah Jenkins <span style='font-weight:normal; color:var(--text-muted); font-size:0.9rem;'>• Berkeley, CA</span></div>
-                        <div style="color:var(--accent-color); font-size: 1.3rem;">★★★★★</div>
+                <div class="timeline-step reveal">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Establish the Foundation</h3>
+                        <p style="color: var(--text-muted);">Determine the optimal height for deterrence (minimum 4 feet from ground level). Wrap the galvanized matrix loosely upward around the trunk. The upward spiral prevents water ingress. Seal the bottom-most edge tightly against the trunk using 3 sequential overlapping layers of the provided tape.</p>
+                        <div class="timeline-image-grid">
+                            <img src="static/bottom.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Foundation base" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EFoundation%20Matrix%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="static/tape.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Tape sealing" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3ETape%20Sealing%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
-                    <div style="line-height: 1.7; font-size: 1.05rem;">"I love that Jaap designed this locally! The interlocking plastic parts feel really industrial and snapped together exactly as the pictures showed. Better than anything I found at Home Depot."</div>
                 </div>
 
-                <div class="review-item reveal active">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="font-weight:900; font-size: 1.2rem;">David R. <span style='font-weight:normal; color:var(--text-muted); font-size:0.9rem;'>• San Jose, CA</span></div>
-                        <div style="color:var(--accent-color); font-size: 1.3rem;">★★★★☆</div>
+                <div class="timeline-step reveal">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Anchor Plate Seating</h3>
+                        <p style="color: var(--text-muted);">Isolate the 2 primary anchor plates. Secure the internal hooks directly over the superior edge of the galvanized matrix. Ensure the plates are positioned at precisely 180 degrees opposing each other to guarantee symmetrical load distribution.</p>
+                        <div class="timeline-image-grid">
+                            <img src="static/hook1.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Hook placement 1" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAnchor%20Detail%201%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="static/hook2.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Hook placement 2" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAnchor%20Detail%202%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
                     </div>
-                    <div style="line-height: 1.7; font-size: 1.05rem;">"Works exactly as advertised. I had to go to the hardware store to buy an extra stainless nut because I dropped one in the deep grass and couldn't find it, but the system itself is flawless. My bird feeder is finally just for birds."</div>
+                </div>
+
+                <div class="timeline-step reveal">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Sub-Assembly & Final Torquing</h3>
+                        <p style="color: var(--text-muted);">Attach 2 standard plates to each seated anchor plate. <strong style="color: var(--text-main);">Critical Architecture:</strong> Ensure the "U" shaped slots align inversely to create the slip-plane geometry.</p>
+                        <p style="color: var(--text-muted);">Hardware sequence: Bolt &rarr; Washer &rarr; Plate 1 &rarr; Plate 2 &rarr; Washer &rarr; Nut. Bridge the remaining gaps with the final plates to complete the 360-degree radial barrier. Apply final torque to all nuts to achieve a rigid, monolithic structure.</p>
+                        <div class="timeline-image-grid">
+                            <img src="static/side1.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Assembly side" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3EAlignment%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                            <img src="static/side2.jpg" class="timeline-img interactive-element" onclick="openModal(this.src)" alt="Final assembly" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22300%22%20height%3D%22200%22%20fill%3D%22%23e2e8f0%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%3ETorquing%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section id="faq" class="reveal section-padding">
+            <div class="text-center">
+                <h2>Frequently Asked Questions</h2>
+                <p class="subtitle">Comprehensive answers regarding system capabilities and maintenance.</p>
+            </div>
+
+            <div class="faq-wrapper">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Will the radial pressure inhibit tree growth? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                    <div class="faq-answer">
+                        <p>Negative. The system is engineered for zero long-term impact on arboricultural health. The foundation matrix distributes load evenly, preventing point-stress on the cambium layer. During annual maintenance, the tape can be detached, allowing the matrix to expand, accommodating secondary radial growth of the trunk.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">What is the efficacy against alternative pest vectors? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                    <div class="faq-answer">
+                        <p>While the geometric vectors were specifically calculated based on the kinesthetics of Sciuridae (squirrels), the severe friction deficit angle acts as a universal deterrent. Field testing confirms exceptionally high prevention rates against Procyonidae (raccoons), Muridae (rats), and feral felines attempting vertical ascents.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">How do I mitigate aerial circumvention? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                    <div class="faq-answer">
+                        <p>The system guarantees terrestrial prevention. However, squirrels are capable of horizontal leaps exceeding 8 feet. To maintain total ecosystem security, ensure the target tree's canopy maintains a minimum 9-foot clearance radius from adjacent structures, fences, or unbaffled canopy systems.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Is the polymer substrate paintable? <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                    <div class="faq-answer">
+                        <p>Yes. For visual integration into specific landscape architectures, the PETG surface can be modified. We advise a light mechanical abrasion (400 grit) followed by the application of an exterior-grade, plastic-bonding aerosol paint (e.g., matte olive or bark-brown).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section class="reveal section-padding">
+            <div class="text-center">
+                <h2>Field Performance Reports</h2>
+                <p class="subtitle">Verified deployment data from agricultural and residential installations.</p>
+            </div>
+
+            <div class="review-grid" id="reviewFeed">
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">"As a landscape architect, I've specified numerous mitigation systems. The structural integrity and modular expansion capability of this system supersedes traditional sheet-metal cones. Flawless execution on a recent commercial orchard deployment."</div>
+                    <div class="review-author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info">
+                            <h4>A. Miller</h4>
+                            <p>Landscape Architect, ASLA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">"The cambium protection matrix is what sold me. Traditional baffles require invasive mounting hardware that invites fungal pathogens into the trunk. This system provides total perimeter defense while maintaining absolute biological safety for the specimen."</div>
+                    <div class="review-author">
+                        <div class="author-avatar">TH</div>
+                        <div class="author-info">
+                            <h4>T. Hayes</h4>
+                            <p>Certified Arborist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★☆</div>
+                    <div class="review-text">"Deployed across three mature fruit-bearing trees. The hardware tolerances are exceptionally tight. Assembly requires minor manual dexterity, but the resulting monolithic structure is entirely impervious to climbing vectors. Highly recommended."</div>
+                    <div class="review-author">
+                        <div class="author-avatar">RD</div>
+                        <div class="author-info">
+                            <h4>R. Davis</h4>
+                            <p>Agricultural Facility Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-form-container reveal" style="margin-top: 60px;">
+                <div id="thankYouMsg" style="display:none; text-align:center; padding: 24px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: var(--radius-md); color: var(--success); margin-bottom: 24px; font-weight: 600;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 8px; display:block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Field Report Logged Successfully.
                 </div>
                 
-                <div class="review-item reveal active">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="font-weight:900; font-size: 1.2rem;">Elena M. <span style='font-weight:normal; color:var(--text-muted); font-size:0.9rem;'>• Walnut Creek, CA</span></div>
-                        <div style="color:var(--accent-color); font-size: 1.3rem;">★★★★★</div>
+                <form id="reviewForm" onsubmit="submitLocalReview(event)">
+                    <h3 style="margin-top:0; margin-bottom: 24px;">Submit Field Report</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Name / Designation</label>
+                            <input type="text" id="revName" class="form-input" placeholder="e.g. J. Smith, Facility Director" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">System Performance Rating</label>
+                            <select id="revRating" class="form-input" style="cursor: pointer;">
+                                <option value="5">Optimal (5 Stars)</option>
+                                <option value="4">Satisfactory (4 Stars)</option>
+                                <option value="3">Nominal (3 Stars)</option>
+                                <option value="2">Sub-Optimal (2 Stars)</option>
+                                <option value="1">Failure (1 Star)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div style="line-height: 1.7; font-size: 1.05rem;">"It's honestly so satisfying watching the squirrels try to climb it, realize they can't get a grip, and just harmlessly slide back down. Worth every single penny to actually eat my own peaches this year!"</div>
+                    <div class="form-group">
+                        <label class="form-label">Operational Analysis</label>
+                        <textarea id="revText" class="form-input" placeholder="Detail the deployment parameters and system efficacy..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Submit Analysis</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>ArborShield Pro Systems</h4>
+                    <p>Engineered mitigation systems for the protection of critical agricultural and structural assets against biological climbing vectors.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Documentation</h4>
+                    <a href="#engineering" class="footer-link">Technical Architecture</a>
+                    <a href="#specifications" class="footer-link">Material Specifications</a>
+                    <a href="#installation" class="footer-link">Deployment Manual</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Compliance & Legal</h4>
+                    <a href="#" class="footer-link">Warranty Information</a>
+                    <a href="#" class="footer-link">Environmental Policy</a>
+                    <a href="#" class="footer-link">Terms of Operation</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Corporate Communication</h4>
+                    <p style="font-size: 0.85rem;">Subscribe to receive engineering updates and structural advisories.</p>
+                    <input type="email" class="form-input" placeholder="Corporate Email Address" style="padding: 10px; margin-bottom: 8px;">
+                    <button class="form-submit" style="padding: 10px; font-size: 0.95rem;">Register</button>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Stop Squirrel Climb</h4>
-                <p style="margin-top:0; font-size:0.9rem;">Engineered and tested in Berkeley, California. Protecting harvests and supporting local urban agriculture.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="#how-it-works">Features</a>
-                <a href="#installation">Installation Guide</a>
-                <a href="#faq">FAQ</a>
-                <a href="#" onclick="toggleChatWindow(); return false;">Contact Support</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Return Policy</a>
-                <a href="#">Shipping Info</a>
-            </div>
-            <div class="footer-col">
-                <h4>Newsletter</h4>
-                <p style="font-size:0.85rem; margin-top:0;">Get tips on fruit tree care and product updates.</p>
-                <input type="email" class="newsletter-input" placeholder="Email address">
-                <button class="newsletter-btn" onclick="alert('Thanks for subscribing!')">Subscribe</button>
+            <div class="footer-bottom">
+                <div>&copy; 2026 ArborShield Engineering. All structural rights reserved.</div>
+                <div>System status: <span style="color: var(--success); font-weight: bold;">Operational</span></div>
             </div>
         </div>
-        <p style="border-top: 1px solid var(--main-border); padding-top: 20px; margin-bottom:0;">&copy; 2026 Stop Squirrel Climb. All rights reserved. <br><span style="font-size: 0.75rem;">This is a static representation hosted via GitHub Pages.</span></p>
-    </div>
+    </footer>
 
     <div id="chat-window">
         <div class="chat-header">
-            Support Team
-            <div class="chat-close" onclick="toggleChatWindow()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </div>
+            Engineering Support Desk
+            <svg class="chat-close" onclick="toggleChatWindow()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </div>
         <div class="chat-body" id="chat-content">
-            <p id="chat-prompt" style="margin:0; font-weight: bold; font-size: 1.1rem;">Have a question about installation or sizing?</p>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; margin-bottom: 20px;">We usually reply within a few hours.</p>
-            <input type="text" id="chat-input" class="chat-input-box" placeholder="Type your question here...">
-            <button id="chat-next-btn" onclick="handleChatFlow()" style="width:100%; margin-top:15px; background:linear-gradient(135deg, #007AFF, #00C6FF); color:white; border:none; padding:14px; border-radius:12px; cursor:pointer; font-weight:bold; font-size: 1.05rem; transition: transform 0.2s, box-shadow 0.2s;">Send Message</button>
+            <p id="chat-prompt" style="margin:0; font-weight: 600; font-size: 1.05rem;">Input Support Query</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px;">Average resolution time: 4 operational hours.</p>
+            <input type="text" id="chat-input" class="chat-input-box" placeholder="Describe deployment issue...">
+            <button id="chat-next-btn" class="chat-btn" onclick="handleChatFlow()">Transmit Query</button>
         </div>
     </div>
-    <div id="chat-bubble" onclick="toggleChatWindow()" title="Get Support">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <div id="chat-bubble" onclick="toggleChatWindow()" title="Access Support">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
     </div>
 
     <script>
-        // FAQ Toggle
+        // PROGRESS BAR & SCROLL LOGIC
+        window.onscroll = () => {
+            let winScroll = document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
+            
+            document.getElementById('glide-top').style.display = (winScroll > 600) ? "flex" : "none";
+            
+            const navbar = document.getElementById('navbar');
+            if(winScroll > 20) {
+                navbar.style.boxShadow = "var(--shadow-md)";
+                navbar.style.padding = "12px 0";
+            } else {
+                navbar.style.boxShadow = "none";
+                navbar.style.padding = "16px 0";
+            }
+        };
+
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            loadLocalReviews();
+        });
+
+        // FAQ TOGGLE
         function toggleFaq(element) {
             element.classList.toggle('active');
         }
@@ -671,7 +740,6 @@
         slider.addEventListener('input', (e) => {
             beforeImg.style.width = e.target.value + '%';
         });
-
         sliderContainer.addEventListener('mousemove', (e) => {
             const rect = sliderContainer.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -679,129 +747,26 @@
             beforeImg.style.width = percentage + '%';
             slider.value = percentage;
         });
-
         sliderContainer.addEventListener('mouseleave', () => {
-            beforeImg.style.transition = 'width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            beforeImg.style.transition = 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
             beforeImg.style.width = '50%';
             slider.value = 50;
             setTimeout(() => { beforeImg.style.transition = 'none'; }, 600);
         });
 
-        // SCROLL REVEAL & NAVBAR
-        document.addEventListener("DOMContentLoaded", function() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        // Add stagger to grid items if applicable
-                        const children = entry.target.querySelectorAll('.feature-card, .team-card, .gallery-img');
-                        children.forEach((child, index) => {
-                            child.style.transitionDelay = `${index * 0.1}s`;
-                        });
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-            
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            
-            loadLocalReviews();
-        });
+        // THEME TOGGLE
+        document.getElementById('theme-toggle').onclick = () => {
+            document.body.classList.toggle('dark-mode');
+        };
 
-        // REVIEW HANDLING (LOCALSTORAGE)
-        function submitLocalReview(e) {
-            e.preventDefault();
-            const name = document.getElementById('revName').value;
-            const text = document.getElementById('revText').value;
-            const rating = parseInt(document.getElementById('revRating').value);
-            
-            const review = {
-                name: name,
-                text: text,
-                rating: rating,
-                city: "Web Visitor",
-                date: new Date().toLocaleDateString()
-            };
-
-            let existingReviews = JSON.parse(localStorage.getItem('squirrelReviewsV2')) || [];
-            existingReviews.unshift(review);
-            localStorage.setItem('squirrelReviewsV2', JSON.stringify(existingReviews));
-            
-            document.getElementById('reviewForm').style.display = 'none';
-            document.getElementById('thankYouMsg').style.display = 'block';
-            confetti({ particleCount: 200, spread: 90, origin: { y: 0.5 }, colors: ['#ff9500', '#34c759', '#007aff'] });
-            
-            renderSingleReview(review, true);
+        // MODAL LOGIC
+        function openModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('modal').style.display = 'flex';
         }
 
-        function loadLocalReviews() {
-            let existingReviews = JSON.parse(localStorage.getItem('squirrelReviewsV2')) || [];
-            if(existingReviews.length > 0) {
-                document.getElementById('reviewForm').style.display = 'none';
-                document.getElementById('thankYouMsg').style.display = 'block';
-                document.getElementById('thankYouMsg').innerHTML = "Welcome back! Your review is posted below.";
-                existingReviews.reverse().forEach(rev => renderSingleReview(rev, true));
-            }
-        }
-
-        function renderSingleReview(r, atTop) {
-            const feed = document.getElementById('reviewFeed');
-            const stars = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
-            const html = `
-                <div class="review-item reveal active" style="animation: liquidPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <div style="font-weight:900; font-size: 1.2rem;">${r.name} <span style='font-weight:normal; color:var(--text-muted); font-size:0.9rem;'>• ${r.city}</span></div>
-                        <div style="color:var(--accent-color); font-size: 1.3rem;">${stars}</div>
-                    </div>
-                    <div style="line-height: 1.7; font-size: 1.05rem;">"${r.text}"</div>
-                </div>
-            `;
-            if(atTop) {
-                feed.insertAdjacentHTML('afterbegin', html);
-            } else {
-                feed.insertAdjacentHTML('beforeend', html);
-            }
-        }
-
-        // EASTER EGG
-        function startDrip(event) {
-            const btn = document.getElementById('rain-btn');
-            const rect = btn.getBoundingClientRect();
-            const isSquirrelStorm = Math.random() < 0.20; // 20% chance
-            
-            for(let i=0; i<40; i++) {
-                setTimeout(() => {
-                    const drop = document.createElement('div');
-                    drop.className = 'dripping-drop';
-                    
-                    // Disperse wider
-                    drop.style.left = (rect.left - 50 + Math.random() * (rect.width + 100)) + 'px';
-                    drop.style.top = rect.top + 'px';
-                    
-                    if (isSquirrelStorm) {
-                        drop.style.backgroundColor = 'transparent';
-                        drop.style.width = 'auto';
-                        drop.style.height = 'auto';
-                        drop.style.fontSize = Math.random() > 0.5 ? '28px' : '20px';
-                        drop.innerHTML = Math.random() > 0.5 ? '🐿️' : '🥜';
-                    }
-                    
-                    drop.animate([
-                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                        { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0.1 }
-                    ], { 
-                        duration: 1000 + Math.random() * 1000, 
-                        easing: 'ease-in' 
-                    });
-
-                    document.body.appendChild(drop);
-                    setTimeout(() => { drop.remove(); }, 2000);
-                }, i * 50);
-            }
-        }
-
-        // CHAT FLOW
+        // CHAT SUPPORT LOGIC
         let chatStep = 1; 
-        let savedQuestion = "";
         
         function toggleChatWindow() {
             const win = document.getElementById('chat-window');
@@ -821,27 +786,26 @@
             
             if (chatStep === 1) {
                 if(!input.value.trim()) return;
-                savedQuestion = input.value; 
                 input.value = "";
-                prompt.innerText = "Thanks! What's your email address so we can reply?";
-                input.placeholder = "email@example.com";
+                prompt.innerText = "Input Verification Email";
+                input.placeholder = "protocol@domain.com";
                 input.type = "email";
-                btn.innerText = "Submit Request";
+                btn.innerText = "Execute Transmission";
                 chatStep = 2;
             } else {
                 if(!input.value.trim() || !input.value.includes('@')) {
-                    alert("Please enter a valid email address.");
+                    alert("Authentication failure: Invalid email structure.");
                     return;
                 }
-                btn.innerText = "Sending..."; 
+                btn.innerText = "Processing..."; 
                 btn.disabled = true;
                 
                 setTimeout(() => {
                     content.innerHTML = `
-                        <div style="text-align: center; padding: 30px 0;">
-                            <div style="font-size: 50px; margin-bottom: 15px; animation: liquidPop 0.5s;">✅</div>
-                            <p style='color:var(--success-color); font-weight:900; font-size: 1.4rem; margin:0;'>Message Sent!</p>
-                            <p style="font-size: 1rem; color: var(--text-muted); margin-top: 10px;">We'll email you back soon.</p>
+                        <div style="text-align: center; padding: 32px 0;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="margin:0 auto 16px; display:block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <p style='color:var(--text-main); font-weight:700; font-size: 1.2rem; margin:0;'>Transmission Secured</p>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Support personnel will initiate contact shortly.</p>
                         </div>
                     `;
                     setTimeout(() => {
@@ -849,46 +813,76 @@
                         setTimeout(() => {
                             chatStep = 1;
                             content.innerHTML = `
-                                <p id="chat-prompt" style="margin:0; font-weight: bold; font-size: 1.1rem;">Have a question about installation or sizing?</p>
-                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; margin-bottom: 20px;">We usually reply within a few hours.</p>
-                                <input type="text" id="chat-input" class="chat-input-box" placeholder="Type your question here...">
-                                <button id="chat-next-btn" onclick="handleChatFlow()" style="width:100%; margin-top:15px; background:linear-gradient(135deg, #007AFF, #00C6FF); color:white; border:none; padding:14px; border-radius:12px; cursor:pointer; font-weight:bold; font-size: 1.05rem;">Send Message</button>
+                                <p id="chat-prompt" style="margin:0; font-weight: 600; font-size: 1.05rem;">Input Support Query</p>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px;">Average resolution time: 4 operational hours.</p>
+                                <input type="text" id="chat-input" class="chat-input-box" placeholder="Describe deployment issue...">
+                                <button id="chat-next-btn" class="chat-btn" onclick="handleChatFlow()">Transmit Query</button>
                             `;
                         }, 500);
                     }, 3000);
-                }, 1200);
+                }, 1000);
             }
         }
 
-        // SCROLL EFFECTS & THEME
-        window.onscroll = () => {
-            let winScroll = document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress-fill").style.height = (winScroll / height) * 100 + "%";
+        // LOCAL REVIEWS LOGIC
+        function submitLocalReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('revName').value;
+            const text = document.getElementById('revText').value;
+            const rating = parseInt(document.getElementById('revRating').value);
             
-            // Glide top button
-            document.getElementById('glide-top').style.display = (winScroll > 500) ? "flex" : "none";
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+
+            const review = {
+                name: name,
+                initials: initials,
+                text: text,
+                rating: rating
+            };
+
+            let existingReviews = JSON.parse(localStorage.getItem('arborShieldReviews')) || [];
+            existingReviews.unshift(review);
+            localStorage.setItem('arborShieldReviews', JSON.stringify(existingReviews));
             
-            // Navbar shadow
-            const navbar = document.getElementById('navbar');
-            if(winScroll > 50) {
-                navbar.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
-                navbar.style.padding = "10px 0";
-            } else {
-                navbar.style.boxShadow = "none";
-                navbar.style.padding = "15px 0";
+            document.getElementById('reviewForm').style.display = 'none';
+            document.getElementById('thankYouMsg').style.display = 'block';
+            
+            // Professional Confetti
+            confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 }, colors: ['#2563eb', '#10b981', '#f8fafc'] });
+            
+            renderSingleReview(review, true);
+        }
+
+        function loadLocalReviews() {
+            let existingReviews = JSON.parse(localStorage.getItem('arborShieldReviews')) || [];
+            if(existingReviews.length > 0) {
+                document.getElementById('reviewForm').style.display = 'none';
+                document.getElementById('thankYouMsg').style.display = 'block';
+                existingReviews.reverse().forEach(rev => renderSingleReview(rev, true));
             }
-        };
+        }
 
-        document.getElementById('theme-toggle').onclick = () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            document.getElementById('theme-toggle').innerText = isDark ? '☀️' : '🌙';
-        };
-
-        function openModal(src) {
-            document.getElementById('modalImg').src = src;
-            document.getElementById('modal').style.display = 'flex';
+        function renderSingleReview(r, atTop) {
+            const feed = document.getElementById('reviewFeed');
+            const stars = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
+            const html = `
+                <div class="review-card reveal active">
+                    <div class="review-stars">${stars}</div>
+                    <div class="review-text">"${r.text}"</div>
+                    <div class="review-author">
+                        <div class="author-avatar">${r.initials}</div>
+                        <div class="author-info">
+                            <h4>${r.name}</h4>
+                            <p>Verified Operator</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            if(atTop) {
+                feed.insertAdjacentHTML('afterbegin', html);
+            } else {
+                feed.insertAdjacentHTML('beforeend', html);
+            }
         }
     </script>
 </body>
