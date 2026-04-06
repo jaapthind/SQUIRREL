@@ -55,6 +55,7 @@
         }
 
         body {
+            transform: translate3d(0, 0, 0);
             font-family: var(--font-main);
             background-color: #050505;
             color: var(--text-primary);
@@ -80,6 +81,7 @@
         }
 
         .liquid-blob {
+            will-change: transform;
             position: absolute;
             border-radius: 50%;
             filter: blur(120px);
