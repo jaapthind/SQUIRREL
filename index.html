@@ -6,29 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Squirrel-Proof Baffle</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' rx='20' fill='%23ff2d55'/><text x='50%' y='53%' text-anchor='middle' dominant-baseline='middle' font-size='65'>🐿️</text></svg>">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --accent-color: #ff2d55;
+            --accent-glow: rgba(255, 45, 85, 0.4);
             --text-color: #1d1d1f;
-            --glass-bg: rgba(255, 255, 255, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.25);
             
-            /* #4: Soft UI Shadows - Match background gradient (tinted soft pink/purple) instead of black */
+            /* EFFECT #4: ULTRA-DETAILED SOFT UI SHADOWS */
+            /* Expanded from 4 layers to 8 complex, tinted layers for hyper-realistic 3D depth and ambient occlusion */
             --glass-shadow:
-                0 15px 35px rgba(220, 180, 255, 0.25),
-                inset 0 1px 1px rgba(255, 255, 255, 0.9),
-                inset 0 0 20px rgba(255, 255, 255, 0.4),
-                inset 0 -1px 1px rgba(255, 255, 255, 0.5);
+                0 40px 80px -20px rgba(220, 180, 255, 0.25), /* Deep ambient glow */
+                0 25px 45px -10px rgba(0, 0, 0, 0.05),       /* Mid-tier soft shadow */
+                0 10px 20px -5px rgba(0, 0, 0, 0.03),        /* Contact shadow */
+                0 2px 5px rgba(0, 0, 0, 0.02),               /* Micro shadow */
+                inset 0 1px 1px rgba(255, 255, 255, 0.95),   /* Top rim light */
+                inset 0 -1px 2px rgba(255, 255, 255, 0.3),   /* Bottom reflection */
+                inset 1px 0 2px rgba(255, 255, 255, 0.4),    /* Left rim light */
+                inset -1px 0 2px rgba(255, 255, 255, 0.2);   /* Right rim shadow */
                 
-            /* #7: Frosted Glass Border */
-            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+            --blur: blur(45px) saturate(180%);
+
+            /* EFFECT #7: DETAILED FROSTED GLASS BORDER */
+            /* Using a multi-stop transparent gradient to simulate variable edge thickness of actual glass */
+            --glass-border: 1px solid transparent;
+            --glass-border-image: linear-gradient(
+                135deg, 
+                rgba(255, 255, 255, 0.8) 0%, 
+                rgba(255, 255, 255, 0.2) 20%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(255, 255, 255, 0.2) 80%, 
+                rgba(255, 255, 255, 0.6) 100%
+            );
             
-            --blur: blur(40px) saturate(160%);
             --body-gradient:
                 radial-gradient(circle at 10% 20%, rgba(255, 180, 200, 0.7) 0%, transparent 60%),
                 radial-gradient(circle at 90% 80%, rgba(180, 230, 255, 0.7) 0%, transparent 60%),
@@ -39,26 +55,38 @@
 
         body.dark-mode {
             --text-color: #ffffff;
-            --glass-bg: rgba(0, 0, 0, 0.15);
+            --glass-bg: rgba(10, 10, 15, 0.25);
             
-            /* #4: Soft UI Shadows - Deep purple/dark tinted instead of pure black */
+            /* EFFECT #4: DARK MODE SPECIFIC MULTI-LAYER SHADOWS */
             --glass-shadow:
-                0 25px 50px rgba(80, 40, 110, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2),
-                inset 0 0 20px rgba(0, 0, 0, 0.2),
-                inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+                0 50px 100px -20px rgba(0, 0, 0, 0.8),
+                0 30px 60px -10px rgba(40, 20, 60, 0.5),
+                0 10px 20px -5px rgba(0, 0, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+                inset 1px 0 2px rgba(255, 255, 255, 0.05),
+                inset -1px 0 2px rgba(0, 0, 0, 0.3);
                 
-            /* #7: Frosted Glass Border */
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            /* EFFECT #7: DARK MODE FROSTED BORDER */
+            --glass-border-image: linear-gradient(
+                135deg, 
+                rgba(255, 255, 255, 0.2) 0%, 
+                rgba(255, 255, 255, 0.05) 20%, 
+                rgba(255, 255, 255, 0.0) 50%, 
+                rgba(255, 255, 255, 0.02) 80%, 
+                rgba(255, 255, 255, 0.1) 100%
+            );
                 
             --body-gradient:
                 radial-gradient(circle at 20% 30%, rgba(100, 40, 70, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 80% 70%, rgba(40, 80, 120, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 40% 80%, rgba(80, 40, 110, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 70% 20%, rgba(120, 70, 40, 0.5) 0%, transparent 60%),
-                #121214;
+                #0a0a0c;
         }
 
+        /* EFFECT #2: CUSTOM CURSOR (CSS base, hides default cursor) */
         body {
             margin: 0;
             background: var(--body-gradient);
@@ -67,22 +95,30 @@
             animation: liquidRainbow 25s linear infinite alternate;
             color: var(--text-color);
             
-            /* #5: Typography Contrast */
+            /* EFFECT #5: APPLYING CONTRASTING BASE FONT */
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.01em;
             
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 20px;
             box-sizing: border-box;
-            transition: background 0.5s ease;
+            transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Hides default cursor to use our custom interactive one */
+            cursor: none;
         }
         
-        /* #5: Typography Contrast */
+        /* EFFECT #5: TYPOGRAPHY CONTRAST (HEADING SPECIFICS) */
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            letter-spacing: -0.04em;
         }
 
         @keyframes liquidRainbow {
@@ -92,12 +128,50 @@
             100% { background-position: 0% 100%; }
         }
 
+        /* EFFECT #2: CUSTOM CURSOR (ANIMATED ELEMENTS) */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid rgba(150, 150, 150, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s, height 0.15s, border-color 0.15s, background-color 0.15s;
+            backdrop-filter: blur(2px);
+        }
+        /* When hovering over interactive elements */
+        body.hovering .cursor-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #34c759;
+        }
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            border-color: #34c759;
+            background-color: rgba(52, 199, 89, 0.1);
+        }
+
         .product-container {
             background: var(--glass-bg);
-            
-            /* #7: Frosted Glass Border */
-            border: var(--glass-border);
-            
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
@@ -111,8 +185,24 @@
             align-items: stretch;
             position: relative;
             
-            /* #2: Custom Cursor (Acorn) */
-            cursor: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22><text y=%2220%22 font-size=%2220%22>🌰</text></svg>'), auto;
+            /* EFFECT #7: IMPLEMENTING THE COMPLEX BORDER */
+            border: var(--glass-border);
+            border-image: var(--glass-border-image) 1;
+            /* Border-image removes border-radius, so we use a pseudo-element hack for true glass borders */
+        }
+        
+        /* EFFECT #7: TRUE ROUNDED GRADIENT BORDER PSEUDO-ELEMENT */
+        .product-container::before, .info-box::before, .poster-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px; /* border thickness */
+            background: var(--glass-border-image);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         .left-col {
@@ -121,6 +211,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .right-col {
@@ -128,32 +219,48 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
         }
 
+        /* EFFECT #6: HIGHLY DETAILED ANIMATED GRADIENT TEXT */
         .header h1 {
             margin: 0 0 0.2rem 0;
-            font-size: 2.6rem;
-            letter-spacing: -0.8px;
-            font-weight: 800;
+            font-size: 2.8rem; /* Slightly larger for impact */
+            line-height: 1.1;
             
-            /* #6: Animated Gradient Text */
-            background: linear-gradient(to right, var(--text-color) 20%, var(--accent-color) 40%, var(--accent-color) 60%, var(--text-color) 80%);
-            background-size: 200% auto;
+            /* Complex 5-stop gradient that sweeps across the text */
+            background: linear-gradient(
+                110deg,
+                var(--text-color) 0%,
+                var(--text-color) 35%,
+                var(--accent-color) 50%,
+                #ff8da1 55%,
+                var(--text-color) 65%,
+                var(--text-color) 100%
+            );
+            background-size: 300% 300%;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: textShine 4s linear infinite;
+            
+            /* Custom easing for a "shimmer" rather than a mechanical slide */
+            animation: ultimateTextShine 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+            
+            /* Text shadow tailored to not break the background clip */
+            filter: drop-shadow(0px 4px 12px rgba(255, 45, 85, 0.15));
         }
         
-        @keyframes textShine {
-            to { background-position: 200% center; }
+        @keyframes ultimateTextShine {
+            0% { background-position: 200% center; }
+            40% { background-position: -100% center; }
+            100% { background-position: -100% center; } /* Pause between shimmers */
         }
 
         .header p {
             margin: 0 0 1.5rem 0;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-color);
-            opacity: 0.9;
+            opacity: 0.85;
             font-size: 1.15rem;
         }
 
@@ -162,29 +269,58 @@
             height: 100%;
             min-height: 350px;
             border-radius: 36px;
-            
-            /* #7: Frosted Glass Border */
-            border: var(--glass-border);
-            
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            
-            /* #3: Skeleton Loading - Animated background underneath the image */
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 75%);
-            background-size: 400% 100%;
-            animation: skeleton-loading 1.5s infinite ease-in-out;
-            
             position: relative;
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
+            background: transparent;
         }
-        
-        @keyframes skeleton-loading {
+
+        /* EFFECT #3: DETAILED SKELETON LOADING */
+        /* Creates an intricate shimmering wave effect while the image loads */
+        .skeleton-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: linear-gradient(
+                120deg, 
+                rgba(255, 255, 255, 0.05) 25%, 
+                rgba(255, 255, 255, 0.25) 35%, 
+                rgba(255, 255, 255, 0.6) 50%, 
+                rgba(255, 255, 255, 0.25) 65%, 
+                rgba(255, 255, 255, 0.05) 75%
+            );
+            background-size: 400% 100%;
+            animation: hyperSkeletonShine 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        body.dark-mode .skeleton-overlay {
+            background: linear-gradient(
+                120deg, 
+                rgba(0, 0, 0, 0.1) 25%, 
+                rgba(255, 255, 255, 0.05) 35%, 
+                rgba(255, 255, 255, 0.15) 50%, 
+                rgba(255, 255, 255, 0.05) 65%, 
+                rgba(0, 0, 0, 0.1) 75%
+            );
+            background-size: 400% 100%;
+        }
+
+        @keyframes hyperSkeletonShine {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
+        }
+
+        /* Class applied via JS when image finishes loading */
+        .skeleton-overlay.loaded {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .poster-image {
@@ -192,61 +328,46 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
-            opacity: 0.85;
+            opacity: 0; /* Starts hidden for skeleton effect */
+            transition: opacity 0.8s ease-in-out;
             mix-blend-mode: multiply;
         }
 
-        body.dark-mode .poster-image {
+        .poster-image.revealed {
+            opacity: 0.85; /* Fades in once loaded */
+        }
+
+        body.dark-mode .poster-image.revealed {
             mix-blend-mode: screen;
             opacity: 0.8;
         }
 
         .info-box {
             background: var(--glass-bg);
-            
-            /* #7: Frosted Glass Border */
-            border: var(--glass-border);
-            
             border-radius: 32px;
             padding: 1.5rem;
             margin-bottom: 1.2rem;
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
+            position: relative;
         }
 
         .info-box h3 {
             margin-top: 0;
             margin-bottom: 0.5rem;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-color);
-            font-weight: 700;
         }
 
         .info-box p {
             margin: 0.4rem 0;
             font-size: 0.95rem;
-            line-height: 1.5;
+            line-height: 1.6;
             color: var(--text-color);
         }
 
-        .info-box ul {
-            margin: 0.6rem 0 0 0;
-            padding-left: 1.2rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--text-color);
-        }
-
-        .info-box li {
-            margin-bottom: 0.4rem;
-        }
-
-        .info-box.highlight {
-            position: relative;
-        }
-
-        .info-box.highlight::before {
+        .info-box.highlight::after {
             content: '';
             position: absolute;
             left: 16px;
@@ -254,13 +375,14 @@
             bottom: 1.5rem;
             width: 6px;
             border-radius: 6px;
-            background: #34c759;
-            box-shadow: 0 0 10px rgba(52, 199, 89, 0.4);
+            background: linear-gradient(180deg, #34c759, #28a745);
+            box-shadow: 0 0 15px rgba(52, 199, 89, 0.5);
         }
 
         .info-box.highlight h3 {
             padding-left: 15px;
             color: #34c759;
+            text-shadow: 0 2px 4px rgba(52, 199, 89, 0.2);
         }
 
         .info-box.highlight p {
@@ -272,22 +394,36 @@
             top: 25px;
             right: 25px;
             font-size: 1.4rem;
-            cursor: pointer;
-            padding: 10px;
+            padding: 12px;
             border-radius: 50%;
             background: var(--glass-bg);
-            
-            /* #7: Frosted Glass Border */
-            border: var(--glass-border);
-            
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
-            z-index: 10;
+            z-index: 100;
             display: flex;
             justify-content: center;
             align-items: center;
             color: var(--text-color);
+            border: none; /* Handled by pseudo element below */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        #theme-toggle::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: var(--glass-border-image);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
         }
 
         .bio-box {
@@ -301,73 +437,118 @@
             height: 132px;
             border-radius: 50%;
             object-fit: cover;
-            
-            /* #7: Frosted Glass Border */
-            border: var(--glass-border);
-            
             flex-shrink: 0;
             background: var(--glass-bg);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
+            position: relative;
         }
-
-        /* #9: Squirrel Slide Animation */
-        .sliding-squirrel {
+        
+        /* Apply glass border to portrait */
+        .portrait-wrapper {
+            position: relative;
+            width: 132px;
+            height: 132px;
+            border-radius: 50%;
+        }
+        .portrait-wrapper::before {
+            content: "";
             position: absolute;
-            right: -20px;
-            font-size: 2rem;
-            animation: squirrelClimbSlide 8s infinite ease-in-out;
-            z-index: 20;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: var(--glass-border-image);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
             pointer-events: none;
+            z-index: 2;
         }
 
-        @keyframes squirrelClimbSlide {
-            0%   { top: 90%; transform: scaleX(-1) rotate(-90deg); opacity: 0; }
-            10%  { opacity: 1; }
-            40%  { top: 15%; transform: scaleX(-1) rotate(-90deg); }
-            45%  { top: 15%; transform: scaleX(1) rotate(0deg); } 
-            50%  { top: 15%; transform: scaleX(-1) rotate(20deg); } 
-            55%  { top: 90%; transform: scaleX(-1) rotate(20deg); opacity: 1; } 
-            60%  { opacity: 0; top: 90%; }
-            100% { opacity: 0; top: 90%; }
+        /* EFFECT #9: THE EPIC SQUIRREL SLIDE ANIMATION */
+        /* A complex, multi-stage keyframe animation telling a physical story */
+        .squirrel-actor {
+            position: absolute;
+            font-size: 2.5rem;
+            z-index: 50;
+            pointer-events: none;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+            
+            /* Start hidden off-screen */
+            top: 110%;
+            right: -60px;
+            opacity: 0;
+            transform: scaleX(-1) rotate(-90deg);
+            
+            /* The entire scene takes 12 seconds to play out, looping infinitely */
+            animation: epicSquirrelFail 12s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+        }
+
+        @keyframes epicSquirrelFail {
+            /* 0% to 15%: Approaching and climbing up the invisible wall */
+            0%   { top: 110%; right: -60px; opacity: 0; transform: scaleX(-1) rotate(-90deg) scale(0.8); }
+            5%   { top: 90%;  right: -30px; opacity: 1; transform: scaleX(-1) rotate(-90deg) scale(1); }
+            15%  { top: 10%;  right: -30px; transform: scaleX(-1) rotate(-90deg); }
+            
+            /* 16% to 25%: Peeking over, assessing the baffle */
+            18%  { top: 5%;   right: -20px; transform: scaleX(-1) rotate(-45deg); }
+            20%  { top: 2%;   right: -10px; transform: scaleX(1) rotate(0deg); } /* Turns around */
+            25%  { top: 5%;   right: -15px; transform: scaleX(-1) rotate(15deg); } /* Commits to stepping on */
+            
+            /* 26% to 35%: The struggle. Slipping, trying to grip */
+            27%  { top: 8%;   right: -25px; transform: scaleX(-1) rotate(-10deg); }
+            29%  { top: 12%;  right: -20px; transform: scaleX(-1) rotate(20deg); }
+            31%  { top: 15%;  right: -30px; transform: scaleX(-1) rotate(-5deg); }
+            33%  { top: 20%;  right: -25px; transform: scaleX(-1) rotate(35deg); }
+            35%  { top: 25%;  right: -35px; transform: scaleX(-1) rotate(10deg); }
+            
+            /* 36% to 45%: Complete loss of grip, accelerating slide down */
+            36%  { top: 30%;  right: -30px; transform: scaleX(-1) rotate(45deg); animation-timing-function: ease-in; }
+            40%  { top: 70%;  right: -40px; transform: scaleX(-1) rotate(75deg); }
+            42%  { top: 90%;  right: -35px; transform: scaleX(-1) rotate(90deg); }
+            
+            /* 43% to 50%: The impact, bounce, and retreat */
+            44%  { top: 105%; right: -40px; transform: scaleX(-1) rotate(110deg); animation-timing-function: ease-out; } /* Hit ground */
+            46%  { top: 95%;  right: -50px; transform: scaleX(-1) rotate(45deg); } /* Bounce up */
+            48%  { top: 105%; right: -60px; transform: scaleX(-1) rotate(0deg); } /* Land on feet */
+            55%  { top: 105%; right: -200px; opacity: 1; transform: scaleX(-1) rotate(0deg); } /* Run away fast */
+            60%  { opacity: 0; right: -200px; }
+            100% { opacity: 0; right: -200px; }
         }
 
         @media (max-width: 768px) {
+            body { cursor: auto; } /* Remove custom cursor on mobile */
+            .cursor-dot, .cursor-outline { display: none; }
             .product-container {
                 flex-direction: column;
                 padding: 1.5rem;
                 border-radius: 36px;
                 gap: 1.5rem;
             }
-            .poster-container {
-                min-height: 250px;
-            }
-            .header h1 {
-                font-size: 2rem;
-                margin-top: 1.5rem;
-            }
-            .bio-box {
-                flex-direction: column;
-                text-align: center;
-            }
-            .sliding-squirrel {
-                display: none; /* Hide on mobile to avoid horizontal scrolling issues */
-            }
+            .poster-container { min-height: 250px; }
+            .header h1 { font-size: 2.2rem; margin-top: 1.5rem; }
+            .bio-box { flex-direction: column; text-align: center; }
+            .squirrel-actor { display: none; } /* Hide heavy animation on small screens to prevent overflow bugs */
         }
     </style>
 </head>
 
 <body>
-    <button id="theme-toggle">🌙</button>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <button id="theme-toggle" class="interactive-element">🌙</button>
 
     <div class="product-container">
         
-        <div class="sliding-squirrel">🐿️</div>
+        <div class="squirrel-actor">🐿️</div>
 
         <div class="left-col">
             <div class="poster-container" title="Top of Newimage.png is displayed here">
-                <img src="./aiGeneratedSquirrel.png" class="poster-image" alt="Squirrel sliding off baffle"
+                <div class="skeleton-overlay" id="skeleton"></div>
+                
+                <img src="./aiGeneratedSquirrel.png" class="poster-image interactive-element" id="main-image" alt="Squirrel sliding off baffle"
                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500?text=Image+Not+Found'">
             </div>
         </div>
@@ -378,7 +559,7 @@
                 <p>Secure Your Fruit, Save Your Harvest, for only $38.</p>
             </div>
 
-            <div class="info-box highlight">
+            <div class="info-box highlight interactive-element">
                 <h3>✨ ORDER NOW FOR A FREE INSTALLATION!</h3>
                 <p>We are offering <strong>FREE installation</strong> with your purchase!</p>
                 <p><strong>Contact:</strong> Call <strong>510-336-4081</strong> or email
@@ -386,11 +567,13 @@
                 </p>
             </div>
 
-            <div class="info-box bio-box">
-                <img src="./portrait.jpg" alt="Jaap" class="portrait">
+            <div class="info-box bio-box interactive-element">
+                <div class="portrait-wrapper">
+                    <img src="./portrait.jpg" alt="Jaap" class="portrait">
+                </div>
                 <div>
                     <h3 style="color: var(--text-color); margin-bottom: 5px;">Hi, I'm Jaap.</h3>
-                    <p style="font-size: 0.95rem; margin: 0; line-height: 1.4;">I designed this 3D-printed barrier right
+                    <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">I designed this 3D-printed barrier right
                         here in Berkeley to save my dad's fruit harvest from neighborhood squirrels. After testing a few
                         prototypes, I found the perfect slip angle they just can't grip. Now, I manufacture these kits
                         locally to help other families protect their trees, too.</p>
@@ -400,10 +583,62 @@
     </div>
 
     <script>
-        document.getElementById('theme-toggle').onclick = () => {
+        // DARK MODE TOGGLE LOGIC
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.onclick = () => {
             document.body.classList.toggle('dark-mode');
-            document.getElementById('theme-toggle').innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            themeToggle.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         };
+
+        // EFFECT #3 LOGIC: SKELETON LOADING REMOVAL
+        const mainImage = document.getElementById('main-image');
+        const skeleton = document.getElementById('skeleton');
+        
+        // Simulating network delay for local files so you can actually see the beautiful skeleton effect
+        // Remove the setTimeout in production and just use the onload function directly.
+        if(mainImage.complete) {
+            setTimeout(() => {
+                skeleton.classList.add('loaded');
+                mainImage.classList.add('revealed');
+            }, 1000); 
+        } else {
+            mainImage.onload = () => {
+                setTimeout(() => {
+                    skeleton.classList.add('loaded');
+                    mainImage.classList.add('revealed');
+                }, 1000);
+            };
+        }
+
+        // EFFECT #2 LOGIC: CUSTOM CURSOR MOVEMENT & HOVER STATES
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const interactives = document.querySelectorAll('.interactive-element, button, a');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            // Outline follows with a slight smooth delay
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards", easing: "ease-out" });
+        });
+
+        // Add visual feedback to cursor when hovering over elements
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
+            });
+        });
     </script>
 </body>
 
