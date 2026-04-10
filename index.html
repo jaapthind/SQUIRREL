@@ -10,7 +10,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -20,21 +20,19 @@
             --glass-bg: rgba(255, 255, 255, 0.25);
             
             /* EFFECT #4: ULTRA-DETAILED SOFT UI SHADOWS */
-            /* Expanded from 4 layers to 8 complex, tinted layers for hyper-realistic 3D depth and ambient occlusion */
             --glass-shadow:
-                0 40px 80px -20px rgba(220, 180, 255, 0.25), /* Deep ambient glow */
-                0 25px 45px -10px rgba(0, 0, 0, 0.05),       /* Mid-tier soft shadow */
-                0 10px 20px -5px rgba(0, 0, 0, 0.03),        /* Contact shadow */
-                0 2px 5px rgba(0, 0, 0, 0.02),               /* Micro shadow */
-                inset 0 1px 1px rgba(255, 255, 255, 0.95),   /* Top rim light */
-                inset 0 -1px 2px rgba(255, 255, 255, 0.3),   /* Bottom reflection */
-                inset 1px 0 2px rgba(255, 255, 255, 0.4),    /* Left rim light */
-                inset -1px 0 2px rgba(255, 255, 255, 0.2);   /* Right rim shadow */
+                0 40px 80px -20px rgba(220, 180, 255, 0.25),
+                0 25px 45px -10px rgba(0, 0, 0, 0.05),
+                0 10px 20px -5px rgba(0, 0, 0, 0.03),
+                0 2px 5px rgba(0, 0, 0, 0.02),
+                inset 0 1px 1px rgba(255, 255, 255, 0.95),
+                inset 0 -1px 2px rgba(255, 255, 255, 0.3),
+                inset 1px 0 2px rgba(255, 255, 255, 0.4),
+                inset -1px 0 2px rgba(255, 255, 255, 0.2);
                 
             --blur: blur(45px) saturate(180%);
 
             /* EFFECT #7: DETAILED FROSTED GLASS BORDER */
-            /* Using a multi-stop transparent gradient to simulate variable edge thickness of actual glass */
             --glass-border: 1px solid transparent;
             --glass-border-image: linear-gradient(
                 135deg, 
@@ -53,40 +51,6 @@
                 #fcfcfc;
         }
 
-        body.dark-mode {
-            --text-color: #ffffff;
-            --glass-bg: rgba(10, 10, 15, 0.25);
-            
-            /* EFFECT #4: DARK MODE SPECIFIC MULTI-LAYER SHADOWS */
-            --glass-shadow:
-                0 50px 100px -20px rgba(0, 0, 0, 0.8),
-                0 30px 60px -10px rgba(40, 20, 60, 0.5),
-                0 10px 20px -5px rgba(0, 0, 0, 0.4),
-                0 2px 5px rgba(0, 0, 0, 0.3),
-                inset 0 1px 1px rgba(255, 255, 255, 0.15),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.5),
-                inset 1px 0 2px rgba(255, 255, 255, 0.05),
-                inset -1px 0 2px rgba(0, 0, 0, 0.3);
-                
-            /* EFFECT #7: DARK MODE FROSTED BORDER */
-            --glass-border-image: linear-gradient(
-                135deg, 
-                rgba(255, 255, 255, 0.2) 0%, 
-                rgba(255, 255, 255, 0.05) 20%, 
-                rgba(255, 255, 255, 0.0) 50%, 
-                rgba(255, 255, 255, 0.02) 80%, 
-                rgba(255, 255, 255, 0.1) 100%
-            );
-                
-            --body-gradient:
-                radial-gradient(circle at 20% 30%, rgba(100, 40, 70, 0.5) 0%, transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(40, 80, 120, 0.5) 0%, transparent 60%),
-                radial-gradient(circle at 40% 80%, rgba(80, 40, 110, 0.5) 0%, transparent 60%),
-                radial-gradient(circle at 70% 20%, rgba(120, 70, 40, 0.5) 0%, transparent 60%),
-                #0a0a0c;
-        }
-
-        /* EFFECT #2: CUSTOM CURSOR (CSS base, hides default cursor) */
         body {
             margin: 0;
             background: var(--body-gradient);
@@ -94,12 +58,9 @@
             background-attachment: fixed;
             animation: liquidRainbow 25s linear infinite alternate;
             color: var(--text-color);
-            
-            /* EFFECT #5: APPLYING CONTRASTING BASE FONT */
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-weight: 400;
             letter-spacing: 0.01em;
-            
             display: flex;
             justify-content: center;
             align-items: center;
@@ -108,13 +69,11 @@
             overflow-x: hidden;
             padding: 20px;
             box-sizing: border-box;
-            transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             
-            /* Hides default cursor to use our custom interactive one */
+            /* EFFECT #2: Hides default cursor */
             cursor: none;
         }
         
-        /* EFFECT #5: TYPOGRAPHY CONTRAST (HEADING SPECIFICS) */
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             font-weight: 800;
@@ -128,15 +87,14 @@
             100% { background-position: 0% 100%; }
         }
 
-        /* EFFECT #2: CUSTOM CURSOR (ANIMATED ELEMENTS) */
+        /* EFFECT #2: CUSTOM CURSOR */
         .cursor-dot {
             width: 8px;
             height: 8px;
             background-color: var(--accent-color);
             border-radius: 50%;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
@@ -149,25 +107,127 @@
             border: 1.5px solid rgba(150, 150, 150, 0.5);
             border-radius: 50%;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
             transition: width 0.15s, height 0.15s, border-color 0.15s, background-color 0.15s;
             backdrop-filter: blur(2px);
         }
-        /* When hovering over interactive elements */
         body.hovering .cursor-dot {
-            width: 12px;
-            height: 12px;
+            width: 12px; height: 12px;
             background-color: #34c759;
         }
         body.hovering .cursor-outline {
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             border-color: #34c759;
             background-color: rgba(52, 199, 89, 0.1);
+        }
+
+        /* --- NEW FEATURE: DYNAMIC PRICING COUNTDOWN (TOP LEFT) --- */
+        .timer-widget {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            box-shadow: var(--glass-shadow);
+            padding: 8px 24px 8px 12px;
+            border-radius: 50px;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .timer-svg {
+            transform: rotate(-90deg);
+            width: 48px;
+            height: 48px;
+        }
+        
+        .timer-bg {
+            fill: none;
+            stroke: rgba(0, 0, 0, 0.05);
+            stroke-width: 4;
+        }
+        
+        .timer-progress {
+            fill: none;
+            stroke: #34c759;
+            stroke-width: 4;
+            stroke-linecap: round;
+            /* 2 * pi * 22 (radius) = ~138 */
+            stroke-dasharray: 138;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+        
+        .timer-text-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .timer-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #34c759;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        
+        #countdown-time {
+            font-family: 'Inter', monospace;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-color);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* --- NEW FEATURE: FLOATING BUY A COFFEE BUTTON (BOTTOM RIGHT) --- */
+        .coffee-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            box-shadow: var(--glass-shadow);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+        
+        .coffee-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(220, 180, 255, 0.4);
+            color: var(--text-color);
+        }
+
+        /* Glass border pseudo-elements for all glass containers */
+        .product-container::before, .info-box::before, .poster-container::before, .portrait-wrapper::before, .timer-widget::before, .coffee-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px; /* border thickness */
+            background: var(--glass-border-image);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .product-container {
@@ -184,25 +244,7 @@
             gap: 2.5rem;
             align-items: stretch;
             position: relative;
-            
-            /* EFFECT #7: IMPLEMENTING THE COMPLEX BORDER */
-            border: var(--glass-border);
-            border-image: var(--glass-border-image) 1;
-            /* Border-image removes border-radius, so we use a pseudo-element hack for true glass borders */
-        }
-        
-        /* EFFECT #7: TRUE ROUNDED GRADIENT BORDER PSEUDO-ELEMENT */
-        .product-container::before, .info-box::before, .poster-container::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px; /* border thickness */
-            background: var(--glass-border-image);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            margin-top: 40px; /* Space for top fixed header */
         }
 
         .left-col {
@@ -222,13 +264,11 @@
             position: relative;
         }
 
-        /* EFFECT #6: HIGHLY DETAILED ANIMATED GRADIENT TEXT */
+        /* EFFECT #6: ANIMATED GRADIENT TEXT */
         .header h1 {
             margin: 0 0 0.2rem 0;
-            font-size: 2.8rem; /* Slightly larger for impact */
+            font-size: 2.8rem;
             line-height: 1.1;
-            
-            /* Complex 5-stop gradient that sweeps across the text */
             background: linear-gradient(
                 110deg,
                 var(--text-color) 0%,
@@ -242,18 +282,14 @@
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            
-            /* Custom easing for a "shimmer" rather than a mechanical slide */
             animation: ultimateTextShine 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-            
-            /* Text shadow tailored to not break the background clip */
             filter: drop-shadow(0px 4px 12px rgba(255, 45, 85, 0.15));
         }
         
         @keyframes ultimateTextShine {
             0% { background-position: 200% center; }
             40% { background-position: -100% center; }
-            100% { background-position: -100% center; } /* Pause between shimmers */
+            100% { background-position: -100% center; }
         }
 
         .header p {
@@ -280,8 +316,7 @@
             background: transparent;
         }
 
-        /* EFFECT #3: DETAILED SKELETON LOADING */
-        /* Creates an intricate shimmering wave effect while the image loads */
+        /* EFFECT #3: SKELETON LOADING */
         .skeleton-overlay {
             position: absolute;
             inset: 0;
@@ -300,24 +335,11 @@
             backdrop-filter: blur(10px);
         }
 
-        body.dark-mode .skeleton-overlay {
-            background: linear-gradient(
-                120deg, 
-                rgba(0, 0, 0, 0.1) 25%, 
-                rgba(255, 255, 255, 0.05) 35%, 
-                rgba(255, 255, 255, 0.15) 50%, 
-                rgba(255, 255, 255, 0.05) 65%, 
-                rgba(0, 0, 0, 0.1) 75%
-            );
-            background-size: 400% 100%;
-        }
-
         @keyframes hyperSkeletonShine {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
 
-        /* Class applied via JS when image finishes loading */
         .skeleton-overlay.loaded {
             opacity: 0;
             visibility: hidden;
@@ -328,19 +350,12 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
-            opacity: 0; /* Starts hidden for skeleton effect */
+            opacity: 0; 
             transition: opacity 0.8s ease-in-out;
             mix-blend-mode: multiply;
         }
 
-        .poster-image.revealed {
-            opacity: 0.85; /* Fades in once loaded */
-        }
-
-        body.dark-mode .poster-image.revealed {
-            mix-blend-mode: screen;
-            opacity: 0.8;
-        }
+        .poster-image.revealed { opacity: 0.85; }
 
         .info-box {
             background: var(--glass-bg);
@@ -389,43 +404,6 @@
             padding-left: 15px;
         }
 
-        #theme-toggle {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 1.4rem;
-            padding: 12px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            box-shadow: var(--glass-shadow);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-color);
-            border: none; /* Handled by pseudo element below */
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        #theme-toggle::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: var(--glass-border-image);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        #theme-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-        }
-
         .bio-box {
             display: flex;
             gap: 18px;
@@ -445,91 +423,69 @@
             position: relative;
         }
         
-        /* Apply glass border to portrait */
         .portrait-wrapper {
             position: relative;
             width: 132px;
             height: 132px;
             border-radius: 50%;
         }
-        .portrait-wrapper::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: var(--glass-border-image);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: 2;
-        }
 
-        /* EFFECT #9: THE EPIC SQUIRREL SLIDE ANIMATION */
-        /* A complex, multi-stage keyframe animation telling a physical story */
+        /* EFFECT #9: EPIC SQUIRREL SLIDE */
         .squirrel-actor {
             position: absolute;
             font-size: 2.5rem;
             z-index: 50;
             pointer-events: none;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-            
-            /* Start hidden off-screen */
-            top: 110%;
-            right: -60px;
-            opacity: 0;
+            top: 110%; right: -60px; opacity: 0;
             transform: scaleX(-1) rotate(-90deg);
-            
-            /* The entire scene takes 12 seconds to play out, looping infinitely */
             animation: epicSquirrelFail 12s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
         }
 
         @keyframes epicSquirrelFail {
-            /* 0% to 15%: Approaching and climbing up the invisible wall */
             0%   { top: 110%; right: -60px; opacity: 0; transform: scaleX(-1) rotate(-90deg) scale(0.8); }
             5%   { top: 90%;  right: -30px; opacity: 1; transform: scaleX(-1) rotate(-90deg) scale(1); }
             15%  { top: 10%;  right: -30px; transform: scaleX(-1) rotate(-90deg); }
-            
-            /* 16% to 25%: Peeking over, assessing the baffle */
             18%  { top: 5%;   right: -20px; transform: scaleX(-1) rotate(-45deg); }
-            20%  { top: 2%;   right: -10px; transform: scaleX(1) rotate(0deg); } /* Turns around */
-            25%  { top: 5%;   right: -15px; transform: scaleX(-1) rotate(15deg); } /* Commits to stepping on */
-            
-            /* 26% to 35%: The struggle. Slipping, trying to grip */
+            20%  { top: 2%;   right: -10px; transform: scaleX(1) rotate(0deg); } 
+            25%  { top: 5%;   right: -15px; transform: scaleX(-1) rotate(15deg); } 
             27%  { top: 8%;   right: -25px; transform: scaleX(-1) rotate(-10deg); }
             29%  { top: 12%;  right: -20px; transform: scaleX(-1) rotate(20deg); }
             31%  { top: 15%;  right: -30px; transform: scaleX(-1) rotate(-5deg); }
             33%  { top: 20%;  right: -25px; transform: scaleX(-1) rotate(35deg); }
             35%  { top: 25%;  right: -35px; transform: scaleX(-1) rotate(10deg); }
-            
-            /* 36% to 45%: Complete loss of grip, accelerating slide down */
             36%  { top: 30%;  right: -30px; transform: scaleX(-1) rotate(45deg); animation-timing-function: ease-in; }
             40%  { top: 70%;  right: -40px; transform: scaleX(-1) rotate(75deg); }
             42%  { top: 90%;  right: -35px; transform: scaleX(-1) rotate(90deg); }
-            
-            /* 43% to 50%: The impact, bounce, and retreat */
-            44%  { top: 105%; right: -40px; transform: scaleX(-1) rotate(110deg); animation-timing-function: ease-out; } /* Hit ground */
-            46%  { top: 95%;  right: -50px; transform: scaleX(-1) rotate(45deg); } /* Bounce up */
-            48%  { top: 105%; right: -60px; transform: scaleX(-1) rotate(0deg); } /* Land on feet */
-            55%  { top: 105%; right: -200px; opacity: 1; transform: scaleX(-1) rotate(0deg); } /* Run away fast */
+            44%  { top: 105%; right: -40px; transform: scaleX(-1) rotate(110deg); animation-timing-function: ease-out; } 
+            46%  { top: 95%;  right: -50px; transform: scaleX(-1) rotate(45deg); } 
+            48%  { top: 105%; right: -60px; transform: scaleX(-1) rotate(0deg); } 
+            55%  { top: 105%; right: -200px; opacity: 1; transform: scaleX(-1) rotate(0deg); } 
             60%  { opacity: 0; right: -200px; }
             100% { opacity: 0; right: -200px; }
         }
 
         @media (max-width: 768px) {
-            body { cursor: auto; } /* Remove custom cursor on mobile */
+            body { cursor: auto; }
             .cursor-dot, .cursor-outline { display: none; }
             .product-container {
                 flex-direction: column;
                 padding: 1.5rem;
-                border-radius: 36px;
                 gap: 1.5rem;
+                margin-top: 80px; /* Make room for timer */
             }
-            .poster-container { min-height: 250px; }
-            .header h1 { font-size: 2.2rem; margin-top: 1.5rem; }
-            .bio-box { flex-direction: column; text-align: center; }
-            .squirrel-actor { display: none; } /* Hide heavy animation on small screens to prevent overflow bugs */
+            .timer-widget {
+                top: 15px; left: 15px;
+                padding: 6px 16px 6px 8px;
+            }
+            .timer-svg { width: 36px; height: 36px; }
+            #countdown-time { font-size: 0.95rem; }
+            .coffee-btn {
+                bottom: 15px; right: 15px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .squirrel-actor { display: none; }
         }
     </style>
 </head>
@@ -538,7 +494,16 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <button id="theme-toggle" class="interactive-element">🌙</button>
+    <div class="timer-widget interactive-element">
+        <svg class="timer-svg" viewBox="0 0 48 48">
+            <circle class="timer-bg" cx="24" cy="24" r="22"></circle>
+            <circle class="timer-progress" cx="24" cy="24" r="22"></circle>
+        </svg>
+        <div class="timer-text-container">
+            <span class="timer-label">Free Install Ends</span>
+            <span id="countdown-time">00:00:00</span>
+        </div>
+    </div>
 
     <div class="product-container">
         
@@ -547,7 +512,6 @@
         <div class="left-col">
             <div class="poster-container" title="Top of Newimage.png is displayed here">
                 <div class="skeleton-overlay" id="skeleton"></div>
-                
                 <img src="./aiGeneratedSquirrel.png" class="poster-image interactive-element" id="main-image" alt="Squirrel sliding off baffle"
                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500?text=Image+Not+Found'">
             </div>
@@ -582,20 +546,15 @@
         </div>
     </div>
 
-    <script>
-        // DARK MODE TOGGLE LOGIC
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.onclick = () => {
-            document.body.classList.toggle('dark-mode');
-            themeToggle.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        };
+    <a href="https://buymeacoffee.com" target="_blank" class="coffee-btn interactive-element">
+        ☕ Buy Jaap a coffee
+    </a>
 
-        // EFFECT #3 LOGIC: SKELETON LOADING REMOVAL
+    <script>
+        // SKELETON LOADING LOGIC
         const mainImage = document.getElementById('main-image');
         const skeleton = document.getElementById('skeleton');
         
-        // Simulating network delay for local files so you can actually see the beautiful skeleton effect
-        // Remove the setTimeout in production and just use the onload function directly.
         if(mainImage.complete) {
             setTimeout(() => {
                 skeleton.classList.add('loaded');
@@ -610,7 +569,7 @@
             };
         }
 
-        // EFFECT #2 LOGIC: CUSTOM CURSOR MOVEMENT & HOVER STATES
+        // CUSTOM CURSOR LOGIC
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         const interactives = document.querySelectorAll('.interactive-element, button, a');
@@ -619,26 +578,49 @@
             const posX = e.clientX;
             const posY = e.clientY;
             
-            // Dot follows instantly
             cursorDot.style.left = `${posX}px`;
             cursorDot.style.top = `${posY}px`;
             
-            // Outline follows with a slight smooth delay
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
             }, { duration: 500, fill: "forwards", easing: "ease-out" });
         });
 
-        // Add visual feedback to cursor when hovering over elements
         interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                document.body.classList.add('hovering');
-            });
-            el.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hovering');
-            });
+            el.addEventListener('mouseenter', () => { document.body.classList.add('hovering'); });
+            el.addEventListener('mouseleave', () => { document.body.classList.remove('hovering'); });
         });
+
+        // DYNAMIC 24-HOUR COUNTDOWN LOGIC
+        function updateTimer() {
+            const now = new Date();
+            // Get next midnight
+            const midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-time').innerText = 
+                `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+            // Update circular SVG progress
+            const progressCircle = document.querySelector('.timer-progress');
+            const totalSecsInDay = 24 * 60 * 60;
+            const secsLeft = (h * 3600) + (m * 60) + s;
+            
+            // 138 is the stroke-dasharray (circumference of radius 22)
+            const dashoffset = 138 - (138 * (secsLeft / totalSecsInDay));
+            progressCircle.style.strokeDashoffset = dashoffset;
+        }
+        
+        // Initialize and tick
+        updateTimer();
+        setInterval(updateTimer, 1000);
     </script>
 </body>
 
