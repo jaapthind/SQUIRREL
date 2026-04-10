@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
 
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
         :root {
@@ -633,32 +632,9 @@
         </div>
     </div>
 
-    <button class="ar-trigger-btn interactive-element" id="custom-ar-button" onclick="activateAR()">
-        <span class="icon">📷</span> VISUALIZE 
-    </button>
+    
 
-    <model-viewer 
-        id="baffle-ar-viewer" 
-        src="YOUR_BAFFLE_MODEL.glb" 
-        ios-src="YOUR_BAFFLE_MODEL.usdz" 
-        ar 
-        ar-modes="webxr scene-viewer quick-look" 
-        ar-scale="fixed"
-        ar-placement="floor"
-        camera-controls 
-        touch-action="pan-y" 
-        shadow-intensity="1.5"
-        shadow-softness="0.8"
-        environment-image="neutral"
-        alt="A 3D AR Model of the Squirrel-Proof Baffle">
-        
-        <div slot="ar-button"></div>
-        
-        <div slot="ar-prompt" class="ar-instruction-overlay">
-            <span class="ar-instruction-icon">📱</span>
-            Point your camera at a tree trunk and move slowly...
-        </div>
-    </model-viewer>
+    
 
     <div class="product-container">
         
@@ -702,60 +678,12 @@
     </div>
 
     <a href="https://buymeacoffee.com/JaapThind" target="_blank" class="coffee-btn interactive-element">
-        🍕 Buy Jaap a Pizza
+         Buy Me A Coffee
     </a>
 
     <script>
-        // ==========================================================================
-        // AR (AUGMENTED REALITY) SYSTEM CONTROLLER
-        // ==========================================================================
+       
         
-        const modelViewerElement = document.getElementById('baffle-ar-viewer');
-        const customArButton = document.getElementById('custom-ar-button');
-
-        // Function triggered by the large UI button
-        function activateAR() {
-            if (modelViewerElement.canActivateAR) {
-                // Device supports AR, launch the native AR intent (SceneViewer/QuickLook)
-                modelViewerElement.activateAR();
-            } else {
-                // Device does not support AR (e.g., Desktop PC), provide fallback feedback
-                const originalText = customArButton.innerHTML;
-                customArButton.innerHTML = '<span class="icon">⚠️</span> AR NOT SUPPORTED HERE';
-                customArButton.style.background = 'linear-gradient(135deg, #ff9900, #ff5500)';
-                
-                // Revert button back to normal after 3 seconds
-                setTimeout(() => {
-                    customArButton.innerHTML = originalText;
-                    customArButton.style.background = 'linear-gradient(135deg, rgba(255, 45, 85, 0.95), rgba(255, 100, 120, 0.95))';
-                }, 3000);
-            }
-        }
-
-        // Advanced Listener: Check AR status when the model viewer initializes
-        modelViewerElement.addEventListener('ar-status', (event) => {
-            console.log("AR System Status Changed:", event.detail.status);
-            
-            if (event.detail.status === 'session-started') {
-                console.log("User has successfully entered AR mode.");
-            } else if (event.detail.status === 'not-presenting') {
-                console.log("User exited AR mode or AR has not started yet.");
-            }
-        });
-
-        // Advanced Listener: Handle AR tracking events (when the phone finds the floor/tree)
-        modelViewerElement.addEventListener('ar-tracking', (event) => {
-            if (event.detail.state === 'tracking') {
-                console.log("AR Engine has locked onto a physical surface.");
-            } else if (event.detail.state === 'not-tracking') {
-                console.log("AR Engine lost tracking, user needs to move the phone.");
-            }
-        });
-
-        // Advanced Listener: Handle 3D model loading errors
-        modelViewerElement.addEventListener('error', (event) => {
-            console.error("Failed to load 3D AR Model. Ensure YOUR_BAFFLE_MODEL.glb and .usdz exist in the root directory.", event);
-        });
 
 
         // ==========================================================================
