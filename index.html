@@ -5,56 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Squirrel-Proof Baffle</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --accent-color: #ff2d55;
             --text-color: #1d1d1f;
-            /* Darker text since background is lighter */
             --glass-bg: rgba(255, 255, 255, 0.3);
-            /* Slightly more opaque glass to anchor elements over light bg */
+            
+            /* #4: Soft UI Shadows - Match background gradient (tinted soft pink/purple) instead of black */
             --glass-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.08),
+                0 15px 35px rgba(220, 180, 255, 0.25),
                 inset 0 1px 1px rgba(255, 255, 255, 0.9),
                 inset 0 0 20px rgba(255, 255, 255, 0.4),
                 inset 0 -1px 1px rgba(255, 255, 255, 0.5);
+                
+            /* #7: Frosted Glass Border */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+            
             --blur: blur(40px) saturate(160%);
-
-            /* Lighter Pastel Moving Rainbow Blurbs */
             --body-gradient:
                 radial-gradient(circle at 10% 20%, rgba(255, 180, 200, 0.7) 0%, transparent 60%),
                 radial-gradient(circle at 90% 80%, rgba(180, 230, 255, 0.7) 0%, transparent 60%),
                 radial-gradient(circle at 30% 90%, rgba(220, 180, 255, 0.7) 0%, transparent 60%),
                 radial-gradient(circle at 80% 10%, rgba(255, 220, 180, 0.7) 0%, transparent 60%),
                 #fcfcfc;
-            /* Clean light base */
         }
 
         body.dark-mode {
             --text-color: #ffffff;
             --glass-bg: rgba(0, 0, 0, 0.15);
+            
+            /* #4: Soft UI Shadows - Deep purple/dark tinted instead of pure black */
             --glass-shadow:
-                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 25px 50px rgba(80, 40, 110, 0.4),
                 inset 0 1px 1px rgba(255, 255, 255, 0.2),
                 inset 0 0 20px rgba(0, 0, 0, 0.2),
                 inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+                
+            /* #7: Frosted Glass Border */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+                
             --body-gradient:
                 radial-gradient(circle at 20% 30%, rgba(100, 40, 70, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 80% 70%, rgba(40, 80, 120, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 40% 80%, rgba(80, 40, 110, 0.5) 0%, transparent 60%),
                 radial-gradient(circle at 70% 20%, rgba(120, 70, 40, 0.5) 0%, transparent 60%),
                 #121214;
-            /* Deep dark base */
         }
 
         body {
             margin: 0;
             background: var(--body-gradient);
             background-size: 300% 300%;
-            /* Giant background size to allow movement */
             background-attachment: fixed;
             animation: liquidRainbow 25s linear infinite alternate;
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* #5: Typography Contrast */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
             display: flex;
             justify-content: center;
             align-items: center;
@@ -64,29 +79,25 @@
             box-sizing: border-box;
             transition: background 0.5s ease;
         }
+        
+        /* #5: Typography Contrast */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
 
         @keyframes liquidRainbow {
-            0% {
-                background-position: 0% 0%;
-            }
-
-            33% {
-                background-position: 100% 0%;
-            }
-
-            66% {
-                background-position: 100% 100%;
-            }
-
-            100% {
-                background-position: 0% 100%;
-            }
+            0% { background-position: 0% 0%; }
+            33% { background-position: 100% 0%; }
+            66% { background-position: 100% 100%; }
+            100% { background-position: 0% 100%; }
         }
 
         .product-container {
             background: var(--glass-bg);
-            border: none;
-            /* No solid borders on TRUE deep transparent glass */
+            
+            /* #7: Frosted Glass Border */
+            border: var(--glass-border);
+            
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
@@ -99,6 +110,9 @@
             gap: 2.5rem;
             align-items: stretch;
             position: relative;
+            
+            /* #2: Custom Cursor (Acorn) */
+            cursor: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22><text y=%2220%22 font-size=%2220%22>🌰</text></svg>'), auto;
         }
 
         .left-col {
@@ -121,6 +135,18 @@
             font-size: 2.6rem;
             letter-spacing: -0.8px;
             font-weight: 800;
+            
+            /* #6: Animated Gradient Text */
+            background: linear-gradient(to right, var(--text-color) 20%, var(--accent-color) 40%, var(--accent-color) 60%, var(--text-color) 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textShine 4s linear infinite;
+        }
+        
+        @keyframes textShine {
+            to { background-position: 200% center; }
         }
 
         .header p {
@@ -136,16 +162,29 @@
             height: 100%;
             min-height: 350px;
             border-radius: 36px;
-            border: none;
+            
+            /* #7: Frosted Glass Border */
+            border: var(--glass-border);
+            
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            
+            /* #3: Skeleton Loading - Animated background underneath the image */
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 400% 100%;
+            animation: skeleton-loading 1.5s infinite ease-in-out;
+            
             position: relative;
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
+        }
+        
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .poster-image {
@@ -155,7 +194,6 @@
             object-position: top;
             opacity: 0.85;
             mix-blend-mode: multiply;
-            /* Soft blend to make image look submerged in liquid glass */
         }
 
         body.dark-mode .poster-image {
@@ -165,7 +203,10 @@
 
         .info-box {
             background: var(--glass-bg);
-            border: none;
+            
+            /* #7: Frosted Glass Border */
+            border: var(--glass-border);
+            
             border-radius: 32px;
             padding: 1.5rem;
             margin-bottom: 1.2rem;
@@ -235,7 +276,10 @@
             padding: 10px;
             border-radius: 50%;
             background: var(--glass-bg);
-            border: none;
+            
+            /* #7: Frosted Glass Border */
+            border: var(--glass-border);
+            
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
@@ -257,12 +301,36 @@
             height: 132px;
             border-radius: 50%;
             object-fit: cover;
-            border: none;
+            
+            /* #7: Frosted Glass Border */
+            border: var(--glass-border);
+            
             flex-shrink: 0;
             background: var(--glass-bg);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
             box-shadow: var(--glass-shadow);
+        }
+
+        /* #9: Squirrel Slide Animation */
+        .sliding-squirrel {
+            position: absolute;
+            right: -20px;
+            font-size: 2rem;
+            animation: squirrelClimbSlide 8s infinite ease-in-out;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        @keyframes squirrelClimbSlide {
+            0%   { top: 90%; transform: scaleX(-1) rotate(-90deg); opacity: 0; }
+            10%  { opacity: 1; }
+            40%  { top: 15%; transform: scaleX(-1) rotate(-90deg); }
+            45%  { top: 15%; transform: scaleX(1) rotate(0deg); } 
+            50%  { top: 15%; transform: scaleX(-1) rotate(20deg); } 
+            55%  { top: 90%; transform: scaleX(-1) rotate(20deg); opacity: 1; } 
+            60%  { opacity: 0; top: 90%; }
+            100% { opacity: 0; top: 90%; }
         }
 
         @media (max-width: 768px) {
@@ -272,26 +340,31 @@
                 border-radius: 36px;
                 gap: 1.5rem;
             }
-
             .poster-container {
                 min-height: 250px;
             }
-
             .header h1 {
                 font-size: 2rem;
                 margin-top: 1.5rem;
             }
-
             .bio-box {
                 flex-direction: column;
                 text-align: center;
+            }
+            .sliding-squirrel {
+                display: none; /* Hide on mobile to avoid horizontal scrolling issues */
             }
         }
     </style>
 </head>
 
 <body>
+    <button id="theme-toggle">🌙</button>
+
     <div class="product-container">
+        
+        <div class="sliding-squirrel">🐿️</div>
+
         <div class="left-col">
             <div class="poster-container" title="Top of Newimage.png is displayed here">
                 <img src="./aiGeneratedSquirrel.png" class="poster-image" alt="Squirrel sliding off baffle"
@@ -304,10 +377,6 @@
                 <h1>The Squirrel-Proof Baffle</h1>
                 <p>Secure Your Fruit, Save Your Harvest, for only $38.</p>
             </div>
-
-
-
-
 
             <div class="info-box highlight">
                 <h3>✨ ORDER NOW FOR A FREE INSTALLATION!</h3>
