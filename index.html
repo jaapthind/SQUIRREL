@@ -480,7 +480,6 @@
         #progress-vine::after { content: '🍃'; position: absolute; right: -10px; top: -8px; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
         /* F25: 3D Tilt */
-        .tilt-element { transition: transform 0.15s ease-out; transform-style: preserve-3d; will-change: transform; }
 
         /* F37: Typewriter */
         .typewriter-cursor { display: inline-block; width: 3px; height: 1.1em; background-color: var(--accent-color); vertical-align: text-bottom; animation: blink 1s step-end infinite; margin-left: 2px; }
@@ -627,19 +626,7 @@
         document.querySelectorAll('.reveal-line').forEach(el => observer.observe(el));
 
         // F25: Mouse-Tracked 3D Tilt
-        document.querySelectorAll('.tilt-element').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                const centerX = rect.width / 2; const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5;
-                const rotateY = ((x - centerX) / centerX) * 5;
-                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
+        
 
         // F37: Typewriter Intro
         const twText = "Hi, I'm Jaap.";
