@@ -44,20 +44,30 @@
                 rgba(255, 255, 255, 0.6) 100%
             );
             
-            --body-gradient:
-                radial-gradient(circle at 10% 20%, rgba(255, 180, 200, 0.7) 0%, transparent 60%),
-                radial-gradient(circle at 90% 80%, rgba(180, 230, 255, 0.7) 0%, transparent 60%),
-                radial-gradient(circle at 30% 90%, rgba(220, 180, 255, 0.7) 0%, transparent 60%),
-                radial-gradient(circle at 80% 10%, rgba(255, 220, 180, 0.7) 0%, transparent 60%),
-                #fcfcfc;
-        }
+                --body-gradient: linear-gradient(-45deg, 
+        /* REDS & PINKS */
+        hsl(0, 100%, 90%), hsl(10, 100%, 90%), hsl(20, 100%, 90%), 
+        /* ORANGES */
+        hsl(30, 100%, 90%), hsl(40, 100%, 90%), hsl(50, 100%, 90%), 
+        /* YELLOWS */
+        hsl(60, 100%, 90%), hsl(70, 100%, 90%), hsl(80, 100%, 90%), 
+        /* GREENS */
+        hsl(90, 100%, 90%), hsl(100, 100%, 90%), hsl(110, 100%, 90%), hsl(120, 100%, 90%), hsl(130, 100%, 90%), hsl(140, 100%, 90%), hsl(150, 100%, 90%),
+        /* CYANS & TEALS */
+        hsl(160, 100%, 90%), hsl(170, 100%, 90%), hsl(180, 100%, 90%), hsl(190, 100%, 90%), 
+        /* BLUES */
+        hsl(200, 100%, 90%), hsl(210, 100%, 90%), hsl(220, 100%, 90%), hsl(230, 100%, 90%), hsl(240, 100%, 90%), 
+        /* PURPLES */
+        hsl(250, 100%, 90%), hsl(260, 100%, 90%), hsl(270, 100%, 90%), hsl(280, 100%, 90%), hsl(290, 100%, 90%), 
+        /* MAGENTAS */
+        hsl(300, 100%, 90%), hsl(310, 100%, 90%), hsl(320, 100%, 90%), hsl(330, 100%, 90%), hsl(340, 100%, 90%), hsl(350, 100%, 90%)
+    );
 
         body {
             margin: 0;
             background: var(--body-gradient);
-            background-size: 300% 300%;
-            background-attachment: fixed;
-            animation: liquidRainbow 25s linear infinite alternate;
+            background-size: 800% 800%; /* Massive size for 35 colors */
+            animation: liquidRainbow 6s ease-in-out infinite;
             color: var(--text-color);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-weight: 400;
@@ -82,10 +92,9 @@
         }
 
         @keyframes liquidRainbow {
-            0% { background-position: 0% 0%; }
-            33% { background-position: 100% 0%; }
-            66% { background-position: 100% 100%; }
-            100% { background-position: 0% 100%; }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* EFFECT #2: CUSTOM CURSOR */
