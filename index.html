@@ -475,38 +475,193 @@
         }
 
         /* EFFECT #9: EPIC SQUIRREL SLIDE */
-        .squirrel-actor {
+                .squirrel-actor {
             position: absolute;
-            font-size: 2.5rem;
             z-index: 50;
             pointer-events: none;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-            top: 110%; right: -60px; opacity: 0;
-            transform: scaleX(-1) rotate(-90deg);
-            animation: epicSquirrelFail 12s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+            width: 150px;
+            height: 150px;
+            top: 110%; 
+            right: 10px; 
+            opacity: 0;
+            filter: drop-shadow(0 25px 35px rgba(0,0,0,0.5));
+            animation: masterSquirrelPhys 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            will-change: transform, top, right, opacity;
         }
-
-        @keyframes epicSquirrelFail {
-            0%   { top: 110%; right: -60px; opacity: 0; transform: scaleX(-1) rotate(-90deg) scale(0.8); }
-            5%   { top: 90%;  right: -30px; opacity: 1; transform: scaleX(-1) rotate(-90deg) scale(1); }
-            15%  { top: 10%;  right: -30px; transform: scaleX(-1) rotate(-90deg); }
-            18%  { top: 5%;   right: -20px; transform: scaleX(-1) rotate(-45deg); }
-            20%  { top: 2%;   right: -10px; transform: scaleX(1) rotate(0deg); } 
-            25%  { top: 5%;   right: -15px; transform: scaleX(-1) rotate(15deg); } 
-            27%  { top: 8%;   right: -25px; transform: scaleX(-1) rotate(-10deg); }
-            29%  { top: 12%;  right: -20px; transform: scaleX(-1) rotate(20deg); }
-            31%  { top: 15%;  right: -30px; transform: scaleX(-1) rotate(-5deg); }
-            33%  { top: 20%;  right: -25px; transform: scaleX(-1) rotate(35deg); }
-            35%  { top: 25%;  right: -35px; transform: scaleX(-1) rotate(10deg); }
-            36%  { top: 30%;  right: -30px; transform: scaleX(-1) rotate(45deg); animation-timing-function: ease-in; }
-            40%  { top: 70%;  right: -40px; transform: scaleX(-1) rotate(75deg); }
-            42%  { top: 90%;  right: -35px; transform: scaleX(-1) rotate(90deg); }
-            44%  { top: 105%; right: -40px; transform: scaleX(-1) rotate(110deg); animation-timing-function: ease-out; } 
-            46%  { top: 95%;  right: -50px; transform: scaleX(-1) rotate(45deg); } 
-            48%  { top: 105%; right: -60px; transform: scaleX(-1) rotate(0deg); } 
-            55%  { top: 105%; right: -200px; opacity: 1; transform: scaleX(-1) rotate(0deg); } 
-            60%  { opacity: 0; right: -200px; }
-            100% { opacity: 0; right: -200px; }
+        
+        .squirrel-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+        
+        /* MASTER POSITION AND GRAVITY PHYSICS */
+        @keyframes masterSquirrelPhys {
+            0%    { top: 120%; right: -30px; opacity: 0; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.7); }
+            2%    { top: 105%; right: -35px; opacity: 1; transform: scaleX(-1) translateY(-2px) rotate(-90deg) scale(0.8); }
+            4%    { top: 90%;  right: -32px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.85); animation-timing-function: ease-out; }
+            6%    { top: 85%;  right: -32px; transform: scaleX(-1) translateY(2px) rotate(-92deg) scale(0.85); }
+            8%    { top: 85%;  right: -32px; transform: scaleX(-1) translateY(0) rotate(-88deg) scale(0.85); }
+            10%   { top: 70%;  right: -25px; transform: scaleX(-1) translateY(-5px) rotate(-85deg) scale(0.9); animation-timing-function: linear; }
+            12%   { top: 55%;  right: -20px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.95); }
+            14%   { top: 40%;  right: -25px; transform: scaleX(-1) translateY(-8px) rotate(-95deg) scale(1); }
+            16%   { top: 25%;  right: -28px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(1); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+            18%   { top: 18%;  right: -15px; transform: scaleX(-1) translateY(5px) rotate(-45deg); }
+            18.5% { top: 17%;  right: -10px; transform: scaleX(-1) translateY(0) rotate(-55deg); }
+            19%   { top: 16%;  right: -5px;  transform: scaleX(-1) translateY(3px) rotate(-40deg); }
+            19.5% { top: 15.5%;right: -8px;  transform: scaleX(-1) translateY(-2px) rotate(-50deg); }
+            20%   { top: 15%;  right: 0px;   transform: scaleX(-1) translateY(4px) rotate(-35deg); }
+            20.5% { top: 14.5%;right: -3px;  transform: scaleX(-1) translateY(-3px) rotate(-48deg); }
+            21%   { top: 14%;  right: 5px;   transform: scaleX(-1) translateY(5px) rotate(-30deg); }
+            21.5% { top: 13.5%;right: 2px;   transform: scaleX(-1) translateY(-2px) rotate(-42deg); }
+            22%   { top: 13%;  right: 10px;  transform: scaleX(-1) translateY(6px) rotate(-25deg); }
+            22.5% { top: 13.5%;right: 6px;   transform: scaleX(-1) translateY(-1px) rotate(-35deg); }
+            23%   { top: 14%;  right: 15px;  transform: scaleX(-1) translateY(4px) rotate(-20deg); animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+            24%   { top: 16%;  right: 20px;  transform: scaleX(-1) translateY(0) rotate(-15deg); }
+            25%   { top: 18%;  right: 25px;  transform: scaleX(-1) translateY(-2px) rotate(-10deg); }
+            26%   { top: 22%;  right: 32px;  transform: scaleX(-1) translateY(0) rotate(-5deg); }
+            28%   { top: 28%;  right: 42px;  transform: scaleX(-1) translateY(-4px) rotate(0deg); }
+            30%   { top: 35%;  right: 55px;  transform: scaleX(-1) translateY(0) rotate(5deg); }
+            32%   { top: 45%;  right: 70px;  transform: scaleX(-1) translateY(5px) rotate(15deg); animation-timing-function: ease-in; }
+            34%   { top: 58%;  right: 85px;  transform: scaleX(-1) translateY(12px) rotate(35deg); }
+            36%   { top: 75%;  right: 105px; transform: scaleX(-1) translateY(22px) rotate(70deg); }
+            38%   { top: 98%;  right: 130px; transform: scaleX(-1) translateY(35px) rotate(120deg); }
+            40%   { top: 125%; right: 160px; transform: scaleX(-1) translateY(50px) rotate(180deg); opacity: 1; filter: drop-shadow(0 50px 50px rgba(0,0,0,0.2)); }
+            42%   { top: 150%; right: 190px; transform: scaleX(-1) translateY(65px) rotate(240deg); opacity: 0; }
+            100%  { top: 150%; right: 190px; opacity: 0; }
+        }
+        
+        /* INDIVIDUAL BODY PART MICRO-ANIMATIONS */
+        #sq-tail-group {
+            transform-origin: 120px 130px;
+            animation: tailFluidity 14s infinite;
+        }
+        
+        @keyframes tailFluidity {
+            0%    { transform: rotate(0deg) scale(1); }
+            4%    { transform: rotate(5deg) scale(1.05); }
+            6%    { transform: rotate(-5deg) scale(0.95); }
+            10%   { transform: rotate(12deg) scale(1.1); }
+            14%   { transform: rotate(2deg) scale(1); }
+            18%   { transform: rotate(-25deg) scale(1.15); }
+            19%   { transform: rotate(-45deg) scale(1.2); }
+            20%   { transform: rotate(-30deg) scale(1.1); }
+            21%   { transform: rotate(-50deg) scale(1.25); }
+            22%   { transform: rotate(-35deg) scale(1.1); }
+            23%   { transform: rotate(-15deg) scale(1.05); }
+            25%   { transform: rotate(-5deg) scale(1); }
+            28%   { transform: rotate(10deg) scale(0.95); }
+            32%   { transform: rotate(-20deg) scale(1.1); }
+            36%   { transform: rotate(-60deg) scale(1.2); }
+            40%   { transform: rotate(-90deg) scale(1.3); }
+            100%  { transform: rotate(0deg) scale(1); }
+        }
+        
+        #sq-frontarm {
+            transform-origin: 75px 100px;
+            animation: armPanic 14s infinite;
+        }
+        
+        @keyframes armPanic {
+            0%    { transform: rotate(0deg); }
+            17%   { transform: rotate(0deg); }
+            18%   { transform: rotate(-35deg) translateY(-5px); }
+            18.5% { transform: rotate(15deg) translateY(2px); }
+            19%   { transform: rotate(-45deg) translateY(-8px); }
+            19.5% { transform: rotate(20deg) translateY(3px); }
+            20%   { transform: rotate(-55deg) translateY(-10px); }
+            20.5% { transform: rotate(25deg) translateY(4px); }
+            21%   { transform: rotate(-65deg) translateY(-12px); }
+            21.5% { transform: rotate(10deg) translateY(2px); }
+            22%   { transform: rotate(-75deg) translateY(-15px); }
+            24%   { transform: rotate(-20deg) translateY(-2px); }
+            28%   { transform: rotate(-5deg) translateY(0); }
+            34%   { transform: rotate(-90deg) translateY(-20px); }
+            40%   { transform: rotate(-120deg) translateY(-25px); }
+            100%  { transform: rotate(0deg); }
+        }
+        
+        #sq-backleg {
+            transform-origin: 90px 140px;
+            animation: legScramble 14s infinite;
+        }
+        
+        @keyframes legScramble {
+            0%    { transform: rotate(0deg); }
+            10%   { transform: rotate(-15deg); }
+            14%   { transform: rotate(5deg); }
+            17%   { transform: rotate(-10deg); }
+            18%   { transform: rotate(25deg) translateX(5px); }
+            19%   { transform: rotate(-5deg) translateX(-2px); }
+            20%   { transform: rotate(35deg) translateX(8px); }
+            21%   { transform: rotate(0deg) translateX(0); }
+            22%   { transform: rotate(45deg) translateX(12px); }
+            24%   { transform: rotate(20deg) translateX(5px); }
+            28%   { transform: rotate(10deg) translateX(2px); }
+            34%   { transform: rotate(60deg) translateX(15px); }
+            40%   { transform: rotate(80deg) translateX(20px); }
+            100%  { transform: rotate(0deg); }
+        }
+        
+        #sq-head-group {
+            transform-origin: 60px 70px;
+            animation: headBob 14s infinite;
+        }
+        
+        @keyframes headBob {
+            0%    { transform: rotate(0deg); }
+            6%    { transform: rotate(-15deg); }
+            8%    { transform: rotate(10deg); }
+            10%   { transform: rotate(-5deg); }
+            16%   { transform: rotate(-25deg); }
+            18%   { transform: rotate(30deg); }
+            20%   { transform: rotate(15deg); }
+            22%   { transform: rotate(40deg); }
+            26%   { transform: rotate(20deg); }
+            32%   { transform: rotate(45deg); }
+            38%   { transform: rotate(70deg); }
+            100%  { transform: rotate(0deg); }
+        }
+        
+        #sq-eye {
+            transform-origin: 48px 65px;
+            animation: eyeBlink 14s infinite;
+        }
+        
+        @keyframes eyeBlink {
+            0%    { transform: scaleY(1); }
+            5%    { transform: scaleY(1); }
+            5.5%  { transform: scaleY(0.1); }
+            6%    { transform: scaleY(1); }
+            17%   { transform: scaleY(1); }
+            17.5% { transform: scaleY(0.1); }
+            18%   { transform: scaleY(1); }
+            19%   { transform: scale(1.3); } 
+            24%   { transform: scale(1.3); }
+            24.5% { transform: scaleY(0.1) scaleX(1.3); }
+            25%   { transform: scale(1.3); }
+            32%   { transform: scale(1.5); }
+            100%  { transform: scaleY(1); }
+        }
+        
+        #sq-ear-l, #sq-ear-r {
+            transform-origin: 50px 40px;
+            animation: earFlick 14s infinite;
+        }
+        
+        @keyframes earFlick {
+            0%    { transform: rotate(0deg); }
+            5%    { transform: rotate(0deg); }
+            6%    { transform: rotate(-20deg); }
+            7%    { transform: rotate(10deg); }
+            8%    { transform: rotate(0deg); }
+            18%   { transform: rotate(0deg); }
+            19%   { transform: rotate(-40deg); }
+            22%   { transform: rotate(-40deg); }
+            25%   { transform: rotate(-10deg); }
+            32%   { transform: rotate(-50deg); }
+            100%  { transform: rotate(0deg); }
         }
 
         @media (max-width: 768px) {
@@ -529,7 +684,47 @@
 
     <div class="product-container">
         
-        <div class="squirrel-actor">🐿️</div>
+                <div class="squirrel-actor">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="squirrel-svg">
+                <defs>
+                    <radialGradient id="fur" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#8B5A2B"/>
+                        <stop offset="80%" stop-color="#5C3A21"/>
+                        <stop offset="100%" stop-color="#3A2415"/>
+                    </radialGradient>
+                    <linearGradient id="tailFur" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#A0522D"/>
+                        <stop offset="50%" stop-color="#8B4513"/>
+                        <stop offset="100%" stop-color="#2F4F4F"/>
+                    </linearGradient>
+                </defs>
+                
+                <g id="sq-tail-group">
+                    <path d="M 140,150 C 190,130 210,60 170,30 C 130,0 90,40 105,80 C 115,110 120,130 140,150 Z" fill="url(#tailFur)" id="sq-tail"/>
+                </g>
+                
+                <g id="sq-backleg">
+                    <path d="M 90,140 C 70,150 55,165 50,175 C 45,185 55,190 70,185 C 85,180 100,160 110,145 Z" fill="#3A2415"/>
+                </g>
+                
+                <path d="M 70,160 C 45,160 35,110 60,85 C 85,60 115,70 125,100 C 135,130 110,160 70,160 Z" fill="url(#fur)" id="sq-body"/>
+                
+                <g id="sq-head-group">
+                    <circle cx="60" cy="70" r="28" fill="url(#fur)"/>
+                    <path d="M 50,50 L 35,25 L 60,42 Z" fill="#5C3A21" id="sq-ear-l"/>
+                    <path d="M 70,55 L 88,30 L 78,52 Z" fill="#5C3A21" id="sq-ear-r"/>
+                    <g id="sq-eye">
+                        <circle cx="48" cy="65" r="5" fill="#000"/>
+                        <circle cx="46" cy="63" r="2" fill="#fff"/>
+                    </g>
+                    <circle cx="32" cy="76" r="3.5" fill="#111" id="sq-nose"/>
+                </g>
+                
+                <g id="sq-frontarm">
+                    <path d="M 80,105 C 60,115 45,115 35,110 C 28,106 32,100 38,103 C 50,110 65,110 75,98 Z" fill="#5C3A21"/>
+                </g>
+            </svg>
+        </div>
 
         <div class="left-col">
             <div class="poster-container" title="Top of Newimage.png is displayed here">
