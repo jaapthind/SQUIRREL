@@ -566,6 +566,17 @@
                         prototypes, I found the perfect slip angle they just can't grip. Now, I manufacture these kits
                         locally to help other families protect their trees, too.</p>
                 </div>
+                            <div class="info-box interactive-element" style="margin-top: 1.5rem; overflow: hidden; position: relative;">
+                <h3 style="margin-top: 0; margin-bottom: 8px;">📍 Check Free Installation</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 15px; opacity: 0.9;">Enter your address to see if you qualify for free local setup (4.5 mile radius).</p>
+                
+                <div style="display: flex; gap: 10px; position: relative; z-index: 5;">
+                    <input type="text" id="address-input" placeholder="e.g. 123 Main St, Berkeley" style="flex: 1; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); font-family: inherit; outline: none; color: var(--text-color); font-size: 1rem; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                    <button id="check-btn" class="interactive-element" style="padding: 14px 24px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.5); background: linear-gradient(135deg, var(--accent-color), #ff6b8b); color: white; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 10px 20px var(--accent-glow);">Check</button>
+                </div>
+                
+                <div id="eligibility-result" style="margin-top: 15px; font-weight: 600; font-size: 1rem; display: none; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); animation: slideDown 0.3s ease-out;"></div>
+            </div>
             </div>
         </div>
     </div>
@@ -618,6 +629,80 @@
                 el.addEventListener('mouseleave', () => { document.body.classList.remove('hovering'); });
             });
         }
+
+        // ==========================================================================
+        // FREE INSTALLATION CHECKER (OpenStreetMap API - No Google Key Needed)
+        // ==========================================================================
+        const checkBtn = document.getElementById('check-btn');
+        const inputField = document.getElementById('address-input');
+
+        // Add a focus effect for the liquid glass input
+        inputField.addEventListener('focus', () => inputField.style.background = 'rgba(255,255,255,0.3)');
+        inputField.addEventListener('blur', () => inputField.style.background = 'rgba(255,255,255,0.1)');
+
+        checkBtn.addEventListener('click', async () => {
+            const address = inputField.value.trim();
+            const resultDiv = document.getElementById('eligibility-result');
+            
+            if(!address) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '⚠️ Please enter an address.';
+                resultDiv.style.borderLeft = '4px solid #ffcc00';
+                return;
+            }
+            
+            // Button loading state
+            const originalBtnText = checkBtn.innerHTML;
+            checkBtn.innerHTML = 'Wait...';
+            checkBtn.style.opacity = '0.7';
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '📡 Scanning satellite data...';
+            resultDiv.style.borderLeft = '4px solid #007aff';
+
+            try {
+                // 45 Plaza Dr, Berkeley CA
+                const homeLat = 37.8550; 
+                const homeLon = -122.2450; 
+                
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+                const data = await res.json();
+                
+                if(data.length === 0) {
+                    resultDiv.innerHTML = '❌ Address not found. Please <a href="sms:+15103128640" style="color:var(--accent-color); font-weight:bold;">text me</a> to double check!';
+                    resultDiv.style.borderLeft = '4px solid var(--accent-color)';
+                } else {
+                    const userLat = parseFloat(data[0].lat);
+                    const userLon = parseFloat(data[0].lon);
+                    
+                    // Haversine distance math
+                    const R = 3958.8;
+                    const dLat = (userLat - homeLat) * Math.PI / 180;
+                    const dLon = (userLon - homeLon) * Math.PI / 180;
+                    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(homeLat * Math.PI / 180) * Math.cos(userLat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+                    const distance = R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                    
+                    if(distance <= 4.5) {
+                        resultDiv.innerHTML = '✅ <strong>ELIGIBLE!</strong> You are ' + distance.toFixed(1) + ' miles away. <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline;">Text me to schedule!</a>';
+                        resultDiv.style.borderLeft = '4px solid #34c759';
+                    } else {
+                        resultDiv.innerHTML = '📍 You are <strong>' + distance.toFixed(1) + ' miles</strong> away. Free install is for a 4.5-mile radius. <br><a href="sms:+15103128640" style="color:var(--accent-color); text-decoration:underline;">Text me</a> to see if we can still work it out!';
+                        resultDiv.style.borderLeft = '4px solid #ffcc00';
+                    }
+                }
+            } catch (err) {
+                resultDiv.innerHTML = '⚠️ Error checking map. Please <a href="sms:+15103128640" style="color:var(--accent-color); text-decoration:underline;">text me</a> to check!';
+            }
+            
+            // Restore button
+            checkBtn.innerHTML = originalBtnText;
+            checkBtn.style.opacity = '1';
+        });
+
+        // Allow pressing Enter to search
+        inputField.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') { checkBtn.click(); }
+        });
     </script>
 </body>
 
