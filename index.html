@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Squirrel-Proof Baffle</title>
     
-    <link rel="icon" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' rx='20' fill='%23ff2d55'/><text x='50%' y='53%' text-anchor='middle' dominant-baseline='middle' font-size='65'>🐿️</text></svg>">
-    
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='90' height='90' x='5' y='5' rx='20' fill='%231d1d1f' stroke='%23ff2d55' stroke-width='4'/><path d='M30 35 C 30 25, 70 25, 70 35 C 70 45, 30 55, 30 65 C 30 75, 70 75, 70 65' fill='none' stroke='white' stroke-width='12' stroke-linecap='round'/><circle cx='20' cy='20' r='5' fill='%23555'/><circle cx='80' cy='20' r='5' fill='%23555'/><circle cx='20' cy='80' r='5' fill='%23555'/><circle cx='80' cy='80' r='5' fill='%23555'/></svg>">    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
@@ -655,6 +654,24 @@
             }
         };
         setTimeout(typeWriter, 1200);
+
+        // --- DYNAMIC TAB TITLE LOGIC ---
+       // --- TAB HIJACK LOGIC ---
+        let originalTitle = document.title;
+        let riskInterval;
+        
+        window.addEventListener('blur', () => {
+            // When they leave, start the panic pulse
+            riskInterval = setInterval(() => {
+                document.title = document.title === "⚠️ FRUIT AT RISK!" ? "🐿️ SQUIRRELS ARE CLIMBING!" : "⚠️ FRUIT AT RISK!";
+            }, 1000);
+        });
+        
+        window.addEventListener('focus', () => {
+            // When they come back, stop the panic and reset
+            clearInterval(riskInterval);
+            document.title = originalTitle;
+        });
 
         
   
