@@ -44,30 +44,31 @@
                 rgba(255, 255, 255, 0.6) 100%
             );
             
-                --body-gradient: linear-gradient(-45deg, 
-        /* REDS & PINKS */
-        hsl(0, 100%, 90%), hsl(10, 100%, 90%), hsl(20, 100%, 90%), 
-        /* ORANGES */
-        hsl(30, 100%, 90%), hsl(40, 100%, 90%), hsl(50, 100%, 90%), 
-        /* YELLOWS */
-        hsl(60, 100%, 90%), hsl(70, 100%, 90%), hsl(80, 100%, 90%), 
-        /* GREENS */
-        hsl(90, 100%, 90%), hsl(100, 100%, 90%), hsl(110, 100%, 90%), hsl(120, 100%, 90%), hsl(130, 100%, 90%), hsl(140, 100%, 90%), hsl(150, 100%, 90%),
-        /* CYANS & TEALS */
-        hsl(160, 100%, 90%), hsl(170, 100%, 90%), hsl(180, 100%, 90%), hsl(190, 100%, 90%), 
-        /* BLUES */
-        hsl(200, 100%, 90%), hsl(210, 100%, 90%), hsl(220, 100%, 90%), hsl(230, 100%, 90%), hsl(240, 100%, 90%), 
-        /* PURPLES */
-        hsl(250, 100%, 90%), hsl(260, 100%, 90%), hsl(270, 100%, 90%), hsl(280, 100%, 90%), hsl(290, 100%, 90%), 
-        /* MAGENTAS */
-        hsl(300, 100%, 90%), hsl(310, 100%, 90%), hsl(320, 100%, 90%), hsl(330, 100%, 90%), hsl(340, 100%, 90%), hsl(350, 100%, 90%)
-    );
+            --body-gradient: linear-gradient(-45deg, 
+                /* REDS & PINKS */
+                hsl(0, 100%, 90%), hsl(10, 100%, 90%), hsl(20, 100%, 90%), 
+                /* ORANGES */
+                hsl(30, 100%, 90%), hsl(40, 100%, 90%), hsl(50, 100%, 90%), 
+                /* YELLOWS */
+                hsl(60, 100%, 90%), hsl(70, 100%, 90%), hsl(80, 100%, 90%), 
+                /* GREENS */
+                hsl(90, 100%, 90%), hsl(100, 100%, 90%), hsl(110, 100%, 90%), hsl(120, 100%, 90%), hsl(130, 100%, 90%), hsl(140, 100%, 90%), hsl(150, 100%, 90%),
+                /* CYANS & TEALS */
+                hsl(160, 100%, 90%), hsl(170, 100%, 90%), hsl(180, 100%, 90%), hsl(190, 100%, 90%), 
+                /* BLUES */
+                hsl(200, 100%, 90%), hsl(210, 100%, 90%), hsl(220, 100%, 90%), hsl(230, 100%, 90%), hsl(240, 100%, 90%), 
+                /* PURPLES */
+                hsl(250, 100%, 90%), hsl(260, 100%, 90%), hsl(270, 100%, 90%), hsl(280, 100%, 90%), hsl(290, 100%, 90%), 
+                /* MAGENTAS */
+                hsl(300, 100%, 90%), hsl(310, 100%, 90%), hsl(320, 100%, 90%), hsl(330, 100%, 90%), hsl(340, 100%, 90%), hsl(350, 100%, 90%)
+            );
+        }
 
         body {
             margin: 0;
-           background: var(--body-gradient);
-            background-size: 300% 100%; /* Long ribbon of colors */
-            animation: liquidRainbow 10s linear infinite;
+            background: var(--body-gradient);
+            background-size: 400% 400%;
+            animation: liquidRainbow 15s ease infinite;
             color: var(--text-color);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-weight: 400;
@@ -91,9 +92,10 @@
             letter-spacing: -0.04em;
         }
 
-                @keyframes liquidRainbow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; } /* Moves in one direction for a full loop */
+        @keyframes liquidRainbow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         /* EFFECT #2: CUSTOM CURSOR */
@@ -133,12 +135,6 @@
             background-color: rgba(52, 199, 89, 0.1);
         }
 
-        /* --- NEW FEATURE: DYNAMIC PRICING COUNTDOWN (TOP LEFT) --- */
-        
-
-        /* --- NEW FEATURE: FLOATING BUY A COFFEE BUTTON (BOTTOM RIGHT) --- */
-        
-        
         .coffee-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 20px 40px rgba(220, 180, 255, 0.4);
@@ -521,10 +517,6 @@
                 gap: 1.5rem;
                 margin-top: 100px; /* Make room for timer and AR button */
             }
-
-    
-            
-         
             .squirrel-actor { display: none; }
         }
     </style>
@@ -533,12 +525,6 @@
 <body>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
-
-    
-
-    
-
-    
 
     <div class="product-container">
         
@@ -584,13 +570,7 @@
         </div>
     </div>
 
-   
-
     <script>
-       
-        
-
-
         // ==========================================================================
         // STANDARD UI LOGIC (SKELETON, CURSOR, TIMER)
         // ==========================================================================
@@ -638,7 +618,6 @@
                 el.addEventListener('mouseleave', () => { document.body.classList.remove('hovering'); });
             });
         }
-
     </script>
 </body>
 
