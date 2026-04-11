@@ -590,6 +590,37 @@
 
 
     <script>
+
+
+        // ==========================================================================
+        // AUTO-LOCATION ON LOAD
+        // ==========================================================================
+        window.addEventListener('load', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    // 1. Reverse Geocode (Turn lat/lon into a readable address)
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                        const data = await res.json();
+                        const shortAddress = data.display_name.split(',').slice(0, 3).join(',');
+                        
+                        // 2. Auto-type into search box
+                        inputField.value = shortAddress;
+                        
+                        // 3. Store coords and trigger the check
+                        selectedCoords = { lat: lat, lon: lon };
+                        checkBtn.click(); // Automatically runs your existing logic
+                    } catch (e) {
+                        console.log("Auto-location failed to find address name.");
+                    }
+                }, (error) => {
+                    console.log("User denied location or error occurred.");
+                });
+            }
+        });
         // ==========================================================================
         // STANDARD UI LOGIC (SKELETON, CURSOR, TIMER)
         // ==========================================================================
@@ -640,18 +671,50 @@
         // ==========================================================================
         // ADVANCED FREE INSTALLATION CHECKER (Autocomplete + Haversine)
         // ==========================================================================
+        // ==========================================================================
+        // 2. ADVANCED FREE INSTALLATION CHECKER (Auto-Location + Haversine + Memory)
+        // ==========================================================================
         const inputField = document.getElementById('address-input');
         const checkBtn = document.getElementById('check-btn');
         const suggestionsBox = document.getElementById('suggestions-box');
         const resultDiv = document.getElementById('eligibility-result');
         
         let typingTimer;
-        let selectedCoords = null; // Stores coords if they click a suggestion
+        let selectedCoords = null; 
 
-        // 1. Fetch Suggestions as they type (Debounced)
+        // AUTO-LOCATION ON LOAD
+        window.addEventListener('load', () => {
+            const savedAddress = localStorage.getItem('last-address');
+            if (savedAddress) {
+                inputField.value = savedAddress;
+            }
+
+            if (navigator.geolocation && !savedAddress) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                        const data = await res.json();
+                        const shortAddress = data.display_name.split(',').slice(0, 3).join(',');
+                        
+                        inputField.value = shortAddress;
+                        selectedCoords = { lat: lat, lon: lon };
+                        checkBtn.click(); // Auto-run the check
+                    } catch (e) {
+                        console.log("Auto-location fetch failed.");
+                    }
+                }, () => {
+                    console.log("Location denied by user.");
+                });
+            }
+        });
+
+        // LIVE SUGGESTIONS (Debounced)
         inputField.addEventListener('input', () => {
             clearTimeout(typingTimer);
-            selectedCoords = null; // Reset coords if they change text
+            selectedCoords = null; 
             const query = inputField.value.trim();
             
             if (query.length < 4) {
@@ -659,10 +722,8 @@
                 return;
             }
 
-            // Wait 400ms after they stop typing to avoid API spam
             typingTimer = setTimeout(async () => {
                 try {
-                    // Prioritize CA addresses
                     const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=us`);
                     const data = await res.json();
                     
@@ -671,16 +732,13 @@
                         suggestionsBox.style.display = 'block';
                         data.forEach(place => {
                             const item = document.createElement('div');
-                            // Clean up the display name a bit
                             const shortName = place.display_name.split(',').slice(0, 3).join(',');
                             item.innerHTML = `📍 ${shortName}`;
                             item.style.cssText = 'padding: 10px 15px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; color: var(--text-color); transition: background 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
                             
-                            // Hover effect
                             item.addEventListener('mouseenter', () => item.style.background = 'rgba(255,255,255,0.4)');
                             item.addEventListener('mouseleave', () => item.style.background = 'transparent');
                             
-                            // Click to select
                             item.addEventListener('click', () => {
                                 inputField.value = shortName;
                                 selectedCoords = { lat: parseFloat(place.lat), lon: parseFloat(place.lon) };
@@ -696,14 +754,13 @@
             }, 400); 
         });
 
-        // Hide suggestions when clicking outside
         document.addEventListener('click', (e) => {
             if (e.target !== inputField && e.target !== suggestionsBox) {
                 suggestionsBox.style.display = 'none';
             }
         });
 
-        // 2. Calculate Distance
+        // ADVANCED DISTANCE CALCULATION
         checkBtn.addEventListener('click', async () => {
             const address = inputField.value.trim();
             if(!address) {
@@ -711,7 +768,10 @@
                 return;
             }
             
-            checkBtn.innerHTML = '...';
+            // Save to memory
+            localStorage.setItem('last-address', address);
+            
+            checkBtn.innerHTML = 'Checking...';
             suggestionsBox.style.display = 'none';
             
             try {
@@ -720,7 +780,6 @@
                 const homeLon = -122.2450; 
                 let userLat, userLon;
 
-                // Use pre-fetched coords if they clicked a suggestion, otherwise fetch now
                 if (selectedCoords) {
                     userLat = selectedCoords.lat;
                     userLon = selectedCoords.lon;
@@ -728,7 +787,7 @@
                     const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`);
                     const data = await res.json();
                     if(data.length === 0) {
-                        showResult('❌ Address not found. <a href="sms:+15103128640" style="color:var(--accent-color);">Text me</a>!', 'var(--accent-color)');
+                        showResult('❌ Address not found. <a href="sms:+15103128640" style="color:var(--text-color); font-weight:800;">Text me instead!</a>', '#ff2d55');
                         checkBtn.innerHTML = 'Check';
                         return;
                     }
@@ -736,25 +795,27 @@
                     userLon = parseFloat(data[0].lon);
                 }
                 
-                // Haversine formula
+                // Advanced Haversine math
                 const R = 3958.8;
                 const dLat = (userLat - homeLat) * Math.PI / 180;
                 const dLon = (userLon - homeLon) * Math.PI / 180;
                 const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(homeLat * Math.PI / 180) * Math.cos(userLat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
                 const distance = R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
                 
-                if(distance <= 4.5) {
-                    showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#28a745; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
+                // --- TIERED RESULTS ---
+                if (distance <= 0.5) {
+                    showResult(`🎉 <strong>NEIGHBOR BONUS!</strong> (${distance.toFixed(1)} miles). You are super close! <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline; font-weight:800;">Text for priority setup!</a>`, '#34c759');
+                } else if(distance <= 4.5) {
+                    showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
                 } else {
-                    showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:var(--accent-color); text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
+                    showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:#ffcc00; text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
                 }
             } catch (err) {
-                showResult('⚠️ Error checking map. <a href="sms:+15103128640" style="color:var(--accent-color);">Text me</a>.', 'var(--accent-color)');
+                showResult('⚠️ Error checking map. <a href="sms:+15103128640" style="color:#ff2d55;">Text me instead</a>.', '#ff2d55');
             }
             checkBtn.innerHTML = 'Check';
         });
 
-        // Allow Enter key
         inputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkBtn.click(); });
 
         function showResult(htmlMsg, color) {
