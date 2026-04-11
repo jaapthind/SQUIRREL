@@ -536,7 +536,7 @@
 
         <div class="right-col">
             <div class="header">
-                <h1>The Squirrel-Shield 360</h1>
+                <h1>The Squirrel-Proof Baffle</h1>
                 <p>Secure Your Fruit, Save Your Harvest. Only $38.99.</p>
             </div>
 
@@ -564,22 +564,7 @@
                 </div>
             </div>
 
-<div class="info-box interactive-element tilt-element reveal-line" style="margin-top: 1rem; padding: 1.2rem; position: relative; overflow: visible;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="margin: 0; font-size: 1.1rem;">📍 Check Free Install</h3>
-                    <span style="font-size: 0.75rem; opacity: 0.7; font-weight: bold;">4.5 MILE RADIUS</span>
-                </div>
-                
-                <div style="position: relative; z-index: 50;">
-                    <div style="display: flex; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.4); box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); overflow: hidden;">
-                        <input type="text" id="address-input" autocomplete="off" placeholder="Type your address..." style="flex: 1; padding: 10px 16px; border: none; background: transparent; font-family: inherit; outline: none; color: var(--text-color); font-size: 0.9rem;">
-                        <button id="check-btn" style="padding: 10px 20px; border: none; background: var(--accent-color); color: white; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s;">Check</button>
-                    </div>
-                    <div id="suggestions-box" style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 8px; background: rgba(255,255,255,0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; overflow-x: hidden; z-index: 100;"></div>
-                </div>
-                
-                <div id="eligibility-result" style="margin-top: 12px; font-weight: 600; font-size: 0.9rem; display: none; padding: 10px 15px; border-radius: 12px; background: rgba(255,255,255,0.3); border-left: 4px solid transparent;"></div>
-            </div> 
+
 
         </div> </div> 
     
@@ -601,32 +586,7 @@
         // ==========================================================================
         // AUTO-LOCATION ON LOAD
         // ==========================================================================
-        window.addEventListener('load', () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    // 1. Reverse Geocode (Turn lat/lon into a readable address)
-                    try {
-                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                        const data = await res.json();
-                        const shortAddress = data.display_name.split(',').slice(0, 3).join(',');
-                        
-                        // 2. Auto-type into search box
-                        inputField.value = shortAddress;
-                        
-                        // 3. Store coords and trigger the check
-                        selectedCoords = { lat: lat, lon: lon };
-                        checkBtn.click(); // Automatically runs your existing logic
-                    } catch (e) {
-                        console.log("Auto-location failed to find address name.");
-                    }
-                }, (error) => {
-                    console.log("User denied location or error occurred.");
-                });
-            }
-        });
+       
         // ==========================================================================
         // STANDARD UI LOGIC (SKELETON, CURSOR, TIMER)
         // ==========================================================================
@@ -739,7 +699,7 @@
                 replies: [
                     "Eastern Gray Squirrels are essentially Olympic athletes.",
                     "They can jump up to 4 feet vertically from the ground, and clear 9 feet horizontally from a fence, roof, or branch.",
-                    "This is exactly why the Squirrel-Shield 360 must be mounted at least 5 feet off the ground."
+                    "This is exactly why the Squirrel-Proof Baffle must be mounted at least 5 feet off the ground."
                 ]
             },
             {
@@ -947,6 +907,285 @@
                 ]
             },
             {
+                pattern: /\b(how it works|mechanism|how does it stop|science|logic)\b/i,
+                replies: [
+                    "It’s basic physics. A squirrel needs vertical leverage to climb.",
+                    "The Shield creates a 'negative overhang.' Because the plastic is low-friction PETG, their claws can't find a purchase point, and gravity pull them off."
+                ]
+            },
+            {
+                pattern: /\b(height|how high|ground|feet up|high up)\b/i,
+                replies: [
+                    "Mount it exactly 5 feet from the ground.",
+                    "If you mount it lower, a squirrel can simply jump from the grass over the baffle and onto the trunk above it."
+                ]
+            },
+            {
+                pattern: /\b(fence|roof|wall|house|jump from)\b/i,
+                replies: [
+                    "Great question. Squirrels can jump 9 feet horizontally.",
+                    "If your tree is within 9 feet of a roof or fence, the squirrel might bypass the baffle by jumping 'airborne.' Try to trim branches that lead to the house!"
+                ]
+            },
+            {
+                pattern: /\b(trunk|bark|oak|maple|pine|redwood|citrus|lemon)\b/i,
+                replies: [
+                    "It works on almost all bark types—from smooth lemon trees to deeply furrowed oaks.",
+                    "The inner gasket is designed to 'squish' into the bark gaps to prevent smaller rodents from crawling underneath."
+                ]
+            },
+            {
+                pattern: /\b(weight|heavy|light|flimsy|strong)\b/i,
+                replies: [
+                    "It’s surprisingly lightweight but structurally reinforced with an internal 'honeycomb' infill.",
+                    "It can support the weight of a massive 2lb squirrel without sagging or snapping."
+                ]
+            },
+            {
+                pattern: /\b(video|see it|proof|demo|show me)\b/i,
+                replies: [
+                    "I am working on uploading slow-motion footage of squirrels sliding off!",
+                    "In the meantime, you can see the design photos on the main page. The 42-degree angle is the proof."
+                ]
+            },
+            {
+                pattern: /\b(eco|environment|nature|green|safe|recyclable)\b/i,
+                replies: [
+                    "PETG is a highly recyclable plastic.",
+                    "More importantly, it’s a non-lethal solution. We save the fruit without hurting the local wildlife."
+                ]
+            },
+            {
+                pattern: /\b(bulk|wholesale|many|multiple|discount|quantity)\b/i,
+                replies: [
+                    "Need to protect an entire orchard?",
+                    "Text Jaap at 510-312-8640. We offer a 15% discount for orders of 5 or more units."
+                ]
+            },
+            {
+                pattern: /\b(winter|cold|snow|ice|freeze)\b/i,
+                replies: [
+                    "The PETG material won't become brittle in the cold.",
+                    "It is rated for temperatures well below freezing, though Berkeley rarely sees those temps!"
+                ]
+            },
+            {
+                pattern: /\b(stolen|theft|security|lock)\b/i,
+                replies: [
+                    "The baffle is secured with a specialized tension bolt.",
+                    "While someone could theoretically remove it with a screwdriver, it’s designed to be discreet and looks like part of the tree hardware."
+                ]
+            },
+            {
+                pattern: /\b(possum|opossum|marsupial)\b/i,
+                replies: [
+                    "Possums are slow climbers but very heavy.",
+                    "The Shield works on them too, as they rely on the same trunk-gripping mechanics as squirrels."
+                ]
+            },
+            {
+                pattern: /\b(snakes|rats|slugs|bugs|ants)\b/i,
+                replies: [
+                    "It stops rats and snakes effectively.",
+                    "For ants or slugs, you might still need a sticky barrier like Tanglefoot, as they are small enough to crawl over any surface."
+                ]
+            },
+            {
+                pattern: /\b(maintenance|cleaning|sticky|sap|dirt)\b/i,
+                replies: [
+                    "If the baffle gets covered in heavy dust or sap, it loses its 'slickness.'",
+                    "Just spray it with a garden hose once a month to keep it slippery."
+                ]
+            },
+            {
+                pattern: /\b(colors|visible|ugly|looks|aesthetic)\b/i,
+                replies: [
+                    "We use a matte finish so it doesn't reflect sunlight like metal baffles.",
+                    "It’s designed to look like a professional horticultural tool, not a DIY project."
+                ]
+            },
+            {
+                pattern: /\b(hand made|manufactured|factory|china|usa)\b/i,
+                replies: [
+                    "Every single unit is printed and hand-finished right here in Berkeley.",
+                    "No overseas shipping, no mass-factory waste. Just local engineering."
+                ]
+            },
+            {
+                pattern: /\b(patented|design|cad|fusion|3d model)\b/i,
+                replies: [
+                    "The design was custom-modeled in Fusion 360 over 8 different prototype iterations.",
+                    "The current 'V8' model is the most effective version yet."
+                ]
+            },
+            {
+                pattern: /\b(remove|taking it off|move it|reinstall)\b/i,
+                replies: [
+                    "It's fully reusable. If you move houses or the tree grows, just loosen the bolt and move it.",
+                    "It grows with your garden!"
+                ]
+            },
+            {
+                pattern: /\b(tight|strangle|tree growth|expand)\b/i,
+                replies: [
+                    "We recommend checking the tension once a year.",
+                    "Because it uses a flexible gasket, it won't 'strangle' the tree like a wire would, but it's good to give the tree room to breathe."
+                ]
+            },
+            {
+                pattern: /\b(morning|night|when do squirrels climb)\b/i,
+                replies: [
+                    "Squirrels are most active at dawn and dusk.",
+                    "The Shield is on duty 24/7, catching them while you're still asleep."
+                ]
+            },
+            {
+                pattern: /\b(guarantee|promise|sure|really work)\b/i,
+                replies: [
+                    "If a squirrel walks through the plastic, I'll be shocked.",
+                    "If they jump *around* it from a nearby object, that's the only way they win. Clear your jump zones!"
+                ]
+            },
+            {
+                pattern: /\b(bird feeder|seeds|sunflower)\b/i,
+                replies: [
+                    "This is perfect for bird feeder poles too!",
+                    "If you have a 4x4 post or a metal pole, text us for a specific 'Pole Adapter' kit."
+                ]
+            },
+            {
+                pattern: /\b(avocado|guacamole|squirrels eating avocados)\b/i,
+                replies: [
+                    "Avocados are the #1 target in Berkeley.",
+                    "Stopping them from climbing the trunk is the only way to get a harvest before the squirrels take a single bite and drop the rest."
+                ]
+            },
+            {
+                pattern: /\b(citrus|lemon|orange|lime|peel)\b/i,
+                replies: [
+                    "Rats love citrus. Squirrels love the juice.",
+                    "The Shield creates a rodent-free zone for your citrus canopy."
+                ]
+            },
+            {
+                pattern: /\b(cats|climbing cat|keep cat out)\b/i,
+                replies: [
+                    "It *might* stop a cat, but cats have much longer reach than squirrels.",
+                    "It’s not officially rated for feline exclusion, but it definitely makes the climb harder for them."
+                ]
+            },
+            {
+                pattern: /\b(metal|aluminum|steel|wood|baffle type)\b/i,
+                replies: [
+                    "Metal baffles are noisy and get dangerously hot in the sun.",
+                    "Our PETG plastic is silent, stays cool, and won't cut your hands during installation."
+                ]
+            },
+            {
+                pattern: /\b(how many parts|assembly|pieces)\b/i,
+                replies: [
+                    "The kit consists of 6 main shield pieces, nuts, bolts, washers, and 1 metal sheet.",
+                ]
+            },
+            {
+                pattern: /\b(storm|wind|blown off|hurricane)\b/i,
+                replies: [
+                    "The aerodynamic cone shape actually deflects wind downward.",
+                    "Even in heavy Bay Area wind storms, the Shield stays locked to the trunk."
+                ]
+            },
+            {
+                pattern: /\b(inventor|idea|startup|business)\b/i,
+                replies: [
+                    "It started as a school science project and turned into a local business.",
+                    "Stop Squirrel Climb is all about solving real garden problems with 3D printing."
+                ]
+            },
+            {
+                pattern: /\b(shipping tracking|order status|where is my order)\b/i,
+                replies: [
+                    "Text Jaap at 510-312-8640 with your name.",
+                    "Since we are local, he can give you a live update on your specific print job status."
+                ]
+            },
+            {
+                pattern: /\b(best time|season|spring|summer|fall)\b/i,
+                replies: [
+                    "Install it in late Winter or early Spring before the fruit begins to bud.",
+                    "You want the squirrels to learn that your tree is 'unclimbable' before the fruit becomes a temptation!"
+                ]
+            },
+            {
+                pattern: /\b(claws|nails|grip|friction)\b/i,
+                replies: [
+                    "Squirrel claws are razor sharp, but they need a porous surface (like wood) to hook into.",
+                    "On the polished Shield surface, there is no 'hook' point. They just skate."
+                ]
+            },
+            {
+                pattern: /\b(can i print my own|stl file|download)\b/i,
+                replies: [
+                    "The design is proprietary to Stop Squirrel Climb.",
+                    "We don't sell the files because the print settings (infill and wall loops) are critical for the shield's strength."
+                ]
+            },
+            {
+                pattern: /\b(gift|present|gardener gift)\b/i,
+                replies: [
+                    "It’s the perfect gift for the gardener who has everything (except their own fruit).",
+                    "We can even include a hand-written note if you're shipping it as a gift."
+                ]
+            },
+            {
+                pattern: /\b(help|stuck|instruction manual)\b/i,
+                replies: [
+                    "Stuck? Text a photo of your tree to 510-312-8640.",
+                    "Jaap can look at the photo and tell you exactly where to position the brackets."
+                ]
+            },
+            {
+                pattern: /\b(bark damage|living tree|is it safe for the tree)\b/i,
+                replies: [
+                    "100% tree-safe. We love trees.",
+                    "The gasket is made of soft, compressible foam that protects the cambium layer of the tree."
+                ]
+            },
+            {
+                pattern: /\b(possum|marsupial|night animals)\b/i,
+                replies: [
+                    "If you hear thumping in your trees at night, it's likely a possum or rat.",
+                    "The Shield works in total darkness just as well as the daytime."
+                ]
+            },
+            {
+                pattern: /\b(modular|expansion|bigger joints)\b/i,
+                replies: [
+                    "Yes! If your tree grows 2 inches wider, you don't need a new shield.",
+                    "We just swap out the small joint clips for 'Expansion Clips' for a few dollars."
+                ]
+            },
+            {
+                pattern: /\b(is it noisy|clatter|rattle)\b/i,
+                replies: [
+                    "Unlike metal baffles that 'clang' in the wind, the Shield is silent.",
+                    "It won't keep you awake during a windy night."
+                ]
+            },
+            {
+                pattern: /\b(scam|real|legit)\b/i,
+                replies: [
+                    "We are a real Berkeley family business.",
+                    "If you're skeptical, text us and we'll show you the workshop!"
+                ]
+            },
+            {
+                pattern: /\b(bye|goodbye|see ya|later)\b/i,
+                replies: [
+                    "Goodbye! May your harvest be squirrel-free.",
+                    "Text us if you have any more questions!"
+                ]
+            },
+            {
                 pattern: /\b(fuck|shit|bitch|ass|crap|damn)\b/i,
                 replies: [
                     "I understand you might be frustrated.",
@@ -957,7 +1196,9 @@
 
         // Fallback responses if regex fails
         const fallbacks = [
-            "I'm specifically trained on the Squirrel-Shield 360 data. Could you rephrase that regarding trees, baffles, or installation?",
+            "I'm still learning! If I can't answer that, please text Jaap directly at 510-312-8640.",
+            "That sounds complex. My creator Jaap (510-312-8640) can give you a specific answer on that one!",
+            "I'm specifically trained on the Squirrel-Proof Baffle data. Could you rephrase that?",
             "That's outside my current dataset. I mainly handle questions about tree diameters, pricing, and squirrel jumping physics.",
             "I didn't quite catch that. Try asking about the material, the free installation, or how it stops climbing animals."
         ];
@@ -1098,183 +1339,7 @@
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-        // ==========================================================================
-        // ADVANCED FREE INSTALLATION CHECKER (Autocomplete + Haversine)
-        // ==========================================================================
-        // ==========================================================================
-        // 2. ADVANCED FREE INSTALLATION CHECKER (Auto-Location + Haversine + Memory)
-        // ==========================================================================
-        const inputField = document.getElementById('address-input');
-        const checkBtn = document.getElementById('check-btn');
-        const suggestionsBox = document.getElementById('suggestions-box');
-        const resultDiv = document.getElementById('eligibility-result');
-        
-        let typingTimer;
-        let selectedCoords = null; 
-
-        // AUTO-LOCATION ON LOAD
-        window.addEventListener('load', () => {
-            const savedAddress = localStorage.getItem('last-address');
-            if (savedAddress) {
-                inputField.value = savedAddress;
-            }
-
-            if (navigator.geolocation && !savedAddress) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    try {
-                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                        const data = await res.json();
-                        const shortAddress = data.display_name.split(',').slice(0, 3).join(',');
-                        
-                        inputField.value = shortAddress;
-                        selectedCoords = { lat: lat, lon: lon };
-                        checkBtn.click(); // Auto-run the check
-                    } catch (e) {
-                        console.log("Auto-location fetch failed.");
-                    }
-                }, () => {
-                    console.log("Location denied by user.");
-                });
-            }
-        });
-
-        // LIVE SUGGESTIONS (Debounced)
-        inputField.addEventListener('input', () => {
-            clearTimeout(typingTimer);
-            selectedCoords = null; 
-            const query = inputField.value.trim();
-            
-            if (query.length < 4) {
-                suggestionsBox.style.display = 'none';
-                return;
-            }
-
-            typingTimer = setTimeout(async () => {
-                try {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=us`);
-                    const data = await res.json();
-                    
-                    suggestionsBox.innerHTML = '';
-                    if (data.length > 0) {
-                        suggestionsBox.style.display = 'block';
-                        data.forEach(place => {
-                            const item = document.createElement('div');
-                            const shortName = place.display_name.split(',').slice(0, 3).join(',');
-                            item.innerHTML = `📍 ${shortName}`;
-                            item.style.cssText = 'padding: 10px 15px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; color: var(--text-color); transition: background 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
-                            
-                            item.addEventListener('mouseenter', () => item.style.background = 'rgba(255,255,255,0.4)');
-                            item.addEventListener('mouseleave', () => item.style.background = 'transparent');
-                            
-                            item.addEventListener('click', () => {
-                                inputField.value = shortName;
-                                selectedCoords = { lat: parseFloat(place.lat), lon: parseFloat(place.lon) };
-                                suggestionsBox.style.display = 'none';
-                            });
-                            
-                            suggestionsBox.appendChild(item);
-                        });
-                    } else {
-                        suggestionsBox.style.display = 'none';
-                    }
-                } catch (e) { console.error("Geocoding failed", e); }
-            }, 400); 
-        });
-
-        document.addEventListener('click', (e) => {
-            if (e.target !== inputField && e.target !== suggestionsBox) {
-                suggestionsBox.style.display = 'none';
-            }
-        });
-
-        // ADVANCED DISTANCE CALCULATION
-        checkBtn.addEventListener('click', async () => {
-            const address = inputField.value.trim();
-            if(!address) {
-                showResult('⚠️ Please enter an address.', '#ffcc00');
-                return;
-            }
-            
-            // Save to memory
-            localStorage.setItem('last-address', address);
-            
-            checkBtn.innerHTML = 'Checking...';
-            suggestionsBox.style.display = 'none';
-            
-            try {
-                // Berkeley Plaza Dr coords
-                const homeLat = 37.8550; 
-                const homeLon = -122.2450; 
-                let userLat, userLon;
-
-                if (selectedCoords) {
-                    userLat = selectedCoords.lat;
-                    userLon = selectedCoords.lon;
-                } else {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`);
-                    const data = await res.json();
-                    if(data.length === 0) {
-                        showResult('❌ Address not found. <a href="sms:+15103128640" style="color:var(--text-color); font-weight:800;">Text me instead!</a>', '#ff2d55');
-                        checkBtn.innerHTML = 'Check';
-                        return;
-                    }
-                    userLat = parseFloat(data[0].lat);
-                    userLon = parseFloat(data[0].lon);
-                }
-                
-                // Advanced Haversine math
-                const R = 3958.8;
-                const dLat = (userLat - homeLat) * Math.PI / 180;
-                const dLon = (userLon - homeLon) * Math.PI / 180;
-                const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(homeLat * Math.PI / 180) * Math.cos(userLat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-                const distance = R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-                
-                // --- TIERED RESULTS ---
-                // CUSTOM ODOMETER EFFECT
-                let currentTick = 0.0;
-                let step = distance / 40; 
-                if (step < 0.05) step = 0.05; 
-                
-                resultDiv.style.display = 'block';
-                resultDiv.style.borderLeftColor = 'var(--text-color)';
-                resultDiv.style.color = 'var(--text-color)';
-                
-                const odometerInterval = setInterval(() => {
-                    currentTick += step;
-                    
-                    if(currentTick > distance * 0.7) step *= 0.85; 
-                    
-                    if (currentTick >= distance) {
-                        currentTick = distance;
-                        clearInterval(odometerInterval);
-                        
-                        if (distance <= 0.5) {
-                            showResult(`🎉 <strong>NEIGHBOR BONUS!</strong> (${distance.toFixed(1)} miles). You are super close! <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline; font-weight:800;">Text for priority setup!</a>`, '#34c759');
-                        } else if(distance <= 4.5) {
-                            showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
-                        } else {
-                            showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:#ffcc00; text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
-                        }
-                    } else {
-                        resultDiv.innerHTML = `📍 Calculating distance... <strong style="font-size: 1.1em; color: var(--accent-color);">${currentTick.toFixed(1)}</strong> miles`;
-                    }
-                }, 30);
-            } catch (err) {
-                showResult('⚠️ Error checking map. <a href="sms:+15103128640" style="color:#ff2d55;">Text me instead</a>.', '#ff2d55');
-            }
-            checkBtn.innerHTML = 'Check';
-        });
-
-        inputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkBtn.click(); });
-
-        function showResult(htmlMsg, color) {
-            resultDiv.innerHTML = htmlMsg;
-            resultDiv.style.borderLeftColor = color;
-            resultDiv.style.display = 'block';
-        }
+  
     </script>
 </body>
 
