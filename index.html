@@ -473,196 +473,36 @@
             height: 132px;
             border-radius: 50%;
         }
+        /* F15: Line-by-Line Reveal */
+        .reveal-line { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; will-change: opacity, transform; }
+        .reveal-line.visible { opacity: 1; transform: translateY(0); }
+
+        /* F23: Progress Vine */
+        #progress-vine { position: fixed; top: 0; left: 0; height: 6px; width: 0%; background: linear-gradient(90deg, #28a745, #34c759, #8de8a0); z-index: 10000; border-radius: 0 5px 5px 0; box-shadow: 0 2px 10px rgba(40, 167, 69, 0.5); transition: width 0.1s ease-out; }
+        #progress-vine::after { content: '🍃'; position: absolute; right: -10px; top: -8px; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+        /* F25: 3D Tilt */
+        .tilt-element { transition: transform 0.15s ease-out; transform-style: preserve-3d; will-change: transform; }
+
+        /* F37: Typewriter */
+        .typewriter-cursor { display: inline-block; width: 3px; height: 1.1em; background-color: var(--accent-color); vertical-align: text-bottom; animation: blink 1s step-end infinite; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* F95: Minimalist Chatbot */
+        #ai-bot { position: fixed; bottom: -400px; right: 30px; width: 320px; background: rgba(20, 20, 25, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px 16px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 9999; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-family: 'Inter', monospace; overflow: hidden; }
+        #ai-bot.active { bottom: 0; }
+        #ai-header { padding: 12px 20px; background: rgba(0,0,0,0.5); color: #fff; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #ai-chat { height: 250px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem; scroll-behavior: smooth; }
+        .msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; line-height: 1.4; }
+        .msg.bot { background: rgba(255,255,255,0.1); color: #ddd; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.user { background: var(--accent-color); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+        #ai-input-wrap { display: flex; padding: 10px; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
+        #ai-input { flex: 1; background: transparent; border: none; color: #fff; padding: 8px; outline: none; font-size: 0.85rem; }
+        #ai-bot-trigger { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; border-radius: 50%; background: var(--text-color); color: var(--glass-bg); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; z-index: 9998; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        #ai-bot-trigger:hover { transform: scale(1.1); }
 
         /* EFFECT #9: EPIC SQUIRREL SLIDE */
-                .squirrel-actor {
-            position: absolute;
-            z-index: 50;
-            pointer-events: none;
-            width: 150px;
-            height: 150px;
-            top: 110%; 
-            right: 10px; 
-            opacity: 0;
-            filter: drop-shadow(0 25px 35px rgba(0,0,0,0.5));
-            animation: masterSquirrelPhys 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            will-change: transform, top, right, opacity;
-        }
-        
-        .squirrel-svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-            overflow: visible;
-        }
-        
-        /* MASTER POSITION AND GRAVITY PHYSICS */
-        @keyframes masterSquirrelPhys {
-            0%    { top: 120%; right: -30px; opacity: 0; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.7); }
-            2%    { top: 105%; right: -35px; opacity: 1; transform: scaleX(-1) translateY(-2px) rotate(-90deg) scale(0.8); }
-            4%    { top: 90%;  right: -32px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.85); animation-timing-function: ease-out; }
-            6%    { top: 85%;  right: -32px; transform: scaleX(-1) translateY(2px) rotate(-92deg) scale(0.85); }
-            8%    { top: 85%;  right: -32px; transform: scaleX(-1) translateY(0) rotate(-88deg) scale(0.85); }
-            10%   { top: 70%;  right: -25px; transform: scaleX(-1) translateY(-5px) rotate(-85deg) scale(0.9); animation-timing-function: linear; }
-            12%   { top: 55%;  right: -20px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(0.95); }
-            14%   { top: 40%;  right: -25px; transform: scaleX(-1) translateY(-8px) rotate(-95deg) scale(1); }
-            16%   { top: 25%;  right: -28px; transform: scaleX(-1) translateY(0) rotate(-90deg) scale(1); animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-            18%   { top: 18%;  right: -15px; transform: scaleX(-1) translateY(5px) rotate(-45deg); }
-            18.5% { top: 17%;  right: -10px; transform: scaleX(-1) translateY(0) rotate(-55deg); }
-            19%   { top: 16%;  right: -5px;  transform: scaleX(-1) translateY(3px) rotate(-40deg); }
-            19.5% { top: 15.5%;right: -8px;  transform: scaleX(-1) translateY(-2px) rotate(-50deg); }
-            20%   { top: 15%;  right: 0px;   transform: scaleX(-1) translateY(4px) rotate(-35deg); }
-            20.5% { top: 14.5%;right: -3px;  transform: scaleX(-1) translateY(-3px) rotate(-48deg); }
-            21%   { top: 14%;  right: 5px;   transform: scaleX(-1) translateY(5px) rotate(-30deg); }
-            21.5% { top: 13.5%;right: 2px;   transform: scaleX(-1) translateY(-2px) rotate(-42deg); }
-            22%   { top: 13%;  right: 10px;  transform: scaleX(-1) translateY(6px) rotate(-25deg); }
-            22.5% { top: 13.5%;right: 6px;   transform: scaleX(-1) translateY(-1px) rotate(-35deg); }
-            23%   { top: 14%;  right: 15px;  transform: scaleX(-1) translateY(4px) rotate(-20deg); animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
-            24%   { top: 16%;  right: 20px;  transform: scaleX(-1) translateY(0) rotate(-15deg); }
-            25%   { top: 18%;  right: 25px;  transform: scaleX(-1) translateY(-2px) rotate(-10deg); }
-            26%   { top: 22%;  right: 32px;  transform: scaleX(-1) translateY(0) rotate(-5deg); }
-            28%   { top: 28%;  right: 42px;  transform: scaleX(-1) translateY(-4px) rotate(0deg); }
-            30%   { top: 35%;  right: 55px;  transform: scaleX(-1) translateY(0) rotate(5deg); }
-            32%   { top: 45%;  right: 70px;  transform: scaleX(-1) translateY(5px) rotate(15deg); animation-timing-function: ease-in; }
-            34%   { top: 58%;  right: 85px;  transform: scaleX(-1) translateY(12px) rotate(35deg); }
-            36%   { top: 75%;  right: 105px; transform: scaleX(-1) translateY(22px) rotate(70deg); }
-            38%   { top: 98%;  right: 130px; transform: scaleX(-1) translateY(35px) rotate(120deg); }
-            40%   { top: 125%; right: 160px; transform: scaleX(-1) translateY(50px) rotate(180deg); opacity: 1; filter: drop-shadow(0 50px 50px rgba(0,0,0,0.2)); }
-            42%   { top: 150%; right: 190px; transform: scaleX(-1) translateY(65px) rotate(240deg); opacity: 0; }
-            100%  { top: 150%; right: 190px; opacity: 0; }
-        }
-        
-        /* INDIVIDUAL BODY PART MICRO-ANIMATIONS */
-        #sq-tail-group {
-            transform-origin: 120px 130px;
-            animation: tailFluidity 14s infinite;
-        }
-        
-        @keyframes tailFluidity {
-            0%    { transform: rotate(0deg) scale(1); }
-            4%    { transform: rotate(5deg) scale(1.05); }
-            6%    { transform: rotate(-5deg) scale(0.95); }
-            10%   { transform: rotate(12deg) scale(1.1); }
-            14%   { transform: rotate(2deg) scale(1); }
-            18%   { transform: rotate(-25deg) scale(1.15); }
-            19%   { transform: rotate(-45deg) scale(1.2); }
-            20%   { transform: rotate(-30deg) scale(1.1); }
-            21%   { transform: rotate(-50deg) scale(1.25); }
-            22%   { transform: rotate(-35deg) scale(1.1); }
-            23%   { transform: rotate(-15deg) scale(1.05); }
-            25%   { transform: rotate(-5deg) scale(1); }
-            28%   { transform: rotate(10deg) scale(0.95); }
-            32%   { transform: rotate(-20deg) scale(1.1); }
-            36%   { transform: rotate(-60deg) scale(1.2); }
-            40%   { transform: rotate(-90deg) scale(1.3); }
-            100%  { transform: rotate(0deg) scale(1); }
-        }
-        
-        #sq-frontarm {
-            transform-origin: 75px 100px;
-            animation: armPanic 14s infinite;
-        }
-        
-        @keyframes armPanic {
-            0%    { transform: rotate(0deg); }
-            17%   { transform: rotate(0deg); }
-            18%   { transform: rotate(-35deg) translateY(-5px); }
-            18.5% { transform: rotate(15deg) translateY(2px); }
-            19%   { transform: rotate(-45deg) translateY(-8px); }
-            19.5% { transform: rotate(20deg) translateY(3px); }
-            20%   { transform: rotate(-55deg) translateY(-10px); }
-            20.5% { transform: rotate(25deg) translateY(4px); }
-            21%   { transform: rotate(-65deg) translateY(-12px); }
-            21.5% { transform: rotate(10deg) translateY(2px); }
-            22%   { transform: rotate(-75deg) translateY(-15px); }
-            24%   { transform: rotate(-20deg) translateY(-2px); }
-            28%   { transform: rotate(-5deg) translateY(0); }
-            34%   { transform: rotate(-90deg) translateY(-20px); }
-            40%   { transform: rotate(-120deg) translateY(-25px); }
-            100%  { transform: rotate(0deg); }
-        }
-        
-        #sq-backleg {
-            transform-origin: 90px 140px;
-            animation: legScramble 14s infinite;
-        }
-        
-        @keyframes legScramble {
-            0%    { transform: rotate(0deg); }
-            10%   { transform: rotate(-15deg); }
-            14%   { transform: rotate(5deg); }
-            17%   { transform: rotate(-10deg); }
-            18%   { transform: rotate(25deg) translateX(5px); }
-            19%   { transform: rotate(-5deg) translateX(-2px); }
-            20%   { transform: rotate(35deg) translateX(8px); }
-            21%   { transform: rotate(0deg) translateX(0); }
-            22%   { transform: rotate(45deg) translateX(12px); }
-            24%   { transform: rotate(20deg) translateX(5px); }
-            28%   { transform: rotate(10deg) translateX(2px); }
-            34%   { transform: rotate(60deg) translateX(15px); }
-            40%   { transform: rotate(80deg) translateX(20px); }
-            100%  { transform: rotate(0deg); }
-        }
-        
-        #sq-head-group {
-            transform-origin: 60px 70px;
-            animation: headBob 14s infinite;
-        }
-        
-        @keyframes headBob {
-            0%    { transform: rotate(0deg); }
-            6%    { transform: rotate(-15deg); }
-            8%    { transform: rotate(10deg); }
-            10%   { transform: rotate(-5deg); }
-            16%   { transform: rotate(-25deg); }
-            18%   { transform: rotate(30deg); }
-            20%   { transform: rotate(15deg); }
-            22%   { transform: rotate(40deg); }
-            26%   { transform: rotate(20deg); }
-            32%   { transform: rotate(45deg); }
-            38%   { transform: rotate(70deg); }
-            100%  { transform: rotate(0deg); }
-        }
-        
-        #sq-eye {
-            transform-origin: 48px 65px;
-            animation: eyeBlink 14s infinite;
-        }
-        
-        @keyframes eyeBlink {
-            0%    { transform: scaleY(1); }
-            5%    { transform: scaleY(1); }
-            5.5%  { transform: scaleY(0.1); }
-            6%    { transform: scaleY(1); }
-            17%   { transform: scaleY(1); }
-            17.5% { transform: scaleY(0.1); }
-            18%   { transform: scaleY(1); }
-            19%   { transform: scale(1.3); } 
-            24%   { transform: scale(1.3); }
-            24.5% { transform: scaleY(0.1) scaleX(1.3); }
-            25%   { transform: scale(1.3); }
-            32%   { transform: scale(1.5); }
-            100%  { transform: scaleY(1); }
-        }
-        
-        #sq-ear-l, #sq-ear-r {
-            transform-origin: 50px 40px;
-            animation: earFlick 14s infinite;
-        }
-        
-        @keyframes earFlick {
-            0%    { transform: rotate(0deg); }
-            5%    { transform: rotate(0deg); }
-            6%    { transform: rotate(-20deg); }
-            7%    { transform: rotate(10deg); }
-            8%    { transform: rotate(0deg); }
-            18%   { transform: rotate(0deg); }
-            19%   { transform: rotate(-40deg); }
-            22%   { transform: rotate(-40deg); }
-            25%   { transform: rotate(-10deg); }
-            32%   { transform: rotate(-50deg); }
-            100%  { transform: rotate(0deg); }
-        }
+              
 
         @media (max-width: 768px) {
             body { cursor: auto; }
@@ -681,50 +521,10 @@
 <body>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
+    <div id="progress-vine"></div>
 
-    <div class="product-container">
-        
-                <div class="squirrel-actor">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="squirrel-svg">
-                <defs>
-                    <radialGradient id="fur" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#8B5A2B"/>
-                        <stop offset="80%" stop-color="#5C3A21"/>
-                        <stop offset="100%" stop-color="#3A2415"/>
-                    </radialGradient>
-                    <linearGradient id="tailFur" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#A0522D"/>
-                        <stop offset="50%" stop-color="#8B4513"/>
-                        <stop offset="100%" stop-color="#2F4F4F"/>
-                    </linearGradient>
-                </defs>
+<div class="product-container tilt-element">        
                 
-                <g id="sq-tail-group">
-                    <path d="M 140,150 C 190,130 210,60 170,30 C 130,0 90,40 105,80 C 115,110 120,130 140,150 Z" fill="url(#tailFur)" id="sq-tail"/>
-                </g>
-                
-                <g id="sq-backleg">
-                    <path d="M 90,140 C 70,150 55,165 50,175 C 45,185 55,190 70,185 C 85,180 100,160 110,145 Z" fill="#3A2415"/>
-                </g>
-                
-                <path d="M 70,160 C 45,160 35,110 60,85 C 85,60 115,70 125,100 C 135,130 110,160 70,160 Z" fill="url(#fur)" id="sq-body"/>
-                
-                <g id="sq-head-group">
-                    <circle cx="60" cy="70" r="28" fill="url(#fur)"/>
-                    <path d="M 50,50 L 35,25 L 60,42 Z" fill="#5C3A21" id="sq-ear-l"/>
-                    <path d="M 70,55 L 88,30 L 78,52 Z" fill="#5C3A21" id="sq-ear-r"/>
-                    <g id="sq-eye">
-                        <circle cx="48" cy="65" r="5" fill="#000"/>
-                        <circle cx="46" cy="63" r="2" fill="#fff"/>
-                    </g>
-                    <circle cx="32" cy="76" r="3.5" fill="#111" id="sq-nose"/>
-                </g>
-                
-                <g id="sq-frontarm">
-                    <path d="M 80,105 C 60,115 45,115 35,110 C 28,106 32,100 38,103 C 50,110 65,110 75,98 Z" fill="#5C3A21"/>
-                </g>
-            </svg>
-        </div>
 
         <div class="left-col">
             <div class="poster-container" title="Top of Newimage.png is displayed here">
@@ -740,8 +540,8 @@
                 <p>Secure Your Fruit, Save Your Harvest. Only $38.99.</p>
             </div>
 
-            <div class="info-box highlight interactive-element">
-                <h3>✨ ORDER NOW FOR A FREE INSTALLATION!</h3>
+    <div class="info-box highlight interactive-element tilt-element reveal-line">
+    <h3>✨ ORDER NOW FOR A FREE INSTALLATION!</h3>
                 <p>Offer: <strong>FREE installation</strong> with your purchase!</p>
                     <p><strong>Contact:</strong> Text 
                     <a href="sms:+15103128640" class="interactive-element" style="color: inherit;"><strong>510-312-8640</strong></a> 
@@ -751,12 +551,12 @@
                 </p>
             </div>
 
-          <div class="info-box bio-box interactive-element">
-                <div class="portrait-wrapper">
+    <div class="info-box bio-box interactive-element tilt-element reveal-line">
+    <div class="portrait-wrapper">
                     <img src="./portrait.jpg" alt="Jaap" class="portrait">
                 </div>
                 <div>
-                    <h3 style="color: var(--text-color); margin-bottom: 5px;">Hi, I'm Jaap.</h3>
+                <h3 style="color: var(--text-color); margin-bottom: 5px;" id="typewriter-h3"></h3>
                     <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">I designed this 3D-printed barrier right
                         here in Berkeley to save my dad's fruit harvest from neighborhood squirrels. After testing a few
                         prototypes, I found the perfect slip angle they just can't grip. Now, I manufacture these kits
@@ -764,8 +564,8 @@
                 </div>
             </div>
 
-            <div class="info-box interactive-element" style="margin-top: 1rem; padding: 1.2rem; position: relative; overflow: visible;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+<div class="info-box interactive-element tilt-element reveal-line" style="margin-top: 1rem; padding: 1.2rem; position: relative; overflow: visible;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <h3 style="margin: 0; font-size: 1.1rem;">📍 Check Free Install</h3>
                     <span style="font-size: 0.75rem; opacity: 0.7; font-weight: bold;">4.5 MILE RADIUS</span>
                 </div>
@@ -781,7 +581,18 @@
                 <div id="eligibility-result" style="margin-top: 12px; font-weight: 600; font-size: 0.9rem; display: none; padding: 10px 15px; border-radius: 12px; background: rgba(255,255,255,0.3); border-left: 4px solid transparent;"></div>
             </div> 
 
-        </div> </div> ```
+        </div> </div> 
+    
+    <div id="ai-bot-trigger">🤖</div>
+    <div id="ai-bot">
+        <div id="ai-header"><span>Squirrel Shield AI</span> <span id="ai-close">×</span></div>
+        <div id="ai-chat">
+            <div class="msg bot">I know tree diameters and squirrel jump arcs. What do you need to know?</div>
+        </div>
+        <div id="ai-input-wrap">
+            <input type="text" id="ai-input" placeholder="Ask about squirrels or baffles..." autocomplete="off">
+        </div>
+    </div>
 
 
     <script>
@@ -862,6 +673,430 @@
                 el.addEventListener('mouseenter', () => { document.body.classList.add('hovering'); });
                 el.addEventListener('mouseleave', () => { document.body.classList.remove('hovering'); });
             });
+        }
+
+        // F23: Progress Vine
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('progress-vine').style.width = (winScroll / height) * 100 + "%";
+        });
+
+        // F15: Line-by-Line Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-line').forEach(el => observer.observe(el));
+
+        // F25: Mouse-Tracked 3D Tilt
+        document.querySelectorAll('.tilt-element').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const centerX = rect.width / 2; const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // F37: Typewriter Intro
+        const twText = "Hi, I'm Jaap.";
+        const twElem = document.getElementById('typewriter-h3');
+        let twIndex = 0;
+        const typeWriter = () => {
+            if (twIndex < twText.length) {
+                twElem.innerHTML = twText.substring(0, twIndex + 1) + '<span class="typewriter-cursor"></span>';
+                twIndex++;
+                setTimeout(typeWriter, Math.random() * 80 + 40);
+            }
+        };
+        setTimeout(typeWriter, 1200);
+
+        // F95: ADVANCED ILLUSION AI CHATBOT (REALISTIC LLM SIMULATION)
+        const botTrigger = document.getElementById('ai-bot-trigger');
+        const botUI = document.getElementById('ai-bot');
+        const botClose = document.getElementById('ai-close');
+        const botInput = document.getElementById('ai-input');
+        const botChat = document.getElementById('ai-chat');
+        
+        let isTyping = false;
+        
+        // --- MASSIVE NLP KNOWLEDGE BASE ---
+        const aiBrain = [
+            {
+                pattern: /\b(hi|hello|hey|sup|yo|greetings|howdy|morning|afternoon|evening)\b/i,
+                replies: [
+                    "Hello! I am the Squirrel Shield AI.",
+                    "Ask me anything about squirrel jump physics, tree diameters, or the baffle installation."
+                ]
+            },
+            {
+                pattern: /\b(jump|leap|high|far|vertical|horizontal|bound|arc)\b/i,
+                replies: [
+                    "Eastern Gray Squirrels are essentially Olympic athletes.",
+                    "They can jump up to 4 feet vertically from the ground, and clear 9 feet horizontally from a fence, roof, or branch.",
+                    "This is exactly why the Squirrel-Shield 360 must be mounted at least 5 feet off the ground."
+                ]
+            },
+            {
+                pattern: /\b(diameter|size|width|girth|thick|big tree|huge tree)\b/i,
+                replies: [
+                    "The standard Squirrel-Shield 360 is designed for tree trunks up to 8 inches in diameter.",
+                    "However, because it is modular and 3D printed, I can manufacture custom extension joints for larger trees.",
+                    "Just send a text to the number above with your tree's circumference!"
+                ]
+            },
+            {
+                pattern: /\b(small tree|thin tree|sapling|skinny)\b/i,
+                replies: [
+                    "The baffle works perfectly on small trees and saplings.",
+                    "The internal mounting bracket adjusts down to grip trunks as thin as 1 inch in diameter securely without damaging the bark."
+                ]
+            },
+            {
+                pattern: /\b(chew|bite|teeth|break|destroy|eat through|gnaw)\b/i,
+                replies: [
+                    "Squirrels have incredibly strong teeth, but they need an edge to start chewing.",
+                    "The Squirrel-Shield 360 is designed with a massive 42-degree smooth slip angle.",
+                    "Because they cannot grip the surface, they literally cannot get their mouth around it to start biting."
+                ]
+            },
+            {
+                pattern: /\b(material|petg|plastic|made of|3d print|filament)\b/i,
+                replies: [
+                    "It is manufactured using high-grade PETG filament.",
+                    "PETG is heavily UV-resistant, impact-resistant, and won't warp in the California sun like standard PLA plastic would."
+                ]
+            },
+            {
+                pattern: /\b(uv|sun|melt|heat|california weather|hot)\b/i,
+                replies: [
+                    "Absolutely. The material is PETG, which has a glass transition temperature of 85°C (185°F).",
+                    "It will easily survive direct Berkeley summer sunlight without warping, sagging, or degrading."
+                ]
+            },
+            {
+                pattern: /\b(rain|water|rust|weatherproof|wet)\b/i,
+                replies: [
+                    "100% weatherproof. There are zero exposed metal parts that can rust.",
+                    "The plastic repels water, and rain actually makes the slip angle even more slippery for the squirrels."
+                ]
+            },
+            {
+                pattern: /\b(install|setup|mount|attach|put on|assemble)\b/i,
+                replies: [
+                    "Installation takes less than 5 minutes.",
+                    "It uses a modular interlocking bracket system. You just wrap it around the tree, snap the outer shell together, and tighten the tension band.",
+                    "Or, if you are within 4.5 miles, we install it for free."
+                ]
+            },
+            {
+                pattern: /\b(free install|radius|berkeley|distance|miles|far)\b/i,
+                replies: [
+                    "We offer 100% free personal installation if you live within a 4.5-mile radius of the Berkeley workshop.",
+                    "Use the distance checker tool above to see if you qualify instantly!"
+                ]
+            },
+            {
+                pattern: /\b(ship|mail|delivery|postage|send)\b/i,
+                replies: [
+                    "If you are outside the 4.5-mile free install radius, we can absolutely ship it to you.",
+                    "Shipping is generally $6-8 anywhere in the US, and it ships flat-packed with easy instructions."
+                ]
+            },
+            {
+                pattern: /\b(cost|price|money|expensive|cheap|discount)\b/i,
+                replies: [
+                    "The Squirrel-Shield 360 is currently $38.99.",
+                    "Considering a single squirrel can ruin $100+ worth of avocados or peaches in one weekend, it pays for itself almost immediately."
+                ]
+            },
+            {
+                pattern: /\b(raccoon|trash panda)\b/i,
+                replies: [
+                    "Raccoons are significantly heavier than squirrels.",
+                    "While the baffle stops squirrels, a heavy, determined raccoon might be able to pull down on the edge. It's optimized for squirrels, rats, and possums."
+                ]
+            },
+            {
+                pattern: /\b(rat|mouse|rodent|mice)\b/i,
+                replies: [
+                    "Yes. Roof rats and fruit rats are notorious for eating citrus from the inside out.",
+                    "The 42-degree slip angle is highly effective against rats, as their claws cannot penetrate the PETG layer lines."
+                ]
+            },
+            {
+                pattern: /\b(bird|woodpecker|crow|pigeon)\b/i,
+                replies: [
+                    "The baffle stops climbing animals from the ground.",
+                    "It will not stop birds from landing directly in the canopy. For birds, we recommend reflective tape or bird netting in combination with the baffle."
+                ]
+            },
+            {
+                pattern: /\b(cat|dog|pets)\b/i,
+                replies: [
+                    "It is 100% safe for pets. There are no spikes, no electricity, and no poisons.",
+                    "It simply uses gravity and geometry to safely slide animals off the tree."
+                ]
+            },
+            {
+                pattern: /\b(color|paint|custom color|black|white|green)\b/i,
+                replies: [
+                    "Currently, it is printed in a sleek, neutral matte black to blend in with tree bark shadows.",
+                    "If you need a custom color (like olive green or white), text the number above for a custom manufacturing request."
+                ]
+            },
+            {
+                pattern: /\b(guarantee|warranty|return|refund|work)\b/i,
+                replies: [
+                    "If the baffle is installed correctly (5+ feet high, away from fences) and a squirrel gets past it, contact us.",
+                    "We will review the setup, and if the shield failed, we will make it right."
+                ]
+            },
+            {
+                pattern: /\b(who made this|jaap|creator|boy|14|kid|who are you)\b/i,
+                replies: [
+                    "Jaap is a 14-year-old student and designer from Berkeley.",
+                    "He designed this exact system in CAD after watching neighborhood squirrels destroy his family's fruit harvest, and now manufactures them locally."
+                ]
+            },
+            {
+                pattern: /\b(smooth|slip|angle|42|grip|claws|slide)\b/i,
+                replies: [
+                    "The secret is the 42-degree slope combined with the microscopic horizontal layer lines of the 3D print.",
+                    "A squirrel's claws are meant to dig into porous wood. On the PETG plastic shield, they simply slide backward."
+                ]
+            },
+            {
+                pattern: /\b(fruit|apples|oranges|lemons|peaches|harvest|avocado)\b/i,
+                replies: [
+                    "Whether it's lemons, avocados, peaches, or apples, squirrels usually take one bite and throw it on the ground.",
+                    "Protecting the trunk is the only foolproof way to save the canopy."
+                ]
+            },
+            {
+                pattern: /\b(tree damage|hurt tree|screws|nails|bark)\b/i,
+                replies: [
+                    "Zero tree damage. This is a crucial feature.",
+                    "We do NOT use screws or nails. The system uses a tension-based collar that grips the bark securely but leaves no permanent marks."
+                ]
+            },
+            {
+                pattern: /\b(payment|card|cash|apple pay|venmo)\b/i,
+                replies: [
+                    "For local deliveries and installs, we accept Apple Pay, Venmo, Cash, or Zelle.",
+                    "If you are shipping, we can send a secure digital payment link."
+                ]
+            },
+            {
+                pattern: /\b(contact|phone|email|text|call)\b/i,
+                replies: [
+                    "You can reach Jaap directly at 510-312-8640.",
+                    "Texting is usually the fastest way to get a response and schedule a free installation."
+                ]
+            },
+            {
+                pattern: /\b(how long|shipping time|eta|when)\b/i,
+                replies: [
+                    "Because these are manufactured locally on demand, standard turnaround is 2-4 days.",
+                    "If you are within the local Berkeley radius, we can often deliver and install the very next day."
+                ]
+            },
+            {
+                pattern: /\b(clean|wash|maintenance|dirty|sap)\b/i,
+                replies: [
+                    "It requires almost zero maintenance.",
+                    "If tree sap or dirt builds up on the plastic, just wipe it down with a wet rag or hose it off so the slip angle remains perfectly smooth."
+                ]
+            },
+            {
+                pattern: /\b(joke|funny|laugh)\b/i,
+                replies: [
+                    "Why did the squirrel swim on his back?",
+                    "To keep his nuts dry.",
+                    "Sorry, my humor protocol is still in beta."
+                ]
+            },
+            {
+                pattern: /\b(smart|ai|robot|llm|gemini|chatgpt|who are you)\b/i,
+                replies: [
+                    "I am a specialized neural network interface.",
+                    "I don't write poetry or code. I just know an unhealthy amount of information about squirrel jumping physics and tree protection."
+                ]
+            },
+            {
+                pattern: /\b(yes|yeah|yep|sure)\b/i,
+                replies: [
+                    "Excellent. If you are ready to proceed, you can text the number on the site to get on the install schedule!"
+                ]
+            },
+            {
+                pattern: /\b(no|nah|nope)\b/i,
+                replies: [
+                    "No problem. If you change your mind when the squirrels eat your avocados, you know where to find me."
+                ]
+            },
+            {
+                pattern: /\b(thanks|thank you|thx|appreciate)\b/i,
+                replies: [
+                    "You are very welcome! Let me know if you need anything else."
+                ]
+            },
+            {
+                pattern: /\b(fuck|shit|bitch|ass|crap|damn)\b/i,
+                replies: [
+                    "I understand you might be frustrated.",
+                    "Those squirrels can be incredibly annoying. But let's keep the chat clean—I am just a friendly baffle bot."
+                ]
+            }
+        ];
+
+        // Fallback responses if regex fails
+        const fallbacks = [
+            "I'm specifically trained on the Squirrel-Shield 360 data. Could you rephrase that regarding trees, baffles, or installation?",
+            "That's outside my current dataset. I mainly handle questions about tree diameters, pricing, and squirrel jumping physics.",
+            "I didn't quite catch that. Try asking about the material, the free installation, or how it stops climbing animals."
+        ];
+
+        // --- BOT UI LOGIC ---
+        botTrigger.addEventListener('click', () => {
+            botUI.classList.add('active');
+            botTrigger.style.transform = 'scale(0)';
+            if (botChat.children.length === 1) {
+                botInput.focus();
+            }
+        });
+
+        botClose.addEventListener('click', () => {
+            botUI.classList.remove('active');
+            botTrigger.style.transform = 'scale(1)';
+        });
+
+        // --- CORE LLM SIMULATION ENGINE ---
+        botInput.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter' && botInput.value.trim() !== '') {
+                const userText = botInput.value.trim();
+                botInput.value = '';
+                
+                // 1. Add User Message
+                addMessageToUI('user', userText);
+                
+                // Prevent spamming
+                if (isTyping) return;
+                isTyping = true;
+                
+                // 2. Find Intent
+                const matchedIntent = analyzeIntent(userText.toLowerCase());
+                
+                // 3. Simulate Network/Thinking Delay (Randomized)
+                const thinkTime = Math.floor(Math.random() * 600) + 400;
+                showTypingIndicator();
+                await sleep(thinkTime);
+                
+                // 4. Stream Responses (Multi-part sending like a human)
+                for (let i = 0; i < matchedIntent.length; i++) {
+                    const messageSegment = matchedIntent[i];
+                    
+                    // Delay based on string length to simulate reading/typing speed
+                    const typeDelay = (messageSegment.length * 25) + 300;
+                    
+                    if (i > 0) {
+                        showTypingIndicator();
+                        await sleep(typeDelay);
+                    } else {
+                        hideTypingIndicator();
+                    }
+                    
+                    addMessageToUI('bot', messageSegment);
+                    hideTypingIndicator();
+                }
+                
+                isTyping = false;
+                botInput.focus();
+            }
+        });
+
+        // --- HELPER FUNCTIONS ---
+        function analyzeIntent(query) {
+            // Check full knowledge base via regex
+            for (let i = 0; i < aiBrain.length; i++) {
+                if (aiBrain[i].pattern.test(query)) {
+                    return aiBrain[i].replies;
+                }
+            }
+            // If no match, return a random fallback
+            const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            return [randomFallback];
+        }
+
+        function addMessageToUI(sender, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${sender}`;
+            msgDiv.innerHTML = text;
+            
+            // Animation for new messages
+            msgDiv.style.opacity = '0';
+            msgDiv.style.transform = 'translateY(10px)';
+            msgDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            
+            botChat.appendChild(msgDiv);
+            
+            // Trigger reflow
+            void msgDiv.offsetWidth;
+            
+            msgDiv.style.opacity = '1';
+            msgDiv.style.transform = 'translateY(0)';
+            
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            // Remove existing indicator if any
+            hideTypingIndicator();
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'msg bot typing-indicator';
+            typingDiv.id = 'active-typing';
+            typingDiv.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+            
+            botChat.appendChild(typingDiv);
+            scrollToBottom();
+            
+            // Add dynamic CSS for dots if not present
+            if (!document.getElementById('typing-css')) {
+                const style = document.createElement('style');
+                style.id = 'typing-css';
+                style.innerHTML = `
+                    .typing-indicator { display: flex; gap: 3px; padding: 12px 18px; width: fit-content; }
+                    .typing-indicator .dot { display: inline-block; width: 6px; height: 6px; background: rgba(255,255,255,0.6); border-radius: 50%; animation: typeBounce 1.4s infinite ease-in-out both; }
+                    .typing-indicator .dot:nth-child(1) { animation-delay: -0.32s; }
+                    .typing-indicator .dot:nth-child(2) { animation-delay: -0.16s; }
+                    @keyframes typeBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('active-typing');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function scrollToBottom() {
+            botChat.scrollTo({
+                top: botChat.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
         // ==========================================================================
         // ADVANCED FREE INSTALLATION CHECKER (Autocomplete + Haversine)
@@ -998,13 +1233,35 @@
                 const distance = R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
                 
                 // --- TIERED RESULTS ---
-                if (distance <= 0.5) {
-                    showResult(`🎉 <strong>NEIGHBOR BONUS!</strong> (${distance.toFixed(1)} miles). You are super close! <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline; font-weight:800;">Text for priority setup!</a>`, '#34c759');
-                } else if(distance <= 4.5) {
-                    showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
-                } else {
-                    showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:#ffcc00; text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
-                }
+                // CUSTOM ODOMETER EFFECT
+                let currentTick = 0.0;
+                let step = distance / 40; 
+                if (step < 0.05) step = 0.05; 
+                
+                resultDiv.style.display = 'block';
+                resultDiv.style.borderLeftColor = 'var(--text-color)';
+                resultDiv.style.color = 'var(--text-color)';
+                
+                const odometerInterval = setInterval(() => {
+                    currentTick += step;
+                    
+                    if(currentTick > distance * 0.7) step *= 0.85; 
+                    
+                    if (currentTick >= distance) {
+                        currentTick = distance;
+                        clearInterval(odometerInterval);
+                        
+                        if (distance <= 0.5) {
+                            showResult(`🎉 <strong>NEIGHBOR BONUS!</strong> (${distance.toFixed(1)} miles). You are super close! <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline; font-weight:800;">Text for priority setup!</a>`, '#34c759');
+                        } else if(distance <= 4.5) {
+                            showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#34c759; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
+                        } else {
+                            showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:#ffcc00; text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
+                        }
+                    } else {
+                        resultDiv.innerHTML = `📍 Calculating distance... <strong style="font-size: 1.1em; color: var(--accent-color);">${currentTick.toFixed(1)}</strong> miles`;
+                    }
+                }, 30);
             } catch (err) {
                 showResult('⚠️ Error checking map. <a href="sms:+15103128640" style="color:#ff2d55;">Text me instead</a>.', '#ff2d55');
             }
