@@ -566,6 +566,24 @@
                         prototypes, I found the perfect slip angle they just can't grip. Now, I manufacture these kits
                         locally to help other families protect their trees, too.</p>
                 </div>
+                        <div class="info-box interactive-element" style="margin-top: 1rem; padding: 1.2rem; position: relative; overflow: visible;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 1.1rem;">📍 Check Free Install</h3>
+                <span style="font-size: 0.75rem; opacity: 0.7; font-weight: bold;">4.5 MILE RADIUS</span>
+            </div>
+            
+            <div style="position: relative; z-index: 50;">
+                <div style="display: flex; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.4); box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); overflow: hidden;">
+                    <input type="text" id="address-input" autocomplete="off" placeholder="Type your address..." style="flex: 1; padding: 10px 16px; border: none; background: transparent; font-family: inherit; outline: none; color: var(--text-color); font-size: 0.9rem;">
+                    <button id="check-btn" style="padding: 10px 20px; border: none; background: var(--accent-color); color: white; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s;">Check</button>
+                </div>
+        
+                <div id="suggestions-box" style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 8px; background: rgba(255,255,255,0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; overflow-x: hidden; z-index: 100;">
+                    </div>
+            </div>
+            
+            <div id="eligibility-result" style="margin-top: 12px; font-weight: 600; font-size: 0.9rem; display: none; padding: 10px 15px; border-radius: 12px; background: rgba(255,255,255,0.3); border-left: 4px solid transparent;"></div>
+        </div>
             </div>
         </div>
     </div>
@@ -617,6 +635,131 @@
                 el.addEventListener('mouseenter', () => { document.body.classList.add('hovering'); });
                 el.addEventListener('mouseleave', () => { document.body.classList.remove('hovering'); });
             });
+        }
+        // ==========================================================================
+        // ADVANCED FREE INSTALLATION CHECKER (Autocomplete + Haversine)
+        // ==========================================================================
+        const inputField = document.getElementById('address-input');
+        const checkBtn = document.getElementById('check-btn');
+        const suggestionsBox = document.getElementById('suggestions-box');
+        const resultDiv = document.getElementById('eligibility-result');
+        
+        let typingTimer;
+        let selectedCoords = null; // Stores coords if they click a suggestion
+
+        // 1. Fetch Suggestions as they type (Debounced)
+        inputField.addEventListener('input', () => {
+            clearTimeout(typingTimer);
+            selectedCoords = null; // Reset coords if they change text
+            const query = inputField.value.trim();
+            
+            if (query.length < 4) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            // Wait 400ms after they stop typing to avoid API spam
+            typingTimer = setTimeout(async () => {
+                try {
+                    // Prioritize CA addresses
+                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=us`);
+                    const data = await res.json();
+                    
+                    suggestionsBox.innerHTML = '';
+                    if (data.length > 0) {
+                        suggestionsBox.style.display = 'block';
+                        data.forEach(place => {
+                            const item = document.createElement('div');
+                            // Clean up the display name a bit
+                            const shortName = place.display_name.split(',').slice(0, 3).join(',');
+                            item.innerHTML = `📍 ${shortName}`;
+                            item.style.cssText = 'padding: 10px 15px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; color: var(--text-color); transition: background 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+                            
+                            // Hover effect
+                            item.addEventListener('mouseenter', () => item.style.background = 'rgba(255,255,255,0.4)');
+                            item.addEventListener('mouseleave', () => item.style.background = 'transparent');
+                            
+                            // Click to select
+                            item.addEventListener('click', () => {
+                                inputField.value = shortName;
+                                selectedCoords = { lat: parseFloat(place.lat), lon: parseFloat(place.lon) };
+                                suggestionsBox.style.display = 'none';
+                            });
+                            
+                            suggestionsBox.appendChild(item);
+                        });
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
+                } catch (e) { console.error("Geocoding failed", e); }
+            }, 400); 
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target !== inputField && e.target !== suggestionsBox) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        // 2. Calculate Distance
+        checkBtn.addEventListener('click', async () => {
+            const address = inputField.value.trim();
+            if(!address) {
+                showResult('⚠️ Please enter an address.', '#ffcc00');
+                return;
+            }
+            
+            checkBtn.innerHTML = '...';
+            suggestionsBox.style.display = 'none';
+            
+            try {
+                // Berkeley Plaza Dr coords
+                const homeLat = 37.8550; 
+                const homeLon = -122.2450; 
+                let userLat, userLon;
+
+                // Use pre-fetched coords if they clicked a suggestion, otherwise fetch now
+                if (selectedCoords) {
+                    userLat = selectedCoords.lat;
+                    userLon = selectedCoords.lon;
+                } else {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`);
+                    const data = await res.json();
+                    if(data.length === 0) {
+                        showResult('❌ Address not found. <a href="sms:+15103128640" style="color:var(--accent-color);">Text me</a>!', 'var(--accent-color)');
+                        checkBtn.innerHTML = 'Check';
+                        return;
+                    }
+                    userLat = parseFloat(data[0].lat);
+                    userLon = parseFloat(data[0].lon);
+                }
+                
+                // Haversine formula
+                const R = 3958.8;
+                const dLat = (userLat - homeLat) * Math.PI / 180;
+                const dLon = (userLon - homeLon) * Math.PI / 180;
+                const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(homeLat * Math.PI / 180) * Math.cos(userLat * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+                const distance = R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                
+                if(distance <= 4.5) {
+                    showResult(`✅ <strong>ELIGIBLE!</strong> (${distance.toFixed(1)} miles away). <br><a href="sms:+15103128640" style="color:#28a745; text-decoration:underline;">Text to schedule setup!</a>`, '#34c759');
+                } else {
+                    showResult(`📍 <strong>${distance.toFixed(1)} miles away.</strong> Radius is 4.5m. <br><a href="sms:+15103128640" style="color:var(--accent-color); text-decoration:underline;">Text me</a> to see if we can work it out!`, '#ffcc00');
+                }
+            } catch (err) {
+                showResult('⚠️ Error checking map. <a href="sms:+15103128640" style="color:var(--accent-color);">Text me</a>.', 'var(--accent-color)');
+            }
+            checkBtn.innerHTML = 'Check';
+        });
+
+        // Allow Enter key
+        inputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkBtn.click(); });
+
+        function showResult(htmlMsg, color) {
+            resultDiv.innerHTML = htmlMsg;
+            resultDiv.style.borderLeftColor = color;
+            resultDiv.style.display = 'block';
         }
     </script>
 </body>
