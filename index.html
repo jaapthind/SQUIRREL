@@ -126,89 +126,10 @@
         }
 
         /* --- NEW FEATURE: DYNAMIC PRICING COUNTDOWN (TOP LEFT) --- */
-        .timer-widget {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            box-shadow: var(--glass-shadow);
-            padding: 8px 24px 8px 12px;
-            border-radius: 50px;
-            z-index: 100;
-            transition: transform 0.3s ease;
-        }
         
-        .timer-svg {
-            transform: rotate(-90deg);
-            width: 48px;
-            height: 48px;
-        }
-        
-        .timer-bg {
-            fill: none;
-            stroke: rgba(0, 0, 0, 0.05);
-            stroke-width: 4;
-        }
-        
-        .timer-progress {
-            fill: none;
-            stroke: #34c759;
-            stroke-width: 4;
-            stroke-linecap: round;
-            /* 2 * pi * 22 (radius) = ~138 */
-            stroke-dasharray: 138;
-            stroke-dashoffset: 0;
-            transition: stroke-dashoffset 1s linear;
-        }
-        
-        .timer-text-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .timer-label {
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: #34c759;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-        
-        #countdown-time {
-            font-family: 'Inter', monospace;
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--text-color);
-            font-variant-numeric: tabular-nums;
-        }
 
         /* --- NEW FEATURE: FLOATING BUY A COFFEE BUTTON (BOTTOM RIGHT) --- */
-        .coffee-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            box-shadow: var(--glass-shadow);
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            color: var(--text-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-        }
+        
         
         .coffee-btn:hover {
             transform: translateY(-5px) scale(1.05);
@@ -592,26 +513,10 @@
                 gap: 1.5rem;
                 margin-top: 100px; /* Make room for timer and AR button */
             }
-            .timer-widget {
-                top: 15px; left: 15px;
-                padding: 6px 16px 6px 8px;
-            }
-            .timer-svg { width: 36px; height: 36px; }
-            #countdown-time { font-size: 0.95rem; }
+
+    
             
-            /* SHOW THE AR BUTTON ON MOBILE ONLY */
-            .ar-trigger-btn {
-                display: flex; /* Override the default hidden state */
-                top: 80px; /* Positioned right below the timer on mobile */
-                width: 85%;
-                max-width: 350px;
-            }
-            
-            .coffee-btn {
-                bottom: 15px; right: 15px;
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
+         
             .squirrel-actor { display: none; }
         }
     </style>
@@ -621,16 +526,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <div class="timer-widget interactive-element">
-        <svg class="timer-svg" viewBox="0 0 48 48">
-            <circle class="timer-bg" cx="24" cy="24" r="22"></circle>
-            <circle class="timer-progress" cx="24" cy="24" r="22"></circle>
-        </svg>
-        <div class="timer-text-container">
-            <span class="timer-label">Free Install Ends</span>
-            <span id="countdown-time">00:00:00</span>
-        </div>
-    </div>
+    
 
     
 
@@ -680,9 +576,7 @@
         </div>
     </div>
 
-    <a href="https://buymeacoffee.com/JaapThind" target="_blank" class="coffee-btn interactive-element">
-         Buy Me A Coffee
-    </a>
+   
 
     <script>
        
@@ -737,35 +631,6 @@
             });
         }
 
-        // DYNAMIC 24-HOUR COUNTDOWN LOGIC
-        function updateTimer() {
-            const now = new Date();
-            // Get next midnight
-            const midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0);
-            
-            const diff = midnight - now;
-            
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('countdown-time').innerText = 
-                `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                
-            // Update circular SVG progress
-            const progressCircle = document.querySelector('.timer-progress');
-            const totalSecsInDay = 24 * 60 * 60;
-            const secsLeft = (h * 3600) + (m * 60) + s;
-            
-            // 138 is the stroke-dasharray (circumference of radius 22)
-            const dashoffset = 138 - (138 * (secsLeft / totalSecsInDay));
-            progressCircle.style.strokeDashoffset = dashoffset;
-        }
-        
-        // Initialize and tick
-        updateTimer();
-        setInterval(updateTimer, 1000);
     </script>
 </body>
 
