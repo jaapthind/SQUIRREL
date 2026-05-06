@@ -309,23 +309,41 @@
         }
 
         /* EFFECT #6: ANIMATED GRADIENT TEXT */
-                .header h1 {
-            background: linear-gradient(90deg, 
-                hsl(0, 100%, 60%), hsl(60, 100%, 60%), hsl(120, 100%, 60%), 
-                hsl(180, 100%, 60%), hsl(240, 100%, 60%), hsl(300, 100%, 60%), hsl(360, 100%, 60%)
-            );
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: ultimateTextShine 3s linear infinite; /* 3s for fast speed, use linear for constant motion */
-        }
-        
-            @keyframes ultimateTextShine {
-                0% { background-position: 0% 50%; filter: hue-rotate(0deg) brightness(1.2) saturate(150%); }
-                50% { background-position: 100% 50%; filter: hue-rotate(180deg) brightness(1.5) saturate(200%); }
-                100% { background-position: 0% 50%; filter: hue-rotate(360deg) brightness(1.2) saturate(150%); }
+                            .header h1 {
+                font-size: min(4.8rem, 11vw); /* Massive size that safely scales on mobile */
+                max-width: 600px; /* Forces the text to beautifully wrap onto 2 lines */
+                line-height: 1.05;
+                margin: 0 0 0.8rem 0;
+                padding-bottom: 5px; /* Prevents the glass shadow from clipping */
+                
+                /* Deep Rich Liquid Gradient (Cyber-Noir Style, less blinding) */
+                background: linear-gradient(110deg, 
+                    hsl(340, 80%, 65%), /* Deep Pink */
+                    hsl(260, 80%, 65%), /* Royal Purple */
+                    hsl(190, 80%, 60%), /* Glass Cyan */
+                    hsl(120, 75%, 60%), /* Toxic Green */
+                    hsl(45, 85%, 60%),  /* Warm Gold */
+                    hsl(340, 80%, 65%)  /* Seamless Loop back to Pink */
+                );
+                background-size: 300% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                
+                /* Advanced 3D Shadowing for thick glass depth */
+                animation: ultimateTextShine 3.5s linear infinite;
             }
+        
+                    @keyframes ultimateTextShine {
+            0% { 
+                background-position: 100% center; 
+                filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.4)) drop-shadow(0px 2px 5px rgba(255, 255, 255, 0.15)) hue-rotate(0deg); 
+            }
+            100% { 
+                background-position: -200% center; 
+                filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.4)) drop-shadow(0px 2px 5px rgba(255, 255, 255, 0.15)) hue-rotate(360deg); 
+            }
+        }
         .header p {
             margin: 0 0 1.5rem 0;
             font-weight: 500;
