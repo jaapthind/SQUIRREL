@@ -143,6 +143,7 @@
         .product-container::before, .info-box::before, .poster-container::before, .portrait-wrapper::before, .timer-widget::before, .coffee-btn::before {
             content: "";
             position: absolute;
+            animation: liquidRainbow 10s linear infinite; filter: hue-rotate(360deg);
             inset: 0;
             border-radius: inherit;
             padding: 1.5px; /* border thickness */
@@ -271,6 +272,7 @@
         }
 
         .product-container {
+            box-shadow: var(--glass-shadow), 0 0 20px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
             background: var(--glass-bg);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
@@ -328,11 +330,7 @@
             filter: drop-shadow(0px 4px 12px rgba(255, 45, 85, 0.15));
         }
         
-        @keyframes ultimateTextShine {
-            0% { background-position: 200% center; }
-            40% { background-position: -100% center; }
-            100% { background-position: -100% center; }
-        }
+        @keyframes ultimateTextShine { 0% { background-position: 0% center; filter: hue-rotate(0deg); } 100% { background-position: 200% center; filter: hue-rotate(360deg); } }
 
         .header p {
             margin: 0 0 1.5rem 0;
@@ -471,6 +469,8 @@
             height: 132px;
             border-radius: 50%;
         }
+        <style>.portrait:active { transform: scale(2.5); z-index: 9999; position: relative; transition: transform 0.2s; }</style>
+        
         /* F15: Line-by-Line Reveal */
         .reveal-line { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; will-change: opacity, transform; }
         .reveal-line.visible { opacity: 1; transform: translateY(0); }
@@ -505,7 +505,6 @@
 </head>
 
 <body>
-    <button onclick="document.querySelector('.product-container').style.maxWidth='390px'" style="position:fixed; top:10px; left:10px; z-index:10000; padding:10px; background:white; border-radius:8px; cursor:pointer;">Test Mobile View</button>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
     <div id="progress-vine"></div>
