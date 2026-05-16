@@ -561,7 +561,7 @@
                 <h3 style="color: var(--text-color); margin: 0 0 5px 0; font-size: 1rem;">
                     <span id="typewriter-h3">Jaap</span>
                 </h3>
-                <p style="font-size: 0.75rem; margin: 0; line-height: 1.3;">I designed this 3D-printed barrier right here in Berkeley to save my dad's fruit trees from neighborhood squirrels.</p>
+                <p style="font-size: 0.75rem; margin: 0; line-height: 1.3;">I designed this 3D-printed barrier right here in Berkeley to save my dad's fruit trees from neighborhood squirrels. Now, I also want to protect your trees.</p>
             </div>
         </div>
 
@@ -570,7 +570,9 @@
                 <img src="Sevak.png" alt="Sevak" class="portrait" style="width: 90px; height: 90px;">
             </div>
             <div>
-                <h3 style="color: var(--text-color); margin: 0 0 5px 0; font-size: 1rem;">Hi, I'm Sevak</h3>
+                <h3 style="color: var(--text-color); margin: 0 0 5px 0; font-size: 1rem;">
+                    <span id="typewriter-sevak">Hi, I'm Sevak</span>
+                </h3>
                 <p style="font-size: 0.75rem; margin: 0; line-height: 1.3;">I joined Jaap recently to help engineer and develop a better version.</p>
             </div>
         </div>
@@ -661,6 +663,7 @@
         
 
         // F37: Typewriter Intro
+        // F37: Typewriter Intro (Jaap)
         const twText = "Hi, I'm Jaap.";
         const twElem = document.getElementById('typewriter-h3');
         let twIndex = 0;
@@ -672,6 +675,19 @@
             }
         };
         setTimeout(typeWriter, 1200);
+
+        // Typewriter Intro (Sevak)
+        const twTextSevak = "Hi, I'm Sevak.";
+        const twElemSevak = document.getElementById('typewriter-sevak');
+        let twIndexSevak = 0;
+        const typeWriterSevak = () => {
+            if (twIndexSevak < twTextSevak.length) {
+                twElemSevak.innerHTML = twTextSevak.substring(0, twIndexSevak + 1) + '<span class="typewriter-cursor"></span>';
+                twIndexSevak++;
+                setTimeout(typeWriterSevak, Math.random() * 80 + 40);
+            }
+        };
+        setTimeout(typeWriterSevak, 1200); // Launches at the exact same time as Jaap's
 
         // --- DYNAMIC TAB TITLE LOGIC ---
        // --- TAB HIJACK LOGIC ---
