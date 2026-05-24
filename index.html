@@ -354,45 +354,64 @@
             font-size: 1.15rem;
         }
        /* THE FLOATING BUBBLE */
+        /* THE FLOATING GREEN BUBBLE */
+        /* LIQUID GLASS MOVING RAINBOW BUBBLE */
         #chat-bubble {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            background: var(--accent-color);
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 25px rgba(255, 45, 85, 0.4);
             z-index: 10000;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
+            
+            /* Liquid Glass Base */
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            
+            /* Complex Gradient Flow */
+            background-image: linear-gradient(45deg, 
+                hsl(0, 70%, 85%), 
+                hsl(60, 70%, 85%), 
+                hsl(120, 70%, 85%), 
+                hsl(180, 70%, 85%), 
+                hsl(240, 70%, 85%), 
+                hsl(300, 70%, 85%), 
+                hsl(360, 70%, 85%)
+            );
+            background-size: 400% 400%;
+            animation: liquidFlow 10s ease infinite;
+            
+            /* Deep Shadowing */
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 2px rgba(255, 255, 255, 0.3);
         }
         
-        /* THE MODAL OVERLAY */
-        #contact-modal {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 350px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 20px;
-            box-shadow: var(--glass-shadow);
-            display: none; /* Hidden by default */
-            z-index: 10000;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        #chat-bubble:hover {
+            transform: scale(1.15) rotate(10deg);
         }
         
-        /* MOBILE ADAPTATION */
-        @media (max-width: 480px) {
-            #contact-modal {
-                width: 90vw;
-                right: 5vw;
-            }
+        /* THE LIQUID RAINBOW ANIMATION */
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* YOUR EMAIL ICON */
+        #chat-bubble img {
+            width: 35px;
+            height: 35px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         .poster-container {
             width: 100%;
@@ -757,18 +776,18 @@
     </script>        
     <script async data-id="101504352" src="//static.getclicky.com/js"></script>
     <div id="chat-bubble" onclick="toggleChat()">
-    <span style="font-size: 24px;">💬</span>
+    <img src="gmail.png" alt="Contact Us">
 </div>
 
 <div id="contact-modal">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h3>Get in Touch</h3>
-        <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">✖</button>
+        <h3 style="margin: 0;">Get in Touch</h3>
+        <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-color);">✖</button>
     </div>
-    <form action="https://formspree.io/f/xkoezywe" method="POST">
-        <input type="email" name="email" placeholder="Your email address" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:15px; border:1px solid #ccc;">
-        <textarea name="message" placeholder="How can we help?" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:15px; border:1px solid #ccc;"></textarea>
-        <button type="submit" style="width:100%; padding:10px; background:var(--accent-color); color:white; border:none; border-radius:15px;">Send</button>
+    <form action="https://formspree.io/f/mpqnlblo" method="POST">
+        <input type="email" name="email" placeholder="Your email address" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1);">
+        <textarea name="message" placeholder="How can we help?" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1); height:100px;"></textarea>
+        <button type="submit" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:15px; cursor:pointer;">Send Message</button>
     </form>
 </div>
 
