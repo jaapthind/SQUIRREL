@@ -799,6 +799,43 @@
             document.title = originalTitle;
         });
 
+        var form = document.getElementById("my-form");
+    
+async function handleSubmit(event) {
+  event.preventDefault();
+  var status = document.getElementById("my-form-status");
+  var data = new FormData(event.target);
+  fetch(event.target.action, {
+    method: form.method,
+    body: data,
+    headers: {
+        'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      status.innerHTML = "Thanks for your message!";
+      form.reset();
+      
+      // NEW: This closes the modal automatically after 2 seconds
+      setTimeout(() => {
+        toggleChat(); 
+        status.innerHTML = ""; // Clear the message so it's fresh for next time
+      }, 2000);
+    } else {
+      response.json().then(data => {
+        if (Object.hasOwn(data, 'errors')) {
+          status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+        } else {
+          status.innerHTML = "Oops! There was a problem."
+        }
+      })
+    }
+  }).catch(error => {
+    status.innerHTML = "Oops! There was a problem."
+  });
+}
+form.addEventListener("submit", handleSubmit)
+
         
   
     </script>        
@@ -812,11 +849,13 @@
         <h3 style="margin: 0;">Get in Touch</h3>
         <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-color);">✖</button>
     </div>
-    <form action="https://formspree.io/f/mpqnlblo" method="POST">
-        <input type="email" name="email" placeholder="Your email address" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1);">
-        <textarea name="message" placeholder="How can we help?" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1); height:100px;"></textarea>
-        <button type="submit" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:15px; cursor:pointer;">Send Message</button>
-    </form>
+    <form id="my-form" action="https://formspree.io/f/mpqnlblo" method="POST">
+    <input type="email" name="email" placeholder="Your email address" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1);">
+    <textarea name="message" placeholder="How can we help?" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1); height:100px;"></textarea>
+    <button type="submit" id="my-form-button" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:15px; cursor:pointer;">Send Message</button>
+    
+    <p id="my-form-status" style="text-align: center; margin-top: 10px;"></p>
+</form>
 </div>
 
 </body>
