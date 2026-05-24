@@ -406,11 +406,39 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        /* THE MODAL OVERLAY - FIXED POSITIONING */
+        #contact-modal {
+            position: fixed; /* This prevents it from pushing other content */
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            display: none; /* Hidden by default */
+            z-index: 20000; /* Floating on top of everything */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
         
+        /* MOBILE ADAPTATION */
+        @media (max-width: 480px) {
+            #contact-modal {
+                width: 90vw;
+                right: 5vw;
+                bottom: 90px;
+            }
+        }
+                
         /* YOUR EMAIL ICON */
         #chat-bubble img {
             width: 35px;
             height: 35px;
+            object-fit: contain; /* CRITICAL: This forces the image to keep its aspect ratio */
+            display: block;      /* Removes any weird extra spacing below the image */
+            margin: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         .poster-container {
