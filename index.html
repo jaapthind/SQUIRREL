@@ -356,91 +356,7 @@
        /* THE FLOATING BUBBLE */
         /* THE FLOATING GREEN BUBBLE */
         /* LIQUID GLASS MOVING RAINBOW BUBBLE */
-        #chat-bubble {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: transform 0.3s ease;
-            
-            /* Liquid Glass Base */
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px) saturate(180%);
-            -webkit-backdrop-filter: blur(15px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            
-            /* Complex Gradient Flow */
-            background-image: linear-gradient(45deg, 
-                hsl(0, 70%, 85%), 
-                hsl(60, 70%, 85%), 
-                hsl(120, 70%, 85%), 
-                hsl(180, 70%, 85%), 
-                hsl(240, 70%, 85%), 
-                hsl(300, 70%, 85%), 
-                hsl(360, 70%, 85%)
-            );
-            background-size: 400% 400%;
-            animation: liquidFlow 10s ease infinite;
-            
-            /* Deep Shadowing */
-            box-shadow: 
-                0 10px 20px rgba(0, 0, 0, 0.1),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6),
-                inset 0 -1px 2px rgba(255, 255, 255, 0.3);
-        }
         
-        #chat-bubble:hover {
-            transform: scale(1.15) rotate(10deg);
-        }
-        
-        /* THE LIQUID RAINBOW ANIMATION */
-        @keyframes liquidFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* THE MODAL OVERLAY - FIXED POSITIONING */
-        #contact-modal {
-            position: fixed; /* This prevents it from pushing other content */
-            bottom: 100px;
-            right: 20px;
-            width: 350px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-            display: none; /* Hidden by default */
-            z-index: 20000; /* Floating on top of everything */
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        
-        /* MOBILE ADAPTATION */
-        @media (max-width: 480px) {
-            #contact-modal {
-                width: 90vw;
-                right: 5vw;
-                bottom: 90px;
-            }
-        }
-                
-        /* YOUR EMAIL ICON */
-        #chat-bubble img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain; /* CRITICAL: This forces the image to keep its aspect ratio */
-            display: block;      /* Removes any weird extra spacing below the image */
-            margin: auto;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
         .poster-container {
             width: 100%;
             height: 100%;
@@ -634,8 +550,11 @@
                     <p><strong>Contact:</strong> Text 
                     <a href="sms:+15102397830" class="interactive-element" style="color: inherit;"><strong>510-239-7830</strong></a> 
                     or email
-                    <a href="mailto:stopsquirrelclimb@gmail.com" class="interactive-element" style="color: inherit;"><strong>stopsquirrelclimb@gmail.com</strong></a> 
-                    to schedule your setup, complete your payment, or ask questions.
+                    <a href="mailto:stopsquirrelclimb@gmail.com" class="interactive-element" style="color: inherit; display: inline-flex; align-items: center; gap: 6px;">
+                        <strong>stopsquirrelclimb@gmail.com</strong>
+                        <img src="image_1118ed.png" alt="Gmail" style="width: 18px; height: 18px; vertical-align: middle;">
+                    </a> 
+                    to schedule your setup...
                 </p>
     </div>
 
@@ -799,66 +718,13 @@
             document.title = originalTitle;
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementById("my-form");
-    
-    async function handleSubmit(event) {
-        event.preventDefault();
-        var status = document.getElementById("my-form-status");
-        var data = new FormData(event.target);
-        
-        fetch(event.target.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        }).then(response => {
-            if (response.ok) {
-                status.innerHTML = "Thanks for your message!";
-                form.reset();
-                setTimeout(() => {
-                    toggleChat(); 
-                    status.innerHTML = "";
-                }, 2000);
-            } else {
-                response.json().then(data => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-                    } else {
-                        status.innerHTML = "Oops! There was a problem.";
-                    }
-                });
-            }
-        }).catch(error => {
-            status.innerHTML = "Oops! There was a problem.";
-        });
-    }
-    
-    if (form) {
-        form.addEventListener("submit", handleSubmit);
-    }
-});
+       
 
         
   
     </script>        
     <script async data-id="101504352" src="//static.getclicky.com/js"></script>
-    <div id="chat-bubble" onclick="toggleChat()">
-    <img src="gmail.png" alt="Contact Us">
-</div>
-
-<div id="contact-modal">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h3 style="margin: 0;">Get in Touch</h3>
-        <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-color);">✖</button>
-    </div>
-    <form id="my-form" action="https://formspree.io/f/mpqnlblo" method="POST">
-    <input type="email" name="email" placeholder="Your email address" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1);">
-    <textarea name="message" placeholder="How can we help?" required style="width:100%; padding:12px; margin-bottom:10px; border-radius:15px; border:1px solid rgba(0,0,0,0.1); height:100px;"></textarea>
-    <button type="submit" id="my-form-button" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:15px; cursor:pointer;">Send Message</button>
     
-    <p id="my-form-status" style="text-align: center; margin-top: 10px;"></p>
-</form>
-</div>
 
 </body>
 
