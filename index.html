@@ -799,42 +799,44 @@
             document.title = originalTitle;
         });
 
-        var form = document.getElementById("my-form");
+        document.addEventListener("DOMContentLoaded", function() {
+    var form = document.getElementById("my-form");
     
-async function handleSubmit(event) {
-  event.preventDefault();
-  var status = document.getElementById("my-form-status");
-  var data = new FormData(event.target);
-  fetch(event.target.action, {
-    method: form.method,
-    body: data,
-    headers: {
-        'Accept': 'application/json'
+    async function handleSubmit(event) {
+        event.preventDefault();
+        var status = document.getElementById("my-form-status");
+        var data = new FormData(event.target);
+        
+        fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                status.innerHTML = "Thanks for your message!";
+                form.reset();
+                setTimeout(() => {
+                    toggleChat(); 
+                    status.innerHTML = "";
+                }, 2000);
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        status.innerHTML = "Oops! There was a problem.";
+                    }
+                });
+            }
+        }).catch(error => {
+            status.innerHTML = "Oops! There was a problem.";
+        });
     }
-  }).then(response => {
-    if (response.ok) {
-      status.innerHTML = "Thanks for your message!";
-      form.reset();
-      
-      // NEW: This closes the modal automatically after 2 seconds
-      setTimeout(() => {
-        toggleChat(); 
-        status.innerHTML = ""; // Clear the message so it's fresh for next time
-      }, 2000);
-    } else {
-      response.json().then(data => {
-        if (Object.hasOwn(data, 'errors')) {
-          status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-        } else {
-          status.innerHTML = "Oops! There was a problem."
-        }
-      })
+    
+    if (form) {
+        form.addEventListener("submit", handleSubmit);
     }
-  }).catch(error => {
-    status.innerHTML = "Oops! There was a problem."
-  });
-}
-form.addEventListener("submit", handleSubmit)
+});
 
         
   
